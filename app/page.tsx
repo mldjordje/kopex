@@ -61,7 +61,7 @@ export default function HomePage() {
             </div>
           </div>
         </div>
-        <div className="stg-row stg-large-gap stg-valign-middle">
+        <div className="stg-row stg-large-gap stg-valign-middle stg-tp-column-reverse">
           <div className="stg-col-6 stg-tp-col-12">
             <ul className="bringer-detailed-list">
               <li>
@@ -98,7 +98,7 @@ export default function HomePage() {
               </li>
             </ul>
           </div>
-          <div className="stg-col-6 stg-tp-col-12">
+          <div className="stg-col-6 stg-tp-col-12 stg-tp-bottom-gap-l">
             <div className="bringer-parallax-media">
               <img className="bringer-lazy" src="/img/null.png" data-src="/img/kopex/slides/page-04.jpg" alt="Proizvodni pogon" width={960} height={720} />
             </div>
