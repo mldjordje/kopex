@@ -63,7 +63,7 @@ export default function HomePage() {
         </div>
         <div className="stg-row stg-large-gap stg-valign-middle stg-tp-column-reverse">
           <div className="stg-col-6 stg-tp-col-12">
-            <ul className="bringer-detailed-list">
+            <ul className="bringer-detailed-list bringer-detailed-list--mobile-details">
               <li>
                 <div className="bringer-detailed-list-title">
                   <h4>Indukcione pe&#263;i<span className="bringer-accent">.</span></h4>
