@@ -33,6 +33,9 @@ export default function Header() {
               <li className={isActivePath(pathname, '/services') ? 'current-menu-item' : undefined}>
                 <Link href="/services">Opremljenost</Link>
               </li>
+              <li className={isActivePath(pathname, '/news') ? 'current-menu-item' : undefined}>
+                <Link href="/news">Vesti</Link>
+              </li>
               <li>
                 <Link href="/#proizvodi">Proizvodi</Link>
               </li>
