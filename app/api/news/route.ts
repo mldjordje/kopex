@@ -24,17 +24,15 @@ const ensureUploadDir = async (): Promise<string> => {
 };
 
 const saveImages = async (files: File[]): Promise<string[]> => {
-  if (!files.length) {
+  const candidates = files.filter((file) => file.size > 0);
+  if (!candidates.length) {
     return [];
   }
 
   const uploadDir = await ensureUploadDir();
   const stored: string[] = [];
 
-  for (const file of files.slice(0, MAX_IMAGE_COUNT)) {
-    if (!file.size) {
-      continue;
-    }
+  for (const file of candidates.slice(0, MAX_IMAGE_COUNT)) {
 
     const extensionFromType = extensionByType[file.type];
     const extensionFromName = path.extname(file.name).toLowerCase();
