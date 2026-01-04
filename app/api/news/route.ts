@@ -16,6 +16,8 @@ const extensionByType: Record<string, string> = {
   'image/webp': '.webp',
   'image/gif': '.gif'
 };
+const uploadEndpoint = process.env.UPLOAD_ENDPOINT;
+const uploadToken = process.env.UPLOAD_TOKEN;
 
 const ensureUploadDir = async (): Promise<string> => {
   const uploadDir = path.join(process.cwd(), 'public', 'uploads', 'news');
@@ -23,17 +25,10 @@ const ensureUploadDir = async (): Promise<string> => {
   return uploadDir;
 };
 
-const saveImages = async (files: File[]): Promise<string[]> => {
-  const candidates = files.filter((file) => file.size > 0);
-  if (!candidates.length) {
-    return [];
-  }
+const prepareFiles = (files: File[]) => {
+  const candidates = files.filter((file) => file.size > 0).slice(0, MAX_IMAGE_COUNT);
 
-  const uploadDir = await ensureUploadDir();
-  const stored: string[] = [];
-
-  for (const file of candidates.slice(0, MAX_IMAGE_COUNT)) {
-
+  return candidates.map((file) => {
     const extensionFromType = extensionByType[file.type];
     const extensionFromName = path.extname(file.name).toLowerCase();
     const extension = allowedExtensions.has(extensionFromName)
@@ -50,16 +45,82 @@ const saveImages = async (files: File[]): Promise<string[]> => {
       throw new Error('Slike moraju biti manje od 5MB.');
     }
 
-    const safeExtension = hasValidExtension ? extension : extensionFromType || '.jpg';
-    const filename = `${randomUUID()}${safeExtension}`;
+    return {
+      file,
+      extension: hasValidExtension ? extension : extensionFromType || '.jpg'
+    };
+  });
+};
+
+const uploadToEndpoint = async (files: File[]): Promise<string[]> => {
+  if (!uploadEndpoint) {
+    return [];
+  }
+
+  const formData = new FormData();
+  files.forEach((file) => {
+    formData.append('images', file, file.name);
+  });
+
+  if (uploadToken) {
+    formData.append('token', uploadToken);
+  }
+
+  const response = await fetch(uploadEndpoint, {
+    method: 'POST',
+    body: formData,
+    headers: uploadToken ? { 'X-Upload-Token': uploadToken } : undefined
+  });
+
+  const payload = await response.json().catch(() => null);
+
+  if (!response.ok) {
+    const message = payload?.message || 'Neuspesan upload slika.';
+    throw new Error(message);
+  }
+
+  const urls = Array.isArray(payload?.urls)
+    ? payload.urls.filter((item: unknown): item is string => typeof item === 'string')
+    : [];
+
+  if (!urls.length && files.length) {
+    throw new Error('Upload nije vratio URL-ove.');
+  }
+
+  return urls;
+};
+
+const saveImagesLocally = async (prepared: { file: File; extension: string }[]) => {
+  if (!prepared.length) {
+    return [];
+  }
+
+  const uploadDir = await ensureUploadDir();
+  const stored: string[] = [];
+
+  for (const item of prepared) {
+    const filename = `${randomUUID()}${item.extension}`;
     const filePath = path.join(uploadDir, filename);
-    const buffer = Buffer.from(await file.arrayBuffer());
+    const buffer = Buffer.from(await item.file.arrayBuffer());
 
     await writeFile(filePath, buffer);
     stored.push(`/uploads/news/${filename}`);
   }
 
   return stored;
+};
+
+const saveImages = async (files: File[]): Promise<string[]> => {
+  const prepared = prepareFiles(files);
+  if (!prepared.length) {
+    return [];
+  }
+
+  if (uploadEndpoint) {
+    return uploadToEndpoint(prepared.map((item) => item.file));
+  }
+
+  return saveImagesLocally(prepared);
 };
 
 export async function GET() {
