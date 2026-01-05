@@ -9,6 +9,7 @@ export const metadata: Metadata = {
 };
 
 export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
 const formatDate = (value: string): string => {
   const date = new Date(value);
