@@ -8,7 +8,11 @@ type StatusState = {
   message: string;
 } | null;
 
-export default function AdminNewsForm() {
+type AdminNewsFormProps = {
+  requiresPassword: boolean;
+};
+
+export default function AdminNewsForm({ requiresPassword }: AdminNewsFormProps) {
   const router = useRouter();
   const [status, setStatus] = useState<StatusState>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -30,6 +34,14 @@ export default function AdminNewsForm() {
       const payload = await response
         .json()
         .catch(() => ({ message: 'Neuspesan odgovor sa servera.' }));
+
+      if (response.status === 401) {
+        setStatus({
+          type: 'error',
+          message: payload?.message || 'Admin lozinka nije ispravna.'
+        });
+        return;
+      }
 
       if (!response.ok) {
         setStatus({
@@ -66,8 +78,17 @@ export default function AdminNewsForm() {
         <label htmlFor="news-images">Slike (opciono)</label>
         <input id="news-images" name="images" type="file" accept="image/*" multiple />
 
-        <label htmlFor="news-password">Admin lozinka (ako je pode\u0161ena)</label>
-        <input id="news-password" name="adminPassword" type="password" placeholder="Admin lozinka" />
+        <label htmlFor="news-password">Admin lozinka</label>
+        <input
+          id="news-password"
+          name="adminPassword"
+          type="password"
+          placeholder="Admin lozinka"
+          required={requiresPassword}
+        />
+        {requiresPassword ? (
+          <p className="bringer-small-text">Unesite admin lozinku da biste sacuvali vest.</p>
+        ) : null}
 
         <button type="submit" disabled={isSubmitting}>
           {isSubmitting ? 'Cuvanje...' : 'Dodaj vest'}

@@ -48,7 +48,7 @@ export default async function AdminPage() {
         <div className="stg-row stg-large-gap">
           <div className="stg-col-6 stg-tp-col-12 stg-tp-bottom-gap">
             <h3>Nova vest</h3>
-            <AdminNewsForm />
+            <AdminNewsForm requiresPassword={Boolean(process.env.ADMIN_PASSWORD)} />
           </div>
           <div className="stg-col-6 stg-tp-col-12">
             <h3>Poslednje vesti</h3>
