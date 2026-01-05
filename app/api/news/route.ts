@@ -141,10 +141,14 @@ export async function POST(request: Request) {
     const formData = await request.formData();
     const title = String(formData.get('title') || '').trim();
     const body = String(formData.get('body') || '').trim();
-    const adminPassword = String(formData.get('adminPassword') || '');
+    const adminPassword = String(formData.get('adminPassword') || '').trim();
+    const requiredPassword = (process.env.ADMIN_PASSWORD || '').trim();
 
-    if (process.env.ADMIN_PASSWORD && adminPassword !== process.env.ADMIN_PASSWORD) {
-      return NextResponse.json({ message: 'Pogresna lozinka.' }, { status: 401 });
+    if (requiredPassword && adminPassword !== requiredPassword) {
+      return NextResponse.json(
+        { message: 'Pogresna lozinka. Proverite ADMIN_PASSWORD i unos u formi.' },
+        { status: 401 }
+      );
     }
 
     if (!title || !body) {
