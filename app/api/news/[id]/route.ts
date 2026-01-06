@@ -1,3 +1,4 @@
+import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
 import { deleteNewsEntry, updateNewsEntry } from '@/lib/news';
 
@@ -18,11 +19,11 @@ const isAuthorized = (password: string): boolean => {
   return password === process.env.ADMIN_PASSWORD;
 };
 
-export async function PATCH(
-  request: Request,
-  { params }: { params: { id: string } }
-) {
-  const id = parseId(params.id);
+type RouteParams = { params: Promise<{ id: string }> };
+
+export async function PATCH(request: NextRequest, { params }: RouteParams) {
+  const resolvedParams = await params;
+  const id = parseId(resolvedParams.id);
   if (!id) {
     return NextResponse.json({ message: 'Neispravan ID.' }, { status: 400 });
   }
@@ -50,11 +51,9 @@ export async function PATCH(
   }
 }
 
-export async function DELETE(
-  request: Request,
-  { params }: { params: { id: string } }
-) {
-  const id = parseId(params.id);
+export async function DELETE(request: NextRequest, { params }: RouteParams) {
+  const resolvedParams = await params;
+  const id = parseId(resolvedParams.id);
   if (!id) {
     return NextResponse.json({ message: 'Neispravan ID.' }, { status: 400 });
   }
