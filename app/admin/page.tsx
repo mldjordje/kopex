@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import AdminNewsForm from '@/components/AdminNewsForm';
+import AdminNewsList from '@/components/AdminNewsList';
 import { getNewsList } from '@/lib/news';
 import type { NewsItem } from '@/lib/news';
 
@@ -9,18 +10,6 @@ export const metadata: Metadata = {
 };
 
 export const dynamic = 'force-dynamic';
-
-const formatDate = (value: string): string => {
-  const date = new Date(value);
-  if (Number.isNaN(date.getTime())) {
-    return value;
-  }
-  return new Intl.DateTimeFormat('sr-RS', {
-    day: '2-digit',
-    month: 'long',
-    year: 'numeric'
-  }).format(date);
-};
 
 export default async function AdminPage() {
   let items: NewsItem[] = [];
@@ -57,37 +46,7 @@ export default async function AdminPage() {
                 <p>{errorMessage}</p>
               </div>
             ) : null}
-            {!errorMessage && items.length === 0 ? (
-              <div className="bringer-block">
-                <p>Jos uvek nema vesti u bazi.</p>
-              </div>
-            ) : null}
-            {!errorMessage && items.length > 0 ? (
-              <div className="bringer-block">
-                <ul className="bringer-detailed-list">
-                  {items.map((item) => {
-                    const preview = item.body.replace(/\s+/g, ' ').trim();
-                    const snippet =
-                      preview.length > 180 ? `${preview.slice(0, 180)}...` : preview;
-                    return (
-                      <li key={item.id}>
-                        <div className="bringer-detailed-list-title">
-                          <h4>
-                            {item.title}
-                            <span className="bringer-accent">.</span>
-                          </h4>
-                        </div>
-                        <div className="bringer-detailed-list-description">
-                          <p>{formatDate(item.createdAt)}</p>
-                          <p>{snippet}</p>
-                          <p>{item.images.length} slika</p>
-                        </div>
-                      </li>
-                    );
-                  })}
-                </ul>
-              </div>
-            ) : null}
+            {!errorMessage ? <AdminNewsList items={items} /> : null}
           </div>
         </div>
       </section>

@@ -79,3 +79,33 @@ export const createNewsEntry = async ({
   );
   return result.insertId;
 };
+
+export const updateNewsEntry = async ({
+  id,
+  title,
+  body,
+  images
+}: {
+  id: number;
+  title: string;
+  body: string;
+  images?: string[];
+}): Promise<void> => {
+  if (images !== undefined) {
+    const payload = images.length ? JSON.stringify(images) : null;
+    await getDb().query<ResultSetHeader>(
+      'UPDATE news SET title = ?, body = ?, images = ? WHERE id = ?',
+      [title, body, payload, id]
+    );
+    return;
+  }
+
+  await getDb().query<ResultSetHeader>(
+    'UPDATE news SET title = ?, body = ? WHERE id = ?',
+    [title, body, id]
+  );
+};
+
+export const deleteNewsEntry = async (id: number): Promise<void> => {
+  await getDb().query<ResultSetHeader>('DELETE FROM news WHERE id = ?', [id]);
+};
