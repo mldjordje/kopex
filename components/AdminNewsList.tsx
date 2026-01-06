@@ -23,13 +23,21 @@ const formatDate = (value: string): string => {
   }).format(date);
 };
 
-export default function AdminNewsList({ items }: { items: NewsItem[] }) {
+export default function AdminNewsList({
+  items,
+  adminPassword
+}: {
+  items: NewsItem[];
+  adminPassword?: string;
+}) {
   const router = useRouter();
-  const [adminPassword, setAdminPassword] = useState('');
+  const [localPassword, setLocalPassword] = useState('');
   const [editingId, setEditingId] = useState<number | null>(null);
   const [drafts, setDrafts] = useState<DraftState>({});
   const [status, setStatus] = useState<StatusState>(null);
   const [isWorking, setIsWorking] = useState(false);
+  const hasAdminPassword = Boolean(adminPassword && adminPassword.trim());
+  const effectivePassword = hasAdminPassword ? adminPassword!.trim() : localPassword.trim();
 
   useEffect(() => {
     const nextDrafts: DraftState = {};
@@ -75,7 +83,7 @@ export default function AdminNewsList({ items }: { items: NewsItem[] }) {
     const formData = new FormData();
     formData.append('title', draft.title.trim());
     formData.append('body', draft.body.trim());
-    formData.append('adminPassword', adminPassword);
+    formData.append('adminPassword', effectivePassword);
 
     try {
       const response = await fetch(`/api/news/${id}`, {
@@ -115,7 +123,7 @@ export default function AdminNewsList({ items }: { items: NewsItem[] }) {
     setStatus(null);
 
     const formData = new FormData();
-    formData.append('adminPassword', adminPassword);
+    formData.append('adminPassword', effectivePassword);
 
     try {
       const response = await fetch(`/api/news/${id}`, {
@@ -158,20 +166,22 @@ export default function AdminNewsList({ items }: { items: NewsItem[] }) {
 
   return (
     <div className="bringer-block">
-      <div className="bringer-form-content">
-        <label htmlFor="admin-list-password">Admin lozinka</label>
-        <input
-          id="admin-list-password"
-          name="adminPassword"
-          type="password"
-          placeholder="Admin lozinka"
-          value={adminPassword}
-          onChange={(event) => setAdminPassword(event.target.value)}
-        />
-      </div>
+      {!hasAdminPassword ? (
+        <div className="bringer-form-content">
+          <label htmlFor="admin-list-password">Admin lozinka</label>
+          <input
+            id="admin-list-password"
+            name="adminPassword"
+            type="password"
+            placeholder="Admin lozinka"
+            value={localPassword}
+            onChange={(event) => setLocalPassword(event.target.value)}
+          />
+        </div>
+      ) : null}
 
       {status ? (
-        <div className="bringer-contact-form__response">{status.message}</div>
+        <div className="bringer-contact-form__response admin-status">{status.message}</div>
       ) : null}
 
       <ul className="bringer-detailed-list">
@@ -211,7 +221,7 @@ export default function AdminNewsList({ items }: { items: NewsItem[] }) {
                 )}
                 <p>{item.images.length} slika</p>
               </div>
-              <div>
+              <div className="admin-news-actions">
                 {isEditing ? (
                   <>
                     <button type="button" onClick={() => handleSave(item.id)} disabled={isWorking}>

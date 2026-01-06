@@ -8,10 +8,11 @@ type StatusState = {
   message: string;
 } | null;
 
-export default function AdminNewsForm() {
+export default function AdminNewsForm({ adminPassword }: { adminPassword?: string }) {
   const router = useRouter();
   const [status, setStatus] = useState<StatusState>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const hasAdminPassword = Boolean(adminPassword && adminPassword.trim());
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -20,6 +21,10 @@ export default function AdminNewsForm() {
 
     const form = event.currentTarget;
     const formData = new FormData(form);
+
+    if (hasAdminPassword) {
+      formData.set('adminPassword', adminPassword!.trim());
+    }
 
     try {
       const response = await fetch('/api/news', {
@@ -66,17 +71,19 @@ export default function AdminNewsForm() {
         <label htmlFor="news-images">Slike (opciono)</label>
         <input id="news-images" name="images" type="file" accept="image/*" multiple />
 
-        <label htmlFor="news-password">Admin lozinka (ako je pode\u0161ena)</label>
-        <input id="news-password" name="adminPassword" type="password" placeholder="Admin lozinka" />
+        {!hasAdminPassword ? (
+          <>
+            <label htmlFor="news-password">Admin lozinka (ako je podesena)</label>
+            <input id="news-password" name="adminPassword" type="password" placeholder="Admin lozinka" />
+          </>
+        ) : null}
 
         <button type="submit" disabled={isSubmitting}>
           {isSubmitting ? 'Cuvanje...' : 'Dodaj vest'}
         </button>
 
         {status ? (
-          <div className="bringer-contact-form__response">
-            {status.message}
-          </div>
+          <div className="bringer-contact-form__response admin-status">{status.message}</div>
         ) : null}
       </div>
       <span className="bringer-form-spinner"></span>

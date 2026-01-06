@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
-import AdminNewsForm from '@/components/AdminNewsForm';
-import AdminNewsList from '@/components/AdminNewsList';
+import AdminGate from '@/components/AdminGate';
 import { getNewsList } from '@/lib/news';
 import type { NewsItem } from '@/lib/news';
 
@@ -34,21 +33,7 @@ export default async function AdminPage() {
       </section>
 
       <section className="divider-top backlight-top">
-        <div className="stg-row stg-large-gap">
-          <div className="stg-col-6 stg-tp-col-12 stg-tp-bottom-gap">
-            <h3>Nova vest</h3>
-            <AdminNewsForm />
-          </div>
-          <div className="stg-col-6 stg-tp-col-12">
-            <h3>Poslednje vesti</h3>
-            {errorMessage ? (
-              <div className="bringer-block">
-                <p>{errorMessage}</p>
-              </div>
-            ) : null}
-            {!errorMessage ? <AdminNewsList items={items} /> : null}
-          </div>
-        </div>
+        <AdminGate items={items} errorMessage={errorMessage} />
       </section>
     </div>
   );

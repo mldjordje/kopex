@@ -1,5 +1,18 @@
 /* Intentionally minimal; legacy styles are loaded from /public/css */
 
+.bringer-contact-form__response.admin-status {
+  display: block;
+}
+
+.admin-news-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  position: relative;
+  z-index: 2;
+}
+
 @media only screen and (max-width: 739px) {
   .bringer-detailed-list--mobile-details li {
     flex-direction: column;
