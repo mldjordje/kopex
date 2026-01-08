@@ -42,8 +42,8 @@ body:not(.theme-light)::before {
   --kopex-steel: #2e3c43;
   --kopex-mist: #e6edf0;
   --kopex-cream: #f7f2ea;
-  --kopex-oxide: #c45a36;
-  --kopex-copper: #d48757;
+  --kopex-oxide: #ff7a1a;
+  --kopex-copper: #ffbe6b;
   --kopex-shadow: 0 30px 70px rgba(12, 15, 18, 0.2);
   --kopex-radius: 20px;
   --kopex-radius-lg: 34px;
@@ -76,8 +76,8 @@ body:not(.theme-light)::before {
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(120deg, rgba(8, 12, 14, 0.9) 0%, rgba(8, 12, 14, 0.45) 55%, rgba(8, 12, 14, 0.8) 100%),
-    radial-gradient(520px 360px at 80% 15%, rgba(196, 90, 54, 0.35), transparent 70%),
+    linear-gradient(120deg, rgba(8, 12, 14, 0.78) 0%, rgba(8, 12, 14, 0.35) 55%, rgba(8, 12, 14, 0.7) 100%),
+    radial-gradient(520px 360px at 80% 15%, rgba(255, 122, 26, 0.32), transparent 70%),
     radial-gradient(600px 480px at 10% 90%, rgba(27, 102, 126, 0.35), transparent 65%);
   z-index: 1;
 }
@@ -135,7 +135,8 @@ body:not(.theme-light)::before {
   letter-spacing: 0.24em;
   font-size: 0.78rem;
   font-weight: 600;
-  color: rgba(247, 242, 234, 0.75);
+  color: rgba(254, 249, 242, 0.8);
+  text-shadow: 0 10px 26px rgba(0, 0, 0, 0.45);
 }
 
 .kopex-hero__title {
@@ -143,12 +144,15 @@ body:not(.theme-light)::before {
   font-size: clamp(2.6rem, 3.2vw + 1.8rem, 4.9rem);
   line-height: 1.05;
   margin: 0;
+  color: #fef9f2;
+  text-shadow: 0 14px 32px rgba(0, 0, 0, 0.5);
 }
 
 .kopex-hero__lead {
   font-size: 1.15rem;
   line-height: 1.7;
-  color: rgba(247, 242, 234, 0.9);
+  color: rgba(254, 249, 242, 0.92);
+  text-shadow: 0 12px 28px rgba(0, 0, 0, 0.45);
 }
 
 .kopex-hero__actions {
@@ -172,23 +176,25 @@ body:not(.theme-light)::before {
 
 .kopex-button--primary {
   background: linear-gradient(135deg, var(--kopex-oxide), var(--kopex-copper));
-  color: #fff;
-  box-shadow: 0 18px 40px rgba(196, 90, 54, 0.35);
+  color: #161310;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 0 18px 40px rgba(255, 122, 26, 0.32);
 }
 
 .kopex-button--primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 22px 44px rgba(196, 90, 54, 0.4);
+  box-shadow: 0 22px 44px rgba(255, 122, 26, 0.38);
 }
 
 .kopex-button--ghost {
-  color: #fff;
-  border: 1px solid rgba(255, 255, 255, 0.35);
-  background: rgba(16, 21, 23, 0.35);
+  color: #fef9f2;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  background: rgba(10, 14, 17, 0.35);
+  backdrop-filter: blur(8px);
 }
 
 .kopex-button--ghost:hover {
-  background: rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.18);
   transform: translateY(-2px);
 }
 
@@ -210,18 +216,21 @@ body:not(.theme-light)::before {
   display: block;
   font-size: 1.5rem;
   font-weight: 700;
+  color: #fef9f2;
+  text-shadow: 0 10px 24px rgba(0, 0, 0, 0.4);
 }
 
 .kopex-stat__label {
   display: block;
   font-size: 0.92rem;
-  color: rgba(247, 242, 234, 0.72);
+  color: rgba(254, 249, 242, 0.78);
 }
 
 .kopex-hero__trust {
   font-size: 0.95rem;
-  color: rgba(247, 242, 234, 0.7);
+  color: rgba(254, 249, 242, 0.78);
   max-width: 680px;
+  text-shadow: 0 10px 24px rgba(0, 0, 0, 0.4);
 }
 
 .kopex-section {
