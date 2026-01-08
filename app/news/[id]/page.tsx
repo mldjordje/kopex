@@ -1,5 +1,3 @@
-import type { Metadata } from 'next';
-import { notFound } from 'next/navigation';
 import NewsDetailClient from '@/components/NewsDetailClient';
 import { getNewsById } from '@/lib/news';
 
@@ -19,41 +17,20 @@ const parseId = (value: string): number | null => {
   return id;
 };
 
-const toSnippet = (body: string): string => {
-  const trimmed = body.replace(/\s+/g, ' ').trim();
-  if (!trimmed) {
-    return 'Detalji vesti.';
-  }
-  return trimmed.length > 160 ? `${trimmed.slice(0, 160)}...` : trimmed;
-};
-
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const id = parseId(params.id);
-  if (!id) {
-    return { title: 'Vest nije pronadjena' };
-  }
-
-  const item = await getNewsById(id);
-  if (!item) {
-    return { title: 'Vest nije pronadjena' };
-  }
-
-  return {
-    title: `KOPEX MIN-LIV | ${item.title}`,
-    description: toSnippet(item.body)
-  };
-}
-
 export default async function NewsDetailPage({ params }: PageProps) {
   const id = parseId(params.id);
   if (!id) {
-    notFound();
+    return <NewsDetailClient item={null} errorMessage="Neispravan ID vesti." />;
   }
 
-  const item = await getNewsById(id);
-  if (!item) {
-    notFound();
+  try {
+    const item = await getNewsById(id);
+    if (!item) {
+      return <NewsDetailClient item={null} errorMessage="Vest nije pronadjena." />;
+    }
+    return <NewsDetailClient item={item} />;
+  } catch (error) {
+    console.error('News detail error:', error);
+    return <NewsDetailClient item={null} errorMessage="Ne mogu da ucitam vest." />;
   }
-
-  return <NewsDetailClient item={item} />;
 }

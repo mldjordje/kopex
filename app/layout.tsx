@@ -3,6 +3,7 @@ import type { ReactNode } from 'react';
 import Script from 'next/script';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import RouteStateSync from '@/components/RouteStateSync';
 import './globals.css';
 
 export const metadata: Metadata = {
@@ -42,6 +43,7 @@ export default function RootLayout({
         <link rel="stylesheet" href="/css/responsive.css" />
       </head>
       <body className="theme-light is-loaded">
+        <RouteStateSync />
         <Header />
         <main id="bringer-main">
           {children}

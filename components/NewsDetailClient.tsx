@@ -1,6 +1,6 @@
 'use client';
 
-import { Box, Button, Chip, Container, Divider, Stack, Typography } from '@mui/material';
+import { Alert, Box, Button, Chip, Container, Divider, Stack, Typography } from '@mui/material';
 import Link from 'next/link';
 import MuiThemeProvider from '@/components/MuiThemeProvider';
 import type { NewsItem } from '@/lib/news';
@@ -29,8 +29,14 @@ const renderParagraphs = (body: string) => {
     ));
 };
 
-export default function NewsDetailClient({ item }: { item: NewsItem }) {
-  const [cover, ...gallery] = item.images;
+export default function NewsDetailClient({
+  item,
+  errorMessage
+}: {
+  item: NewsItem | null;
+  errorMessage?: string | null;
+}) {
+  const [cover, ...gallery] = item?.images || [];
 
   return (
     <MuiThemeProvider>
@@ -48,17 +54,25 @@ export default function NewsDetailClient({ item }: { item: NewsItem }) {
               </Button>
             </div>
 
-            <Stack spacing={1}>
-              <Typography variant="h3" component="h1">
-                {item.title}
-              </Typography>
-              <Stack direction="row" spacing={1} alignItems="center">
-                <Chip size="small" label={formatDate(item.createdAt)} />
-                {item.images.length > 0 ? (
-                  <Chip size="small" variant="outlined" label={`${item.images.length} slika`} />
-                ) : null}
+            {errorMessage ? <Alert severity="error">{errorMessage}</Alert> : null}
+
+            {item ? (
+              <Stack spacing={1}>
+                <Typography variant="h3" component="h1">
+                  {item.title}
+                </Typography>
+                <Stack direction="row" spacing={1} alignItems="center">
+                  <Chip size="small" label={formatDate(item.createdAt)} />
+                  {item.images.length > 0 ? (
+                    <Chip size="small" variant="outlined" label={`${item.images.length} slika`} />
+                  ) : null}
+                </Stack>
               </Stack>
-            </Stack>
+            ) : (
+              <Typography variant="h4" component="h1">
+                Vest nije pronadjena
+              </Typography>
+            )}
 
             {cover ? (
               <Box
@@ -79,9 +93,9 @@ export default function NewsDetailClient({ item }: { item: NewsItem }) {
               </Box>
             ) : null}
 
-            <Divider />
+            {item ? <Divider /> : null}
 
-            <Stack spacing={2}>{renderParagraphs(item.body)}</Stack>
+            {item ? <Stack spacing={2}>{renderParagraphs(item.body)}</Stack> : null}
 
             {gallery.length > 0 ? (
               <Stack spacing={2}>
