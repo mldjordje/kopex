@@ -1,18 +1,19 @@
 'use client';
 
+import { useEffect } from 'react';
 import type { ReactNode } from 'react';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#d96c33'
+      main: '#07379a'
     },
     secondary: {
-      main: '#177a78'
+      main: '#0b7231'
     },
     background: {
-      default: '#f9f6f1',
+      default: '#f5f7fb',
       paper: '#ffffff'
     },
     text: {
@@ -47,5 +48,10 @@ const theme = createTheme({
 });
 
 export default function MuiThemeProvider({ children }: { children: ReactNode }) {
+  useEffect(() => {
+    document.body.classList.add('is-loaded');
+    document.body.classList.remove('is-loading');
+  }, []);
+
   return <ThemeProvider theme={theme}>{children}</ThemeProvider>;
 }

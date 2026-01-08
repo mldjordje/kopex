@@ -29,13 +29,13 @@
     --bringer-s-text: #c7bfb5;
 
     /* A background color for accents, like buttons, highlighted blocks, etc. */
-    --bringer-s-accent: #e07a3f;
+    --bringer-s-accent: #07379a;
 
     /* A hovered button background color */
     --bringer-button-hover-bg: #cc6c36;
 
     /* Used as a color for text accents */
-    --bringer-s-text-accent: #1f8a88;
+    --bringer-s-text-accent: #0b7231;
 
     /* Used as a text color for accented blocks */
     --bringer-s-accented-text: #1a120d;
@@ -44,7 +44,7 @@
     --bringer-s-border: #f7f1e826;
 
     /* Used as a border color for accented blocks */
-    --bringer-s-border-accent: #1f8a8855;
+    --bringer-s-border-accent: #0b723155;
     
     /* A default semi-transparent border color for blocks with a shining effect */
     --bringer-s-border-mute: #f7f1e80d;
@@ -53,7 +53,7 @@
     --bringer-s-border-highlight: #f7f1e840;
 
     /* Used as a color for a backlight effect */
-    --bringer-s-backlight: #e07a3f1a;
+    --bringer-s-backlight: #07379a1a;
 
     /* Used as a color for block shadow */
     --bringer-s-box-shadow: #0c0b0910;
@@ -252,20 +252,20 @@ body.theme-light {
     --bringer-s-heading: #1f1a14;
     --bringer-s-heading-fade: #1f1a14b3;
     --bringer-s-text: #3d342c;
-    --bringer-s-accent: #d96c33;
+    --bringer-s-accent: #07379a;
     --bringer-button-hover-bg: #c4612e;
-    --bringer-s-text-accent: #177a78;
+    --bringer-s-text-accent: #0b7231;
     --bringer-s-accented-text: #140f0b;
     --bringer-c-menu: #231d17;
     --bringer-c-menu-hover: #1f1a14;
     --bringer-c-menu-active: #1f1a14;
     --bringer-s-border: #1f1a1420;
-    --bringer-s-border-accent: #177a7866;
+    --bringer-s-border-accent: #0b723166;
     --bringer-s-border-mute: #1f1a1408;
     --bringer-s-border-highlight: #1f1a1426;
-    --bringer-s-backlight: #d96c3314;
+    --bringer-s-backlight: #07379a14;
     --bringer-s-box-shadow: #1f1a140f;
-    --bringer-s-cursor-light: #d96c331a;
+    --bringer-s-cursor-light: #07379a1a;
 }
 
 /* =======================
