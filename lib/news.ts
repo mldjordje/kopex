@@ -63,6 +63,26 @@ export const getNewsList = async (): Promise<NewsItem[]> => {
   }));
 };
 
+export const getNewsById = async (id: number): Promise<NewsItem | null> => {
+  const [rows] = await getDb().query<NewsRow[]>(
+    'SELECT id, title, body, images, created_at FROM news WHERE id = ? LIMIT 1',
+    [id]
+  );
+
+  const row = rows[0];
+  if (!row) {
+    return null;
+  }
+
+  return {
+    id: row.id,
+    title: row.title,
+    body: row.body,
+    images: parseImages(row.images),
+    createdAt: toIsoDate(row.created_at)
+  };
+};
+
 export const createNewsEntry = async ({
   title,
   body,

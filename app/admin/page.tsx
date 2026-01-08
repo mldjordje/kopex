@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import AdminGate from '@/components/AdminGate';
+import AdminPageClient from '@/components/AdminPageClient';
 import { getNewsList } from '@/lib/news';
 import type { NewsItem } from '@/lib/news';
 
@@ -21,20 +21,5 @@ export default async function AdminPage() {
     errorMessage = 'Ne mogu da ucitam vesti. Proverite bazu i env podesavanja.';
   }
 
-  return (
-    <div className="stg-container">
-      <section className="backlight-bottom">
-        <div className="stg-row stg-bottom-gap-l">
-          <div className="stg-col-8 stg-offset-2 align-center">
-            <h1 className="bringer-page-title">Admin vesti</h1>
-            <p className="bringer-large-text">Dodajte nove vesti i proverite poslednje unose.</p>
-          </div>
-        </div>
-      </section>
-
-      <section className="divider-top backlight-top">
-        <AdminGate items={items} errorMessage={errorMessage} />
-      </section>
-    </div>
-  );
+  return <AdminPageClient items={items} errorMessage={errorMessage} />;
 }

@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { Alert, Box, Button, Grid, Paper, Stack, TextField, Typography } from '@mui/material';
 import AdminNewsForm from '@/components/AdminNewsForm';
 import AdminNewsList from '@/components/AdminNewsList';
 import type { NewsItem } from '@/lib/news';
@@ -66,55 +67,59 @@ export default function AdminGate({
 
   if (!isAuthed) {
     return (
-      <div className="stg-row stg-large-gap">
-        <div className="stg-col-6 stg-tp-col-12">
-          <h3>Admin prijava</h3>
-          <form className="bringer-contact-form bringer-block" onSubmit={handleLogin}>
-            <div className="bringer-form-content">
-              <label htmlFor="admin-login-password">Admin lozinka</label>
-              <input
-                id="admin-login-password"
-                name="password"
-                type="password"
-                placeholder="Admin lozinka"
-                value={adminPassword}
-                onChange={(event) => setAdminPassword(event.target.value)}
-                required
-              />
-
-              <button type="submit" disabled={isSubmitting}>
-                {isSubmitting ? 'Prijavljivanje...' : 'Prijavi se'}
-              </button>
-
-              {status ? (
-                <div className="bringer-contact-form__response admin-status">
-                  {status.message}
-                </div>
-              ) : null}
-            </div>
-            <span className="bringer-form-spinner"></span>
-          </form>
-        </div>
-      </div>
+      <Grid container spacing={4} justifyContent="center">
+        <Grid item xs={12} md={6}>
+          <Paper sx={{ p: { xs: 3, md: 4 }, boxShadow: 3 }}>
+            <Stack spacing={2}>
+              <Typography variant="h5">Admin prijava</Typography>
+              <Box component="form" onSubmit={handleLogin}>
+                <Stack spacing={2}>
+                  <TextField
+                    id="admin-login-password"
+                    name="password"
+                    type="password"
+                    label="Admin lozinka"
+                    placeholder="Admin lozinka"
+                    value={adminPassword}
+                    onChange={(event) => setAdminPassword(event.target.value)}
+                    required
+                    fullWidth
+                  />
+                  <Button type="submit" variant="contained" disabled={isSubmitting}>
+                    {isSubmitting ? 'Prijavljivanje...' : 'Prijavi se'}
+                  </Button>
+                  {status ? <Alert severity={status.type}>{status.message}</Alert> : null}
+                </Stack>
+              </Box>
+            </Stack>
+          </Paper>
+        </Grid>
+      </Grid>
     );
   }
 
   return (
-    <div className="stg-row stg-large-gap">
-      <div className="stg-col-6 stg-tp-col-12 stg-tp-bottom-gap">
-        <h3>Nova vest</h3>
-        <AdminNewsForm adminPassword={adminPassword} />
-      </div>
-      <div className="stg-col-6 stg-tp-col-12">
-        <h3>Poslednje vesti</h3>
-        {errorMessage ? (
-          <div className="bringer-block">
-            <p>{errorMessage}</p>
-          </div>
-        ) : (
-          <AdminNewsList items={items} adminPassword={adminPassword} />
-        )}
-      </div>
-    </div>
+    <Grid container spacing={4}>
+      <Grid item xs={12} md={6}>
+        <Paper sx={{ p: { xs: 3, md: 4 }, boxShadow: 3 }}>
+          <Stack spacing={2}>
+            <Typography variant="h6">Nova vest</Typography>
+            <AdminNewsForm adminPassword={adminPassword} />
+          </Stack>
+        </Paper>
+      </Grid>
+      <Grid item xs={12} md={6}>
+        <Paper sx={{ p: { xs: 3, md: 4 }, boxShadow: 3 }}>
+          <Stack spacing={2}>
+            <Typography variant="h6">Poslednje vesti</Typography>
+            {errorMessage ? (
+              <Alert severity="error">{errorMessage}</Alert>
+            ) : (
+              <AdminNewsList items={items} adminPassword={adminPassword} />
+            )}
+          </Stack>
+        </Paper>
+      </Grid>
+    </Grid>
   );
 }

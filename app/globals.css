@@ -1,9 +1,5 @@
 /* Intentionally minimal; legacy styles are loaded from /public/css */
 
-.bringer-contact-form__response.admin-status {
-  display: block;
-}
-
 .admin-news-actions {
   display: flex;
   flex-wrap: wrap;
@@ -11,6 +7,33 @@
   align-items: center;
   position: relative;
   z-index: 2;
+}
+
+.bringer-contact-form__response.admin-status {
+  display: block;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.9;
+}
+
+body.theme-light::before {
+  background:
+    radial-gradient(1200px 600px at 10% -10%, rgba(217, 108, 51, 0.35), transparent 60%),
+    radial-gradient(900px 700px at 90% 0%, rgba(23, 122, 120, 0.25), transparent 65%),
+    repeating-linear-gradient(135deg, rgba(32, 26, 20, 0.04) 0 1px, transparent 1px 14px);
+}
+
+body:not(.theme-light)::before {
+  background:
+    radial-gradient(1100px 600px at 15% -10%, rgba(224, 122, 63, 0.28), transparent 60%),
+    radial-gradient(900px 700px at 85% 0%, rgba(31, 138, 136, 0.22), transparent 65%),
+    repeating-linear-gradient(135deg, rgba(247, 241, 232, 0.05) 0 1px, transparent 1px 14px);
 }
 
 @media only screen and (max-width: 739px) {

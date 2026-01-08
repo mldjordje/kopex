@@ -8,55 +8,55 @@
 =============== */
 :root {
     /* Used as body background and overlays */
-    --bringer-s-body-bg: #07090D;
+    --bringer-s-body-bg: #0c0b09;
 
     /* Used as a background color for header, footer, and mobile navigation */
-    --bringer-s-nav: #07090DCC;
+    --bringer-s-nav: #0c0b09cc;
 
     /* Used as a background color for block containers, sub-menus, and form inputs */
-    --bringer-s-container-bg: #1A1D24;
+    --bringer-s-container-bg: #1a1713;
 
     /* The same as the previous one but with transparency for frosted glass blocks */
-    --bringer-s-container-frosted: #1A1D24EE;
+    --bringer-s-container-frosted: #1a1713ee;
 
     /* Used as a color for headings, page titles, button labels, and other bright text accents */
-    --bringer-s-heading: #F5F7FA;
+    --bringer-s-heading: #f7f1e8;
 
     /* It is the same as the previous one but with transparency. Used for labels, meta, and some hover effects */
-    --bringer-s-heading-fade: #F5F7FAC0;
+    --bringer-s-heading-fade: #f7f1e8b3;
 
     /* Used as a color for general content */
-    --bringer-s-text: #C5C7CE;
+    --bringer-s-text: #c7bfb5;
 
     /* A background color for accents, like buttons, highlighted blocks, etc. */
-    --bringer-s-accent: #0E7A3A;
+    --bringer-s-accent: #e07a3f;
 
     /* A hovered button background color */
-    --bringer-button-hover-bg: #0E7A3AD0;
+    --bringer-button-hover-bg: #cc6c36;
 
     /* Used as a color for text accents */
-    --bringer-s-text-accent: #2E6FCB;
+    --bringer-s-text-accent: #1f8a88;
 
     /* Used as a text color for accented blocks */
-    --bringer-s-accented-text: var(--bringer-s-heading);
+    --bringer-s-accented-text: #1a120d;
 
     /* Used as a primary border-color */
-    --bringer-s-border: #F5F7FA27;
+    --bringer-s-border: #f7f1e826;
 
     /* Used as a border color for accented blocks */
-    --bringer-s-border-accent: #2E6FCB80;
+    --bringer-s-border-accent: #1f8a8855;
     
     /* A default semi-transparent border color for blocks with a shining effect */
-    --bringer-s-border-mute: #F5F7FA0D;
+    --bringer-s-border-mute: #f7f1e80d;
 
     /* A semi-transparent border shining effect color */
-    --bringer-s-border-highlight: #F5F7FA40;
+    --bringer-s-border-highlight: #f7f1e840;
 
     /* Used as a color for a backlight effect */
-    --bringer-s-backlight: #F5F7FA12;
+    --bringer-s-backlight: #e07a3f1a;
 
     /* Used as a color for block shadow */
-    --bringer-s-box-shadow: #07090D10;
+    --bringer-s-box-shadow: #0c0b0910;
 
     /* The cursor-followed backlight color. It uses the primary backlight color */
     --bringer-s-cursor-light: var(--bringer-s-backlight);
@@ -81,20 +81,20 @@
 :root {
     /* === FONT GROUPS === */
     /* Headings Font Family */
-    --bringer-t-heading-ff: 'Inter', sans-serif;
+    --bringer-t-heading-ff: 'Fraunces', serif;
     
     /* Headings Font Weight */
     --bringer-t-heading-fw: 600;
 
 
     /* Content Font Family */
-    --bringer-t-content-ff: 'Inter', sans-serif;
+    --bringer-t-content-ff: 'Space Grotesk', sans-serif;
 
     /* Content Font Weight */
     --bringer-t-content-fw: 400;
 
     /* Content Font Letter Spacing */
-    --bringer-t-content-ls: -0.01em;
+    --bringer-t-content-ls: -0.005em;
 
 
     /* === MAIN MENU === */
@@ -139,7 +139,7 @@
     --bringer-t-h1-fs: 80px;
 
     /* H1 Heading letter spacing */
-    --bringer-t-h1-ls: -0.05em;
+    --bringer-t-h1-ls: -0.02em;
 
     /* H1 Line Height */
     --bringer-t-h1-lh: 1.1em;
@@ -152,7 +152,7 @@
     --bringer-t-h2-fs: 56px;
 
     /* H2 Heading letter spacing */
-    --bringer-t-h2-ls: -0.05em;
+    --bringer-t-h2-ls: -0.02em;
 
     /* H2 Line Height */
     --bringer-t-h2-lh: 1.2em;
@@ -165,7 +165,7 @@
     --bringer-t-h3-fs: 40px;
 
     /* H3 Heading letter spacing */
-    --bringer-t-h3-ls: -0.05em;
+    --bringer-t-h3-ls: -0.02em;
     
     /* H3 Line Height */
     --bringer-t-h3-lh: 1.2em;
@@ -178,7 +178,7 @@
     --bringer-t-h4-fs: 32px;
 
     /* H4 Heading letter spacing */
-    --bringer-t-h4-ls: -0.05em;
+    --bringer-t-h4-ls: -0.02em;
 
     /* H4 Line Height */
     --bringer-t-h4-lh: 1.2em;
@@ -191,7 +191,7 @@
     --bringer-t-h5-fs: 26px;
 
     /* H5 Heading letter spacing */
-    --bringer-t-h5-ls: -0.02em;
+    --bringer-t-h5-ls: -0.01em;
 
     /* H5 Line Height */
     --bringer-t-h5-lh: 1.2em;
@@ -204,7 +204,7 @@
     --bringer-t-h6-fs: 20px;
 
     /* H6 Heading letter spacing */
-    --bringer-t-h6-ls: -0.02em;
+    --bringer-t-h6-ls: -0.01em;
                     
     /* H6 Line Height */
     --bringer-t-h6-lh: 1.2em;
@@ -215,7 +215,7 @@
 
     /* === CONTENT === */
     /* Content Large text Font Size */
-    --bringer-t-large-fs: 22px;
+    --bringer-t-large-fs: 24px;
 
     /* Content text Font Size */
     --bringer-t-content-fs: 16px;
@@ -230,7 +230,7 @@
     --bringer-t-meta-ls: 0.12em;
 
     /* Meta Font Weight */
-    --bringer-t-meta-fw: 600;
+    --bringer-t-meta-fw: 700;
 
     
     /* === FORMS AND FIELDS === */
@@ -245,23 +245,27 @@
 }
 
 body.theme-light {
-    --bringer-s-body-bg: #f6f7f9;
-    --bringer-s-nav: #ffffffcc;
-    --bringer-s-container-bg: #ffffff;
-    --bringer-s-container-frosted: #ffffffee;
-    --bringer-s-heading: #0e1116;
-    --bringer-s-heading-fade: #0e1116b3;
-    --bringer-s-text: #2d3138;
-    --bringer-c-menu: #1b1f24;
-    --bringer-c-menu-hover: #0e1116;
-    --bringer-c-menu-active: #0e1116;
-    --bringer-s-border: #0e111620;
-    --bringer-s-border-accent: #2e6fcb66;
-    --bringer-s-border-mute: #0e111608;
-    --bringer-s-border-highlight: #0e11162b;
-    --bringer-s-backlight: #0e111610;
-    --bringer-s-box-shadow: #0e111610;
-    --bringer-s-cursor-light: var(--bringer-s-backlight);
+    --bringer-s-body-bg: #f6efe6;
+    --bringer-s-nav: #f6efe6cc;
+    --bringer-s-container-bg: #fff7ec;
+    --bringer-s-container-frosted: #fff7ecee;
+    --bringer-s-heading: #1f1a14;
+    --bringer-s-heading-fade: #1f1a14b3;
+    --bringer-s-text: #3d342c;
+    --bringer-s-accent: #d96c33;
+    --bringer-button-hover-bg: #c4612e;
+    --bringer-s-text-accent: #177a78;
+    --bringer-s-accented-text: #140f0b;
+    --bringer-c-menu: #231d17;
+    --bringer-c-menu-hover: #1f1a14;
+    --bringer-c-menu-active: #1f1a14;
+    --bringer-s-border: #1f1a1420;
+    --bringer-s-border-accent: #177a7866;
+    --bringer-s-border-mute: #1f1a1408;
+    --bringer-s-border-highlight: #1f1a1426;
+    --bringer-s-backlight: #d96c3314;
+    --bringer-s-box-shadow: #1f1a140f;
+    --bringer-s-cursor-light: #d96c331a;
 }
 
 /* =======================

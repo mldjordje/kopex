@@ -2,6 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import { Alert, Box, Button, Stack, TextField, Typography } from '@mui/material';
 
 type StatusState = {
   type: 'success' | 'error';
@@ -56,37 +57,53 @@ export default function AdminNewsForm({ adminPassword }: { adminPassword?: strin
   };
 
   return (
-    <form
-      className="bringer-contact-form bringer-block"
-      encType="multipart/form-data"
-      onSubmit={handleSubmit}
-    >
-      <div className="bringer-form-content">
-        <label htmlFor="news-title">Naslov</label>
-        <input id="news-title" name="title" type="text" placeholder="Naslov vesti" required />
+    <Box component="form" encType="multipart/form-data" onSubmit={handleSubmit}>
+      <Stack spacing={2}>
+        <TextField
+          id="news-title"
+          name="title"
+          label="Naslov"
+          placeholder="Naslov vesti"
+          required
+          fullWidth
+        />
 
-        <label htmlFor="news-body">Tekst</label>
-        <textarea id="news-body" name="body" placeholder="Tekst vesti" required></textarea>
+        <TextField
+          id="news-body"
+          name="body"
+          label="Tekst"
+          placeholder="Tekst vesti"
+          required
+          fullWidth
+          multiline
+          minRows={5}
+        />
 
-        <label htmlFor="news-images">Slike (opciono)</label>
-        <input id="news-images" name="images" type="file" accept="image/*" multiple />
+        <Stack spacing={1}>
+          <Typography variant="subtitle2">Slike (opciono)</Typography>
+          <Button variant="outlined" component="label">
+            Izaberi slike
+            <input id="news-images" name="images" type="file" accept="image/*" multiple hidden />
+          </Button>
+        </Stack>
 
         {!hasAdminPassword ? (
-          <>
-            <label htmlFor="news-password">Admin lozinka (ako je podesena)</label>
-            <input id="news-password" name="adminPassword" type="password" placeholder="Admin lozinka" />
-          </>
+          <TextField
+            id="news-password"
+            name="adminPassword"
+            type="password"
+            label="Admin lozinka (ako je podesena)"
+            placeholder="Admin lozinka"
+            fullWidth
+          />
         ) : null}
 
-        <button type="submit" disabled={isSubmitting}>
+        <Button type="submit" variant="contained" disabled={isSubmitting}>
           {isSubmitting ? 'Cuvanje...' : 'Dodaj vest'}
-        </button>
+        </Button>
 
-        {status ? (
-          <div className="bringer-contact-form__response admin-status">{status.message}</div>
-        ) : null}
-      </div>
-      <span className="bringer-form-spinner"></span>
-    </form>
+        {status ? <Alert severity={status.type}>{status.message}</Alert> : null}
+      </Stack>
+    </Box>
   );
 }

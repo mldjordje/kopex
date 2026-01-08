@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { Alert, Button, Chip, Paper, Stack, TextField, Typography } from '@mui/material';
 import type { NewsItem } from '@/lib/news';
 
 type StatusState = {
@@ -157,97 +158,119 @@ export default function AdminNewsList({
   };
 
   if (!sortedItems.length) {
-    return (
-      <div className="bringer-block">
-        <p>Jos uvek nema vesti u bazi.</p>
-      </div>
-    );
+    return <Alert severity="info">Jos uvek nema vesti u bazi.</Alert>;
   }
 
   return (
-    <div className="bringer-block">
+    <Stack spacing={2}>
       {!hasAdminPassword ? (
-        <div className="bringer-form-content">
-          <label htmlFor="admin-list-password">Admin lozinka</label>
-          <input
-            id="admin-list-password"
-            name="adminPassword"
-            type="password"
-            placeholder="Admin lozinka"
-            value={localPassword}
-            onChange={(event) => setLocalPassword(event.target.value)}
-          />
-        </div>
+        <TextField
+          id="admin-list-password"
+          name="adminPassword"
+          type="password"
+          label="Admin lozinka"
+          placeholder="Admin lozinka"
+          value={localPassword}
+          onChange={(event) => setLocalPassword(event.target.value)}
+          helperText="Unesite lozinku da biste mogli da menjate ili brisete vesti."
+          fullWidth
+        />
       ) : null}
 
-      {status ? (
-        <div className="bringer-contact-form__response admin-status">{status.message}</div>
-      ) : null}
+      {status ? <Alert severity={status.type}>{status.message}</Alert> : null}
 
-      <ul className="bringer-detailed-list">
-        {sortedItems.map((item) => {
-          const isEditing = editingId === item.id;
-          const preview = item.body.replace(/\s+/g, ' ').trim();
-          const snippet = preview.length > 180 ? `${preview.slice(0, 180)}...` : preview;
-          const draft = drafts[item.id] || { title: item.title, body: item.body };
+      {sortedItems.map((item) => {
+        const isEditing = editingId === item.id;
+        const preview = item.body.replace(/\s+/g, ' ').trim();
+        const snippet = preview.length > 180 ? `${preview.slice(0, 180)}...` : preview;
+        const draft = drafts[item.id] || { title: item.title, body: item.body };
 
-          return (
-            <li key={item.id}>
-              <div className="bringer-detailed-list-title">
+        return (
+          <Paper key={item.id} variant="outlined" sx={{ p: 2 }}>
+            <Stack spacing={2}>
+              <Stack
+                direction={{ xs: 'column', sm: 'row' }}
+                spacing={2}
+                justifyContent="space-between"
+                sx={{ alignItems: { xs: 'stretch', sm: 'center' } }}
+              >
                 {isEditing ? (
-                  <input
+                  <TextField
                     name={`title-${item.id}`}
-                    type="text"
+                    label="Naslov"
                     value={draft.title}
                     onChange={(event) => updateDraft(item.id, 'title', event.target.value)}
+                    fullWidth
                   />
                 ) : (
-                  <h4>
-                    {item.title}
-                    <span className="bringer-accent">.</span>
-                  </h4>
+                  <Typography variant="h6">{item.title}</Typography>
                 )}
-              </div>
-              <div className="bringer-detailed-list-description">
-                <p>{formatDate(item.createdAt)}</p>
-                {isEditing ? (
-                  <textarea
-                    name={`body-${item.id}`}
-                    value={draft.body}
-                    onChange={(event) => updateDraft(item.id, 'body', event.target.value)}
-                  />
-                ) : (
-                  <p>{snippet}</p>
-                )}
-                <p>{item.images.length} slika</p>
-              </div>
-              <div className="admin-news-actions">
-                {isEditing ? (
-                  <>
-                    <button type="button" onClick={() => handleSave(item.id)} disabled={isWorking}>
-                      Sacuvaj
-                    </button>
-                    <button type="button" onClick={() => handleCancel(item.id)} disabled={isWorking}>
-                      Odustani
-                    </button>
-                  </>
-                ) : (
-                  <button
+                <Stack direction="row" spacing={1}>
+                  {isEditing ? (
+                    <>
+                      <Button
+                        type="button"
+                        variant="contained"
+                        onClick={() => handleSave(item.id)}
+                        disabled={isWorking}
+                      >
+                        Sacuvaj
+                      </Button>
+                      <Button
+                        type="button"
+                        variant="outlined"
+                        onClick={() => handleCancel(item.id)}
+                        disabled={isWorking}
+                      >
+                        Odustani
+                      </Button>
+                    </>
+                  ) : (
+                    <Button
+                      type="button"
+                      variant="outlined"
+                      onClick={() => setEditingId(item.id)}
+                      disabled={isWorking}
+                    >
+                      Izmeni
+                    </Button>
+                  )}
+                  <Button
                     type="button"
-                    onClick={() => setEditingId(item.id)}
+                    variant="text"
+                    color="error"
+                    onClick={() => handleDelete(item.id)}
                     disabled={isWorking}
                   >
-                    Izmeni
-                  </button>
-                )}
-                <button type="button" onClick={() => handleDelete(item.id)} disabled={isWorking}>
-                  Obrisi
-                </button>
-              </div>
-            </li>
-          );
-        })}
-      </ul>
-    </div>
+                    Obrisi
+                  </Button>
+                </Stack>
+              </Stack>
+
+              <Stack direction="row" spacing={1} alignItems="center">
+                <Chip size="small" label={formatDate(item.createdAt)} />
+                <Chip size="small" variant="outlined" label={`${item.images.length} slika`} />
+              </Stack>
+
+              {isEditing ? (
+                <TextField
+                  name={`body-${item.id}`}
+                  label="Tekst"
+                  value={draft.body}
+                  onChange={(event) => updateDraft(item.id, 'body', event.target.value)}
+                  fullWidth
+                  multiline
+                  minRows={4}
+                />
+              ) : (
+                <Typography variant="body2" color="text.secondary">
+                  {snippet}
+                </Typography>
+              )}
+            </Stack>
+          </Paper>
+        );
+      })}
+    </Stack>
   );
 }
