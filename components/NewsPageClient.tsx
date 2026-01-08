@@ -78,11 +78,11 @@ export default function NewsPageClient({
           ) : null}
 
           {!errorMessage && items.length > 0 ? (
-            <Grid container spacing={3}>
-              {items.map((item) => {
-                const [cover] = item.images;
-                return (
-                  <Grid item xs={12} md={6} key={item.id}>
+          <Grid container spacing={3}>
+            {items.map((item) => {
+              const [cover] = item.images;
+              return (
+                <Grid size={{ xs: 12, md: 6 }} key={item.id}>
                     <Card
                       sx={{
                         height: '100%',

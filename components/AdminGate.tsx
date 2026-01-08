@@ -68,7 +68,7 @@ export default function AdminGate({
   if (!isAuthed) {
     return (
       <Grid container spacing={4} justifyContent="center">
-        <Grid item xs={12} md={6}>
+        <Grid size={{ xs: 12, md: 6 }}>
           <Paper sx={{ p: { xs: 3, md: 4 }, boxShadow: 3 }}>
             <Stack spacing={2}>
               <Typography variant="h5">Admin prijava</Typography>
@@ -100,7 +100,7 @@ export default function AdminGate({
 
   return (
     <Grid container spacing={4}>
-      <Grid item xs={12} md={6}>
+      <Grid size={{ xs: 12, md: 6 }}>
         <Paper sx={{ p: { xs: 3, md: 4 }, boxShadow: 3 }}>
           <Stack spacing={2}>
             <Typography variant="h6">Nova vest</Typography>
@@ -108,7 +108,7 @@ export default function AdminGate({
           </Stack>
         </Paper>
       </Grid>
-      <Grid item xs={12} md={6}>
+      <Grid size={{ xs: 12, md: 6 }}>
         <Paper sx={{ p: { xs: 3, md: 4 }, boxShadow: 3 }}>
           <Stack spacing={2}>
             <Typography variant="h6">Poslednje vesti</Typography>
