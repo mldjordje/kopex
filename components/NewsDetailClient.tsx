@@ -86,7 +86,7 @@ export default function NewsDetailClient({
                 <Box
                   component="img"
                   src={cover}
-                  alt={item.title}
+                  alt={item?.title ?? 'Vest'}
                   loading="lazy"
                   sx={{ width: '100%', maxHeight: 420, objectFit: 'cover' }}
                 />
@@ -111,7 +111,7 @@ export default function NewsDetailClient({
                 >
                   {gallery.map((image, index) => (
                     <Box
-                      key={`${item.id}-gallery-${index}`}
+                      key={`${item?.id ?? 'news'}-gallery-${index}`}
                       sx={{
                         borderRadius: 2,
                         overflow: 'hidden',
@@ -122,7 +122,7 @@ export default function NewsDetailClient({
                       <Box
                         component="img"
                         src={image}
-                        alt={`${item.title} ${index + 2}`}
+                        alt={`${item?.title ?? 'Vest'} ${index + 2}`}
                         loading="lazy"
                         sx={{ width: '100%', height: 240, objectFit: 'cover' }}
                       />
