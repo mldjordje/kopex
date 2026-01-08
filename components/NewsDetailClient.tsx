@@ -38,7 +38,12 @@ export default function NewsDetailClient({ item }: { item: NewsItem }) {
         <Container maxWidth="md">
           <Stack spacing={3}>
             <div>
-              <Button component={Link} href="/news" variant="text">
+              <Button
+                className="bringer-noanim-link"
+                component={Link}
+                href="/news"
+                variant="text"
+              >
                 Nazad na vesti
               </Button>
             </div>

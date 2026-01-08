@@ -127,12 +127,13 @@ export default function NewsPageClient({
                         </Typography>
                       </CardContent>
                       <CardActions sx={{ px: 2, pb: 2 }}>
-                        <Button
-                          component={Link}
-                          href={`/news/${item.id}`}
-                          variant="contained"
-                          color="primary"
-                        >
+                      <Button
+                        className="bringer-noanim-link"
+                        component={Link}
+                        href={`/news/${item.id}`}
+                        variant="contained"
+                        color="primary"
+                      >
                           Procitaj vise
                         </Button>
                       </CardActions>

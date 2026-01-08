@@ -32,19 +32,19 @@
     --bringer-s-accent: #07379a;
 
     /* A hovered button background color */
-    --bringer-button-hover-bg: #cc6c36;
+    --bringer-button-hover-bg: #0b7231;
 
     /* Used as a color for text accents */
     --bringer-s-text-accent: #0b7231;
 
     /* Used as a text color for accented blocks */
-    --bringer-s-accented-text: #1a120d;
+    --bringer-s-accented-text: #f7f7f7;
 
     /* Used as a primary border-color */
     --bringer-s-border: #f7f1e826;
 
     /* Used as a border color for accented blocks */
-    --bringer-s-border-accent: #0b723155;
+    --bringer-s-border-accent: #07379a55;
     
     /* A default semi-transparent border color for blocks with a shining effect */
     --bringer-s-border-mute: #f7f1e80d;
@@ -253,14 +253,14 @@ body.theme-light {
     --bringer-s-heading-fade: #1f1a14b3;
     --bringer-s-text: #3d342c;
     --bringer-s-accent: #07379a;
-    --bringer-button-hover-bg: #c4612e;
+    --bringer-button-hover-bg: #0b7231;
     --bringer-s-text-accent: #0b7231;
-    --bringer-s-accented-text: #140f0b;
+    --bringer-s-accented-text: #ffffff;
     --bringer-c-menu: #231d17;
     --bringer-c-menu-hover: #1f1a14;
     --bringer-c-menu-active: #1f1a14;
     --bringer-s-border: #1f1a1420;
-    --bringer-s-border-accent: #0b723166;
+    --bringer-s-border-accent: #07379a66;
     --bringer-s-border-mute: #1f1a1408;
     --bringer-s-border-highlight: #1f1a1426;
     --bringer-s-backlight: #07379a14;
