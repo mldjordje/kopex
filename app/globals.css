@@ -254,6 +254,20 @@ body:not(.theme-light)::before {
   padding-top: 40px;
 }
 
+.kopex-section--story,
+.kopex-section--quality {
+  color: var(--kopex-steel);
+}
+
+.kopex-section--story h1,
+.kopex-section--story h2,
+.kopex-section--story h3,
+.kopex-section--quality h1,
+.kopex-section--quality h2,
+.kopex-section--quality h3 {
+  color: var(--kopex-ink);
+}
+
 .kopex-section__header {
   max-width: 720px;
   margin: 0 auto 44px;
@@ -353,6 +367,7 @@ body:not(.theme-light)::before {
   background: rgba(255, 255, 255, 0.96);
   border: 1px solid rgba(46, 60, 67, 0.12);
   box-shadow: 0 20px 45px rgba(17, 21, 23, 0.08);
+  color: var(--kopex-steel);
 }
 
 .kopex-feature-card__kicker {
@@ -366,6 +381,10 @@ body:not(.theme-light)::before {
   color: var(--kopex-oxide);
   font-weight: 700;
   margin-bottom: 16px;
+}
+
+.kopex-feature-card h3 {
+  color: var(--kopex-ink);
 }
 
 .kopex-media-grid {
@@ -414,6 +433,11 @@ body:not(.theme-light)::before {
   border-radius: 20px;
   background: rgba(255, 255, 255, 0.96);
   border: 1px solid rgba(46, 60, 67, 0.14);
+  color: var(--kopex-steel);
+}
+
+.kopex-equipment-card h4 {
+  color: var(--kopex-ink);
 }
 
 .kopex-product-grid {
@@ -439,6 +463,11 @@ body:not(.theme-light)::before {
 
 .kopex-product-card__body {
   padding: 20px 22px 26px;
+  color: var(--kopex-steel);
+}
+
+.kopex-product-card__body h3 {
+  color: var(--kopex-ink);
 }
 
 .kopex-quality-list {
@@ -454,6 +483,7 @@ body:not(.theme-light)::before {
   border-radius: 16px;
   background: rgba(255, 255, 255, 0.9);
   border: 1px solid rgba(46, 60, 67, 0.12);
+  color: var(--kopex-steel);
 }
 
 .kopex-client-grid {
@@ -468,6 +498,11 @@ body:not(.theme-light)::before {
   background: #fff;
   border: 1px solid rgba(46, 60, 67, 0.12);
   box-shadow: 0 18px 40px rgba(17, 21, 23, 0.08);
+  color: var(--kopex-steel);
+}
+
+.kopex-client-card h4 {
+  color: var(--kopex-ink);
 }
 
 .kopex-cert-card {
