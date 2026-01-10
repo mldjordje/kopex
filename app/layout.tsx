@@ -1,6 +1,7 @@
-﻿import type { Metadata, Viewport } from 'next';
+import type { Metadata, Viewport } from 'next';
 import type { ReactNode } from 'react';
 import Script from 'next/script';
+import { Analytics } from '@vercel/analytics/react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import RouteStateSync from '@/components/RouteStateSync';
@@ -49,6 +50,7 @@ export default function RootLayout({
           {children}
           <Footer />
         </main>
+        <Analytics />
         <div className="bringer-backlight"></div>
         <Script src="/js/lib/jquery.min.js" strategy="beforeInteractive" />
         <Script src="/js/lib/libs.js" strategy="afterInteractive" />
@@ -60,5 +62,6 @@ export default function RootLayout({
     </html>
   );
 }
+
 
 
