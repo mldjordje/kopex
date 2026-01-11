@@ -133,6 +133,11 @@ export default async function HomePage() {
           ) : (
             <div className="kopex-product-card__placeholder">Trenutno nema proizvoda.</div>
           )}
+          <div className="kopex-products-actions">
+            <Link href="/products" className="kopex-button kopex-button--primary">
+              Svi proizvodi
+            </Link>
+          </div>
         </div>
       </section>
 

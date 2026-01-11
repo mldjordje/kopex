@@ -28,7 +28,7 @@ export default function Header() {
                 <Link href="/">Po&#269;etna</Link>
               </li>
               <li>
-                <Link href="/#proizvodi">Proizvodi</Link>
+                <Link href="/products">Proizvodi</Link>
               </li>
               <li className={isActivePath(pathname, '/news') ? 'current-menu-item' : undefined}>
                 <Link href="/news">Vesti</Link>

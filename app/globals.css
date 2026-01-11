@@ -480,6 +480,41 @@ body:not(.theme-light)::before {
   color: var(--kopex-ink);
 }
 
+.kopex-product-card__meta {
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--kopex-steel);
+}
+
+.kopex-product-card__docs {
+  margin-top: 12px;
+  font-size: 0.85rem;
+  color: var(--kopex-steel);
+}
+
+.kopex-product-card__docs span {
+  font-weight: 600;
+}
+
+.kopex-product-card__docs ul {
+  list-style: none;
+  padding: 0;
+  margin: 6px 0 0;
+  display: grid;
+  gap: 4px;
+}
+
+.kopex-product-card__docs a {
+  color: var(--kopex-oxide);
+  text-decoration: none;
+}
+
+.kopex-products-actions {
+  margin-top: 18px;
+  text-align: right;
+}
+
 .kopex-news-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));

@@ -46,7 +46,7 @@ export default function Footer() {
                   <ul>
                     <li><Link href="/about-us">O nama</Link></li>
                     <li><Link href="/services">Opremljenost</Link></li>
-                    <li><Link href="/#proizvodi">Proizvodi</Link></li>
+                    <li><Link href="/products">Proizvodi</Link></li>
                     <li><Link href="/news">Vesti</Link></li>
                     <li><Link href="/#kupci">Kupci</Link></li>
                     <li><Link href="/contacts">Kontakt</Link></li>
