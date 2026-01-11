@@ -52,7 +52,7 @@ const prepareFiles = (files: File[]) => {
   });
 };
 
-const uploadToEndpoint = async (files: File[]): Promise<string[]> => {
+const uploadToEndpoint = async (files: File[], folder?: string): Promise<string[]> => {
   if (!uploadEndpoint) {
     return [];
   }
@@ -61,6 +61,9 @@ const uploadToEndpoint = async (files: File[]): Promise<string[]> => {
   files.forEach((file) => {
     formData.append('images', file, file.name);
   });
+  if (folder) {
+    formData.append('folder', folder);
+  }
 
   if (uploadToken) {
     formData.append('token', uploadToken);
@@ -117,7 +120,10 @@ const saveImages = async (files: File[]): Promise<string[]> => {
   }
 
   if (uploadEndpoint) {
-    return uploadToEndpoint(prepared.map((item) => item.file));
+    return uploadToEndpoint(
+      prepared.map((item) => item.file),
+      'news'
+    );
   }
 
   return saveImagesLocally(prepared);

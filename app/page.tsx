@@ -1,6 +1,10 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import HeroVideo from '@/components/HeroVideo';
+import { getNewsList } from '@/lib/news';
+import { getProductsList } from '@/lib/products';
+import type { NewsItem } from '@/lib/news';
+import type { ProductItem } from '@/lib/products';
 
 export const metadata: Metadata = {
   title: 'KOPEX MIN-LIV | Industrijska livnica gvo\u017e\u0111a i \u010delika Ni\u0161',
@@ -8,7 +12,56 @@ export const metadata: Metadata = {
     'Kopex MIN-LIV A.D. Ni\u0161 je industrijska livnica Srbije za livenje metala i proizvodnju metalnih odlivaka: sivi liv, nodularni liv i \u010deli\u010dni liv, uz mehani\u010dku obradu metala (machining), termi\u010dku obradu, sa\u010dmarenje/pe\u0161karenje i kontrolu kvaliteta.'
 };
 
-export default function HomePage() {
+export const dynamic = 'force-dynamic';
+
+const getSnippet = (value: string, limit = 160): string => {
+  const block = value
+    .split(/\n+/)
+    .map((item) => item.trim())
+    .find(Boolean);
+  const preview = (block || value).replace(/\s+/g, ' ').trim();
+  if (!preview) {
+    return 'Bez opisa.';
+  }
+  if (preview.length <= limit) {
+    return preview;
+  }
+  return `${preview.slice(0, limit)}...`;
+};
+
+const formatDate = (value: string): string => {
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) {
+    return value;
+  }
+  return new Intl.DateTimeFormat('sr-RS', {
+    day: '2-digit',
+    month: 'long',
+    year: 'numeric'
+  }).format(date);
+};
+
+const getProductSnippet = (product: ProductItem): string =>
+  getSnippet(product.summary || product.description || '', 150);
+
+export default async function HomePage() {
+  let products: ProductItem[] = [];
+  let news: NewsItem[] = [];
+
+  try {
+    products = await getProductsList();
+  } catch (error) {
+    console.error('Home products error:', error);
+  }
+
+  try {
+    news = await getNewsList();
+  } catch (error) {
+    console.error('Home news error:', error);
+  }
+
+  const latestNews = news.slice(0, 3);
+
   return (
     <div className="kopex-landing">
       <section className="kopex-hero">
@@ -45,6 +98,81 @@ export default function HomePage() {
           <p className="kopex-hero__trust">
             Partneri iz energetike, rudarstva i industrije: EPS, ZI JIN, Danieli, Lafarge, HBIS i drugi.
           </p>
+        </div>
+      </section>
+
+      <section id="proizvodi" className="kopex-section kopex-section--products">
+        <div className="stg-container">
+          <div className="kopex-section__header">
+            <span className="kopex-eyebrow">Proizvodi</span>
+            <h2>Metalni odlivci za energetiku, rudarstvo i industriju.</h2>
+            <p>
+              Specijalizovani smo za sivi liv, nodularni liv i &#269;eli&#269;ni liv, uklju&#269;uju&#263;i legirane
+              &#269;elike za zahtevne uslove rada.
+            </p>
+          </div>
+          {products.length ? (
+            <div className="kopex-product-grid">
+              {products.map((product) => {
+                const cover = product.heroImage || product.gallery[0] || '';
+                return (
+                  <article className="kopex-product-card" key={product.id}>
+                    {cover ? (
+                      <img src={cover} alt={product.name} width={960} height={720} />
+                    ) : (
+                      <div className="kopex-product-card__placeholder">Bez slike</div>
+                    )}
+                    <div className="kopex-product-card__body">
+                      <h3>{product.name}</h3>
+                      <p>{getProductSnippet(product)}</p>
+                    </div>
+                  </article>
+                );
+              })}
+            </div>
+          ) : (
+            <div className="kopex-product-card__placeholder">Trenutno nema proizvoda.</div>
+          )}
+        </div>
+      </section>
+
+      <section id="vesti" className="kopex-section kopex-section--news">
+        <div className="stg-container">
+          <div className="kopex-section__header">
+            <span className="kopex-eyebrow">Vesti</span>
+            <h2>Najnovije informacije iz Kopex MIN-LIV.</h2>
+            <p>
+              Pratite najnovije objave, projekte i aktivnosti iz nase livnice.
+            </p>
+          </div>
+          {latestNews.length ? (
+            <div className="kopex-news-grid">
+              {latestNews.map((item) => {
+                const [cover] = item.images;
+                return (
+                  <article className="kopex-news-card" key={item.id}>
+                    {cover ? (
+                      <img src={cover} alt={item.title} width={960} height={720} />
+                    ) : (
+                      <div className="kopex-news-card__placeholder">Bez naslovne slike</div>
+                    )}
+                    <div className="kopex-news-card__body">
+                      <span className="kopex-news-card__meta">{formatDate(item.createdAt)}</span>
+                      <h3>{item.title}</h3>
+                      <p>{getSnippet(item.body, 180)}</p>
+                    </div>
+                  </article>
+                );
+              })}
+            </div>
+          ) : (
+            <div className="kopex-news-card__placeholder">Trenutno nema vesti.</div>
+          )}
+          <div className="kopex-news-actions">
+            <Link href="/news" className="kopex-button kopex-button--primary">
+              Sve vesti
+            </Link>
+          </div>
         </div>
       </section>
 
@@ -169,42 +297,6 @@ export default function HomePage() {
               </div>
               <Link href="/services" className="kopex-link">Detalji opremljenosti</Link>
             </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="proizvodi" className="kopex-section kopex-section--products">
-        <div className="stg-container">
-          <div className="kopex-section__header">
-            <span className="kopex-eyebrow">Proizvodi</span>
-            <h2>Metalni odlivci za energetiku, rudarstvo i industriju.</h2>
-            <p>
-              Specijalizovani smo za sivi liv, nodularni liv i &#269;eli&#269;ni liv, uklju&#269;uju&#263;i legirane
-              &#269;elike za zahtevne uslove rada.
-            </p>
-          </div>
-          <div className="kopex-product-grid">
-            <article className="kopex-product-card">
-              <img src="/img/kopex/slides/page-06.jpg" alt="Sivi liv" width={960} height={720} />
-              <div className="kopex-product-card__body">
-                <h3>Sivi liv</h3>
-                <p>Odlivci od sivog liva za industrijske sisteme, rudarsku i energetsku opremu.</p>
-              </div>
-            </article>
-            <article className="kopex-product-card">
-              <img src="/img/kopex/slides/page-07.jpg" alt="Nodularni liv" width={960} height={720} />
-              <div className="kopex-product-card__body">
-                <h3>Nodularni liv</h3>
-                <p>Odlivci sa visokom &#269;vrsto&#263;om i otporno&#353;&#263;u, pogodni za zahtevne aplikacije.</p>
-              </div>
-            </article>
-            <article className="kopex-product-card">
-              <img src="/img/kopex/slides/page-08.jpg" alt="&#268;eli&#269;ni liv" width={960} height={720} />
-              <div className="kopex-product-card__body">
-                <h3>&#268;eli&#269;ni liv</h3>
-                <p>&#268;eli&#269;ni liv za velike industrijske odlivke, uz specijalne legure po zahtevima.</p>
-              </div>
-            </article>
           </div>
         </div>
       </section>

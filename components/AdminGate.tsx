@@ -1,41 +1,40 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Alert, Box, Button, Grid, Paper, Stack, TextField, Typography } from '@mui/material';
-import AdminNewsForm from '@/components/AdminNewsForm';
-import AdminNewsList from '@/components/AdminNewsList';
-import type { NewsItem } from '@/lib/news';
 
 type StatusState = {
   type: 'success' | 'error';
   message: string;
 } | null;
 
-export default function AdminGate({
-  items,
-  errorMessage
-}: {
-  items: NewsItem[];
-  errorMessage: string | null;
-}) {
+type AdminGateProps = {
+  children: (payload: { adminPassword: string; onLogout: () => void }) => React.ReactNode;
+};
+
+const STORAGE_KEY = 'kopex-admin-password';
+
+export default function AdminGate({ children }: AdminGateProps) {
   const [adminPassword, setAdminPassword] = useState('');
   const [isAuthed, setIsAuthed] = useState(false);
   const [status, setStatus] = useState<StatusState>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    setStatus(null);
+  const attemptLogin = async (password: string, options?: { silent?: boolean }) => {
+    const silent = options?.silent ?? false;
 
-    if (!adminPassword.trim()) {
-      setStatus({ type: 'error', message: 'Unesite admin lozinku.' });
-      return;
+    if (!password.trim()) {
+      if (!silent) {
+        setStatus({ type: 'error', message: 'Unesite admin lozinku.' });
+      }
+      return false;
     }
 
     setIsSubmitting(true);
+    setStatus(null);
 
     const formData = new FormData();
-    formData.append('password', adminPassword.trim());
+    formData.append('password', password.trim());
 
     try {
       const response = await fetch('/api/admin/login', {
@@ -48,21 +47,49 @@ export default function AdminGate({
         .catch(() => ({ message: 'Neuspesan odgovor sa servera.' }));
 
       if (!response.ok) {
-        setStatus({
-          type: 'error',
-          message: payload?.message || 'Pogresna lozinka.'
-        });
-        return;
+        if (!silent) {
+          setStatus({
+            type: 'error',
+            message: payload?.message || 'Pogresna lozinka.'
+          });
+        }
+        sessionStorage.removeItem(STORAGE_KEY);
+        return false;
       }
 
+      sessionStorage.setItem(STORAGE_KEY, password.trim());
       setIsAuthed(true);
       setStatus(null);
+      return true;
     } catch (error) {
       console.error('Admin login error:', error);
-      setStatus({ type: 'error', message: 'Greska u mrezi ili serveru.' });
+      if (!silent) {
+        setStatus({ type: 'error', message: 'Greska u mrezi ili serveru.' });
+      }
+      return false;
     } finally {
       setIsSubmitting(false);
     }
+  };
+
+  useEffect(() => {
+    const stored = sessionStorage.getItem(STORAGE_KEY);
+    if (stored) {
+      setAdminPassword(stored);
+      void attemptLogin(stored, { silent: true });
+    }
+  }, []);
+
+  const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    void attemptLogin(adminPassword);
+  };
+
+  const handleLogout = () => {
+    sessionStorage.removeItem(STORAGE_KEY);
+    setAdminPassword('');
+    setIsAuthed(false);
+    setStatus(null);
   };
 
   if (!isAuthed) {
@@ -98,28 +125,5 @@ export default function AdminGate({
     );
   }
 
-  return (
-    <Grid container spacing={4}>
-      <Grid size={{ xs: 12, md: 6 }}>
-        <Paper sx={{ p: { xs: 3, md: 4 }, boxShadow: 3 }}>
-          <Stack spacing={2}>
-            <Typography variant="h6">Nova vest</Typography>
-            <AdminNewsForm adminPassword={adminPassword} />
-          </Stack>
-        </Paper>
-      </Grid>
-      <Grid size={{ xs: 12, md: 6 }}>
-        <Paper sx={{ p: { xs: 3, md: 4 }, boxShadow: 3 }}>
-          <Stack spacing={2}>
-            <Typography variant="h6">Poslednje vesti</Typography>
-            {errorMessage ? (
-              <Alert severity="error">{errorMessage}</Alert>
-            ) : (
-              <AdminNewsList items={items} adminPassword={adminPassword} />
-            )}
-          </Stack>
-        </Paper>
-      </Grid>
-    </Grid>
-  );
+  return <>{children({ adminPassword: adminPassword.trim(), onLogout: handleLogout })}</>;
 }

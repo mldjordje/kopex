@@ -27,17 +27,17 @@ export default function Header() {
               <li className={isActivePath(pathname, '/') ? 'current-menu-item' : undefined}>
                 <Link href="/">Po&#269;etna</Link>
               </li>
+              <li>
+                <Link href="/#proizvodi">Proizvodi</Link>
+              </li>
+              <li className={isActivePath(pathname, '/news') ? 'current-menu-item' : undefined}>
+                <Link href="/news">Vesti</Link>
+              </li>
               <li className={isActivePath(pathname, '/about-us') ? 'current-menu-item' : undefined}>
                 <Link href="/about-us">O nama</Link>
               </li>
               <li className={isActivePath(pathname, '/services') ? 'current-menu-item' : undefined}>
                 <Link href="/services">Opremljenost</Link>
-              </li>
-              <li className={isActivePath(pathname, '/news') ? 'current-menu-item' : undefined}>
-                <Link href="/news">Vesti</Link>
-              </li>
-              <li>
-                <Link href="/#proizvodi">Proizvodi</Link>
               </li>
               <li>
                 <Link href="/#kupci">Kupci</Link>
