@@ -1,9 +1,12 @@
-﻿import type { Metadata } from 'next';
+import type { Metadata } from 'next';
+import Image from 'next/image';
 
 export const metadata: Metadata = {
   title: 'KOPEX MIN-LIV | Kontakt',
   description: 'Kontaktirajte KOPEX MIN-LIV A.D. Ni\u0161 - Bulevar 12. februara 82, Ni\u0161.'
 };
+
+const FULL_SIZES = '(max-width: 739px) 100vw, 80vw';
 
 export default function ContactsPage() {
   return (
@@ -16,7 +19,13 @@ export default function ContactsPage() {
           </div>
         </div>
         <div className="bringer-parallax-media" data-parallax-speed="20">
-          <img className="bringer-lazy" src="/img/null.png" data-src="/img/kopex/facility-yard.jpg" alt="Kontakt" width={1920} height={960} />
+          <Image
+            src="/img/kopex/facility-yard.jpg"
+            alt="Kontakt"
+            width={1920}
+            height={960}
+            sizes={FULL_SIZES}
+          />
         </div>
       </section>
 
@@ -153,3 +162,4 @@ export default function ContactsPage() {
     </div>
   );
 }
+

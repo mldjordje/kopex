@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Image from 'next/image';
 import Link from 'next/link';
 import HeroVideo from '@/components/HeroVideo';
 import { getNewsList } from '@/lib/news';
@@ -13,6 +14,12 @@ export const metadata: Metadata = {
 };
 
 export const dynamic = 'force-dynamic';
+
+const CARD_SIZES = '(max-width: 739px) 100vw, (max-width: 1024px) 50vw, 33vw';
+const HALF_SIZES = '(max-width: 991px) 100vw, 50vw';
+const MEDIA_LARGE_SIZES = '(max-width: 739px) 100vw, (max-width: 1200px) 60vw, 33vw';
+const MEDIA_SMALL_SIZES = '(max-width: 739px) 100vw, (max-width: 1200px) 40vw, 17vw';
+const CERT_SIZES = '(max-width: 991px) 100vw, 60vw';
 
 const getSnippet = (value: string, limit = 160): string => {
   const block = value
@@ -118,7 +125,7 @@ export default async function HomePage() {
                 return (
                   <article className="kopex-product-card" key={product.id}>
                     {cover ? (
-                      <img src={cover} alt={product.name} width={960} height={720} />
+                      <Image src={cover} alt={product.name} width={960} height={720} sizes={CARD_SIZES} />
                     ) : (
                       <div className="kopex-product-card__placeholder">Bez slike</div>
                     )}
@@ -162,7 +169,7 @@ export default async function HomePage() {
                 return (
                   <article className="kopex-news-card" key={item.id}>
                     {cover ? (
-                      <img src={cover} alt={item.title} width={960} height={720} />
+                      <Image src={cover} alt={item.title} width={960} height={720} sizes={CARD_SIZES} />
                     ) : (
                       <div className="kopex-news-card__placeholder">Bez naslovne slike</div>
                     )}
@@ -217,10 +224,22 @@ export default async function HomePage() {
           </div>
           <div className="kopex-split__media">
             <div className="kopex-media-frame">
-              <img src="/img/kopex/facility-front.jpg" alt="Kopex MIN-LIV pogon" width={960} height={720} />
+              <Image
+                src="/img/kopex/facility-front.jpg"
+                alt="Kopex MIN-LIV pogon"
+                width={960}
+                height={720}
+                sizes={HALF_SIZES}
+              />
             </div>
             <div className="kopex-media-frame kopex-media-frame--offset">
-              <img src="/img/kopex/facility-yard.jpg" alt="Kompleks livnice" width={960} height={720} />
+              <Image
+                src="/img/kopex/facility-yard.jpg"
+                alt="Kompleks livnice"
+                width={960}
+                height={720}
+                sizes={HALF_SIZES}
+              />
             </div>
           </div>
         </div>
@@ -276,16 +295,40 @@ export default async function HomePage() {
           <div className="kopex-split">
             <div className="kopex-media-grid">
               <div className="kopex-media-grid__item kopex-media-grid__item--large">
-                <img src="/img/kopex/production-01.jpg" alt="Livni&#269;ka proizvodnja" width={640} height={520} />
+                <Image
+                  src="/img/kopex/production-01.jpg"
+                  alt="Livni&#269;ka proizvodnja"
+                  width={640}
+                  height={520}
+                  sizes={MEDIA_LARGE_SIZES}
+                />
               </div>
               <div className="kopex-media-grid__item kopex-media-grid__item--tall">
-                <img src="/img/kopex/production-02.jpg" alt="Proces livenja" width={520} height={820} />
+                <Image
+                  src="/img/kopex/production-02.jpg"
+                  alt="Proces livenja"
+                  width={520}
+                  height={820}
+                  sizes={MEDIA_SMALL_SIZES}
+                />
               </div>
               <div className="kopex-media-grid__item kopex-media-grid__item--wide">
-                <img src="/img/kopex/production-03.jpg" alt="Kontrola procesa" width={740} height={520} />
+                <Image
+                  src="/img/kopex/production-03.jpg"
+                  alt="Kontrola procesa"
+                  width={740}
+                  height={520}
+                  sizes={MEDIA_LARGE_SIZES}
+                />
               </div>
               <div className="kopex-media-grid__item">
-                <img src="/img/kopex/production-04.jpg" alt="Ma&#353;inska obrada metala" width={520} height={520} />
+                <Image
+                  src="/img/kopex/production-04.jpg"
+                  alt="Ma&#353;inska obrada metala"
+                  width={520}
+                  height={520}
+                  sizes={MEDIA_SMALL_SIZES}
+                />
               </div>
             </div>
             <div className="kopex-equipment-list">
@@ -329,7 +372,13 @@ export default async function HomePage() {
           </div>
           <div className="kopex-split__media">
             <div className="kopex-media-frame">
-              <img src="/img/kopex/slides/page-05.jpg" alt="Laboratorija i kontrola kvaliteta" width={960} height={720} />
+              <Image
+                src="/img/kopex/slides/page-05.jpg"
+                alt="Laboratorija i kontrola kvaliteta"
+                width={960}
+                height={720}
+                sizes={HALF_SIZES}
+              />
             </div>
           </div>
         </div>
@@ -363,7 +412,13 @@ export default async function HomePage() {
             <p>Kontinuirano uskla&#273;ujemo procese sa zahtevima industrije i kupaca.</p>
           </div>
           <div className="kopex-cert-card">
-            <img src="/img/kopex/slides/page-11.jpg" alt="Sertifikati kvaliteta KOPEX MIN-LIV" width={960} height={720} />
+            <Image
+              src="/img/kopex/slides/page-11.jpg"
+              alt="Sertifikati kvaliteta KOPEX MIN-LIV"
+              width={960}
+              height={720}
+              sizes={CERT_SIZES}
+            />
           </div>
         </div>
       </section>

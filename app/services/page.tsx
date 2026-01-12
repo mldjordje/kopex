@@ -1,10 +1,13 @@
-﻿import type { Metadata } from 'next';
+import type { Metadata } from 'next';
+import Image from 'next/image';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
   title: 'KOPEX MIN-LIV | Opremljenost',
   description: 'Tehnicka opremljenost i kapaciteti livnice KOPEX MIN-LIV A.D. Ni\u0161.'
 };
+
+const PARALLAX_SIZES = '(max-width: 739px) 100vw, (max-width: 1200px) 90vw, 50vw';
 
 export default function ServicesPage() {
   return (
@@ -74,7 +77,13 @@ export default function ServicesPage() {
           </div>
           <div className="stg-col-6 stg-tp-col-12">
             <div className="bringer-parallax-media">
-              <img className="bringer-lazy" src="/img/null.png" data-src="/img/kopex/slides/page-04.jpg" alt="Opremljenost" width={960} height={720} />
+              <Image
+                src="/img/kopex/slides/page-04.jpg"
+                alt="Opremljenost"
+                width={960}
+                height={720}
+                sizes={PARALLAX_SIZES}
+              />
             </div>
           </div>
         </div>
@@ -120,7 +129,13 @@ export default function ServicesPage() {
           </div>
           <div className="stg-col-6 stg-tp-bottom-gap-l">
             <div className="bringer-parallax-media">
-              <img className="bringer-lazy" src="/img/null.png" data-src="/img/kopex/slides/page-05.jpg" alt="Laboratorija" width={960} height={720} />
+              <Image
+                src="/img/kopex/slides/page-05.jpg"
+                alt="Laboratorija"
+                width={960}
+                height={720}
+                sizes={PARALLAX_SIZES}
+              />
             </div>
           </div>
         </div>
@@ -138,3 +153,4 @@ export default function ServicesPage() {
     </div>
   );
 }
+

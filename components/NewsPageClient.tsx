@@ -7,13 +7,13 @@ import {
   Card,
   CardActions,
   CardContent,
-  CardMedia,
   Chip,
   Container,
   Grid,
   Stack,
   Typography
 } from '@mui/material';
+import Image from 'next/image';
 import Link from 'next/link';
 import MuiThemeProvider from '@/components/MuiThemeProvider';
 import type { NewsItem } from '@/lib/news';
@@ -41,6 +41,8 @@ const getSnippet = (body: string): string => {
   }
   return `${preview.slice(0, 220)}...`;
 };
+
+const CARD_SIZES = '(max-width: 600px) 100vw, (max-width: 1200px) 50vw, 50vw';
 
 export default function NewsPageClient({
   items,
@@ -92,7 +94,15 @@ export default function NewsPageClient({
                       }}
                     >
                       {cover ? (
-                        <CardMedia component="img" height="220" image={cover} alt={item.title} />
+                        <Box sx={{ position: 'relative', height: 220, lineHeight: 0 }}>
+                          <Image
+                            src={cover}
+                            alt={item.title}
+                            fill
+                            sizes={CARD_SIZES}
+                            style={{ objectFit: 'cover' }}
+                          />
+                        </Box>
                       ) : (
                         <Box
                           sx={{

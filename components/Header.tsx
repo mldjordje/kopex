@@ -1,5 +1,6 @@
-﻿'use client';
+'use client';
 
+import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect } from 'react';
 import { usePathname } from 'next/navigation';
@@ -29,7 +30,7 @@ export default function Header() {
       <div className="bringer-header-inner">
         <div className="bringer-header-lp">
           <Link href="/" className="bringer-logo">
-            <img src="/img/logo.png" alt="KOPEX MIN-LIV" width={160} height={40} />
+            <Image src="/img/logo.png" alt="KOPEX MIN-LIV" width={160} height={40} />
           </Link>
         </div>
         <div className="bringer-header-mp">
@@ -77,7 +78,7 @@ export default function Header() {
       </div>
       <div className="bringer-mobile-header-inner">
         <Link href="/" className="bringer-logo">
-          <img src="/img/logo.png" alt="KOPEX MIN-LIV" width={160} height={40} />
+          <Image src="/img/logo.png" alt="KOPEX MIN-LIV" width={160} height={40} />
         </Link>
         <button className="bringer-theme-toggle" type="button" aria-label="Promeni temu" title="Promeni temu">
           <svg className="theme-icon theme-icon-sun" viewBox="0 0 24 24" aria-hidden="true">
@@ -99,3 +100,4 @@ export default function Header() {
     </header>
   );
 }
+

@@ -1,10 +1,15 @@
-﻿import type { Metadata } from 'next';
+import type { Metadata } from 'next';
+import Image from 'next/image';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
   title: 'KOPEX MIN-LIV | O nama',
   description: 'Istorijat i kapaciteti KOPEX MIN-LIV A.D. Ni\u0161, livnice sa tradicijom od 1884. godine.'
 };
+
+const HALF_SIZES = '(max-width: 739px) 100vw, (max-width: 1200px) 90vw, 50vw';
+const THIRD_SIZES = '(max-width: 739px) 100vw, (max-width: 1200px) 50vw, 33vw';
+const FULL_SIZES = '(max-width: 739px) 100vw, 80vw';
 
 export default function AboutPage() {
   return (
@@ -59,7 +64,13 @@ export default function AboutPage() {
           </div>
           <div className="stg-col-6 stg-tp-bottom-gap-l">
             <div className="bringer-parallax-media">
-              <img className="bringer-lazy" src="/img/null.png" data-src="/img/kopex/facility-front.jpg" alt="Kopex MIN-LIV istorijat" width={960} height={720} />
+              <Image
+                src="/img/kopex/facility-front.jpg"
+                alt="Kopex MIN-LIV istorijat"
+                width={960}
+                height={720}
+                sizes={HALF_SIZES}
+              />
             </div>
           </div>
         </div>
@@ -69,7 +80,13 @@ export default function AboutPage() {
         <div className="stg-row stg-large-gap stg-valign-middle">
           <div className="stg-col-6 stg-tp-col-12">
             <div className="bringer-parallax-media">
-              <img className="bringer-lazy" src="/img/null.png" data-src="/img/kopex/slides/page-04.jpg" alt="Tehnicka opremljenost" width={960} height={720} />
+              <Image
+                src="/img/kopex/slides/page-04.jpg"
+                alt="Tehnicka opremljenost"
+                width={960}
+                height={720}
+                sizes={HALF_SIZES}
+              />
             </div>
           </div>
           <div className="stg-col-6 stg-tp-col-12">
@@ -93,7 +110,13 @@ export default function AboutPage() {
           </div>
           <div className="stg-col-6 stg-tp-bottom-gap-l">
             <div className="bringer-parallax-media">
-              <img className="bringer-lazy" src="/img/null.png" data-src="/img/kopex/slides/page-05.jpg" alt="Laboratorija" width={960} height={720} />
+              <Image
+                src="/img/kopex/slides/page-05.jpg"
+                alt="Laboratorija"
+                width={960}
+                height={720}
+                sizes={HALF_SIZES}
+              />
             </div>
           </div>
         </div>
@@ -111,21 +134,39 @@ export default function AboutPage() {
         <div className="stg-row">
           <div className="stg-col-4 stg-tp-col-6 stg-m-bottom-gap">
             <div className="bringer-block">
-              <img className="bringer-lazy" src="/img/null.png" data-src="/img/kopex/slides/page-06.jpg" alt="Sivi liv" width={960} height={720} />
+              <Image
+                src="/img/kopex/slides/page-06.jpg"
+                alt="Sivi liv"
+                width={960}
+                height={720}
+                sizes={THIRD_SIZES}
+              />
               <h5>Sivi liv</h5>
               <p>Stabilna serijska proizvodnja i pouzdan kvalitet.</p>
             </div>
           </div>
           <div className="stg-col-4 stg-tp-col-6 stg-m-bottom-gap">
             <div className="bringer-block">
-              <img className="bringer-lazy" src="/img/null.png" data-src="/img/kopex/slides/page-07.jpg" alt="Nodularni liv" width={960} height={720} />
+              <Image
+                src="/img/kopex/slides/page-07.jpg"
+                alt="Nodularni liv"
+                width={960}
+                height={720}
+                sizes={THIRD_SIZES}
+              />
               <h5>Nodularni liv</h5>
               <p>Visoke mehani&#269;ke osobine i dug vek trajanja.</p>
             </div>
           </div>
           <div className="stg-col-4 stg-tp-col-12">
             <div className="bringer-block">
-              <img className="bringer-lazy" src="/img/null.png" data-src="/img/kopex/slides/page-08.jpg" alt="Celicni liv" width={960} height={720} />
+              <Image
+                src="/img/kopex/slides/page-08.jpg"
+                alt="Celicni liv"
+                width={960}
+                height={720}
+                sizes={THIRD_SIZES}
+              />
               <h5>&#268;eli&#269;ni liv</h5>
               <p>Specijalizacija za legirane i manganske &#269;elike.</p>
             </div>
@@ -164,7 +205,13 @@ export default function AboutPage() {
           </div>
         </div>
         <div className="bringer-parallax-media">
-          <img className="bringer-lazy" src="/img/null.png" data-src="/img/kopex/slides/page-11.jpg" alt="Sertifikati" width={960} height={720} />
+          <Image
+            src="/img/kopex/slides/page-11.jpg"
+            alt="Sertifikati"
+            width={960}
+            height={720}
+            sizes={FULL_SIZES}
+          />
         </div>
       </section>
 
@@ -180,3 +227,4 @@ export default function AboutPage() {
     </div>
   );
 }
+

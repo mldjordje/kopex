@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Image from 'next/image';
 import Link from 'next/link';
 import { getProductsList } from '@/lib/products';
 import type { ProductItem } from '@/lib/products';
@@ -9,6 +10,8 @@ export const metadata: Metadata = {
 };
 
 export const dynamic = 'force-dynamic';
+
+const CARD_SIZES = '(max-width: 739px) 100vw, (max-width: 1024px) 50vw, 33vw';
 
 const getSnippet = (value: string, limit = 180): string => {
   const block = value
@@ -66,7 +69,7 @@ export default async function ProductsPage() {
                 return (
                   <article className="kopex-product-card" key={product.id}>
                     {cover ? (
-                      <img src={cover} alt={product.name} width={960} height={720} />
+                      <Image src={cover} alt={product.name} width={960} height={720} sizes={CARD_SIZES} />
                     ) : (
                       <div className="kopex-product-card__placeholder">Bez slike</div>
                     )}

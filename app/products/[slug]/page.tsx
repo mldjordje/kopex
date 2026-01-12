@@ -1,9 +1,13 @@
 import type { Metadata } from 'next';
+import Image from 'next/image';
 import Link from 'next/link';
 import { getProductBySlug } from '@/lib/products';
 import type { ProductItem } from '@/lib/products';
 
 export const dynamic = 'force-dynamic';
+
+const HERO_SIZES = '(max-width: 739px) 100vw, 50vw';
+const GALLERY_SIZES = '(max-width: 739px) 50vw, 16vw';
 
 type PageProps = {
   params: Promise<{
@@ -113,7 +117,7 @@ export default async function ProductDetailPage({ params }: PageProps) {
             <div className="kopex-product-detail">
               <div className="kopex-product-detail__media">
                 {hero ? (
-                  <img src={hero} alt={product.name} width={1080} height={720} />
+                  <Image src={hero} alt={product.name} width={1080} height={720} sizes={HERO_SIZES} />
                 ) : (
                   <div className="kopex-product-card__placeholder">Bez slike</div>
                 )}
@@ -121,11 +125,13 @@ export default async function ProductDetailPage({ params }: PageProps) {
                 {gallery.length ? (
                   <div className="kopex-product-detail__gallery">
                     {gallery.map((image, index) => (
-                      <img
+                      <Image
                         key={`${product.id}-gallery-${index}`}
                         src={image}
                         alt={`${product.name} ${index + 2}`}
-                        loading="lazy"
+                        width={320}
+                        height={240}
+                        sizes={GALLERY_SIZES}
                       />
                     ))}
                   </div>

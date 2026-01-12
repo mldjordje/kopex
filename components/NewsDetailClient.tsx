@@ -1,6 +1,7 @@
 'use client';
 
 import { Alert, Box, Button, Chip, Container, Divider, Stack, Typography } from '@mui/material';
+import Image from 'next/image';
 import Link from 'next/link';
 import MuiThemeProvider from '@/components/MuiThemeProvider';
 import type { NewsItem } from '@/lib/news';
@@ -28,6 +29,9 @@ const renderParagraphs = (body: string) => {
       </Typography>
     ));
 };
+
+const COVER_SIZES = '(max-width: 900px) 100vw, 900px';
+const GALLERY_SIZES = '(max-width: 600px) 100vw, 50vw';
 
 export default function NewsDetailClient({
   item,
@@ -83,13 +87,15 @@ export default function NewsDetailClient({
                   lineHeight: 0
                 }}
               >
-                <Box
-                  component="img"
-                  src={cover}
-                  alt={item?.title ?? 'Vest'}
-                  loading="lazy"
-                  sx={{ width: '100%', maxHeight: 420, objectFit: 'cover' }}
-                />
+                <Box sx={{ position: 'relative', height: { xs: 240, sm: 420 }, lineHeight: 0 }}>
+                  <Image
+                    src={cover}
+                    alt={item?.title ?? 'Vest'}
+                    fill
+                    sizes={COVER_SIZES}
+                    style={{ objectFit: 'cover' }}
+                  />
+                </Box>
               </Box>
             ) : null}
 
@@ -119,13 +125,15 @@ export default function NewsDetailClient({
                         lineHeight: 0
                       }}
                     >
-                      <Box
-                        component="img"
-                        src={image}
-                        alt={`${item?.title ?? 'Vest'} ${index + 2}`}
-                        loading="lazy"
-                        sx={{ width: '100%', height: 240, objectFit: 'cover' }}
-                      />
+                      <Box sx={{ position: 'relative', height: 240, lineHeight: 0 }}>
+                        <Image
+                          src={image}
+                          alt={`${item?.title ?? 'Vest'} ${index + 2}`}
+                          fill
+                          sizes={GALLERY_SIZES}
+                          style={{ objectFit: 'cover' }}
+                        />
+                      </Box>
                     </Box>
                   ))}
                 </Box>
