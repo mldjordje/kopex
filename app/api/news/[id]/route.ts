@@ -4,12 +4,12 @@ import { deleteNewsEntry, updateNewsEntry } from '@/lib/news';
 
 export const runtime = 'nodejs';
 
-const parseId = (value: string): number | null => {
-  const parsed = Number(value);
-  if (!Number.isFinite(parsed) || parsed <= 0) {
+const normalizeId = (value: string): string | null => {
+  const trimmed = value.trim();
+  if (!trimmed) {
     return null;
   }
-  return parsed;
+  return trimmed;
 };
 
 const isAuthorized = (password: string): boolean => {
@@ -23,7 +23,7 @@ type RouteParams = { params: Promise<{ id: string }> };
 
 export async function PATCH(request: NextRequest, { params }: RouteParams) {
   const resolvedParams = await params;
-  const id = parseId(resolvedParams.id);
+  const id = normalizeId(resolvedParams.id);
   if (!id) {
     return NextResponse.json({ message: 'Neispravan ID.' }, { status: 400 });
   }
@@ -53,7 +53,7 @@ export async function PATCH(request: NextRequest, { params }: RouteParams) {
 
 export async function DELETE(request: NextRequest, { params }: RouteParams) {
   const resolvedParams = await params;
-  const id = parseId(resolvedParams.id);
+  const id = normalizeId(resolvedParams.id);
   if (!id) {
     return NextResponse.json({ message: 'Neispravan ID.' }, { status: 400 });
   }

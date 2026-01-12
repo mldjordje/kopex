@@ -2,7 +2,7 @@ import type { ResultSetHeader, RowDataPacket } from 'mysql2/promise';
 import { getDb } from './db';
 
 export type NewsItem = {
-  id: number;
+  id: string;
   title: string;
   body: string;
   images: string[];
@@ -10,7 +10,7 @@ export type NewsItem = {
 };
 
 type NewsRow = RowDataPacket & {
-  id: number;
+  id: number | string;
   title: string;
   body: string;
   images: unknown;
@@ -49,13 +49,15 @@ const toIsoDate = (value: Date | string): string => {
   return new Date(value).toISOString();
 };
 
+const normalizeId = (value: number | string): string => String(value).trim();
+
 export const getNewsList = async (): Promise<NewsItem[]> => {
   const [rows] = await getDb().query<NewsRow[]>(
     'SELECT id, title, body, images, created_at FROM news ORDER BY created_at DESC, id DESC'
   );
 
   return rows.map((row) => ({
-    id: row.id,
+    id: normalizeId(row.id),
     title: row.title,
     body: row.body,
     images: parseImages(row.images),
@@ -63,7 +65,7 @@ export const getNewsList = async (): Promise<NewsItem[]> => {
   }));
 };
 
-export const getNewsById = async (id: number): Promise<NewsItem | null> => {
+export const getNewsById = async (id: string): Promise<NewsItem | null> => {
   const [rows] = await getDb().query<NewsRow[]>(
     'SELECT id, title, body, images, created_at FROM news WHERE id = ? LIMIT 1',
     [id]
@@ -75,7 +77,7 @@ export const getNewsById = async (id: number): Promise<NewsItem | null> => {
   }
 
   return {
-    id: row.id,
+    id: normalizeId(row.id),
     title: row.title,
     body: row.body,
     images: parseImages(row.images),
@@ -91,13 +93,13 @@ export const createNewsEntry = async ({
   title: string;
   body: string;
   images: string[];
-}): Promise<number> => {
+}): Promise<string> => {
   const payload = images.length ? JSON.stringify(images) : null;
   const [result] = await getDb().query<ResultSetHeader>(
     'INSERT INTO news (title, body, images) VALUES (?, ?, ?)',
     [title, body, payload]
   );
-  return result.insertId;
+  return String(result.insertId);
 };
 
 export const updateNewsEntry = async ({
@@ -106,7 +108,7 @@ export const updateNewsEntry = async ({
   body,
   images
 }: {
-  id: number;
+  id: string;
   title: string;
   body: string;
   images?: string[];
@@ -126,6 +128,6 @@ export const updateNewsEntry = async ({
   );
 };
 
-export const deleteNewsEntry = async (id: number): Promise<void> => {
+export const deleteNewsEntry = async (id: string): Promise<void> => {
   await getDb().query<ResultSetHeader>('DELETE FROM news WHERE id = ?', [id]);
 };

@@ -125,6 +125,11 @@ export default async function HomePage() {
                     <div className="kopex-product-card__body">
                       <h3>{product.name}</h3>
                       <p>{getProductSnippet(product)}</p>
+                      <div className="kopex-product-card__cta">
+                        <Link href={`/products/${product.slug}`} className="kopex-link">
+                          Pogledaj proizvod
+                        </Link>
+                      </div>
                     </div>
                   </article>
                 );

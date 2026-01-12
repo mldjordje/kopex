@@ -10,7 +10,7 @@ type StatusState = {
   message: string;
 } | null;
 
-type DraftState = Record<number, { title: string; body: string }>;
+type DraftState = Record<string, { title: string; body: string }>;
 
 const formatDate = (value: string): string => {
   const date = new Date(value);
@@ -33,7 +33,7 @@ export default function AdminNewsList({
 }) {
   const router = useRouter();
   const [localPassword, setLocalPassword] = useState('');
-  const [editingId, setEditingId] = useState<number | null>(null);
+  const [editingId, setEditingId] = useState<string | null>(null);
   const [drafts, setDrafts] = useState<DraftState>({});
   const [status, setStatus] = useState<StatusState>(null);
   const [isWorking, setIsWorking] = useState(false);
@@ -50,7 +50,7 @@ export default function AdminNewsList({
 
   const sortedItems = useMemo(() => items.slice(), [items]);
 
-  const updateDraft = (id: number, field: 'title' | 'body', value: string) => {
+  const updateDraft = (id: string, field: 'title' | 'body', value: string) => {
     setDrafts((current) => ({
       ...current,
       [id]: {
@@ -60,7 +60,7 @@ export default function AdminNewsList({
     }));
   };
 
-  const handleCancel = (id: number) => {
+  const handleCancel = (id: string) => {
     const original = items.find((item) => item.id === id);
     if (original) {
       setDrafts((current) => ({
@@ -71,7 +71,7 @@ export default function AdminNewsList({
     setEditingId(null);
   };
 
-  const handleSave = async (id: number) => {
+  const handleSave = async (id: string) => {
     const draft = drafts[id];
     if (!draft?.title?.trim() || !draft?.body?.trim()) {
       setStatus({ type: 'error', message: 'Unesite naslov i tekst.' });
@@ -115,7 +115,7 @@ export default function AdminNewsList({
     }
   };
 
-  const handleDelete = async (id: number) => {
+  const handleDelete = async (id: string) => {
     if (!window.confirm('Obrisati ovu vest?')) {
       return;
     }

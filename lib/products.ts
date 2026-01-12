@@ -224,6 +224,23 @@ export const getProductById = async (id: number): Promise<ProductItem | null> =>
   return mapRow(row);
 };
 
+export const getProductBySlug = async (slug: string): Promise<ProductItem | null> => {
+  const [rows] = await getDb().query<ProductRow[]>(
+    `SELECT id, name, slug, summary, description, category, hero_image, gallery_images, documents, seo_title, seo_description, is_active, sort_order, created_at, updated_at
+     FROM products
+     WHERE slug = ?
+     LIMIT 1`,
+    [slug]
+  );
+
+  const row = rows[0];
+  if (!row) {
+    return null;
+  }
+
+  return mapRow(row);
+};
+
 export const createProductEntry = async ({
   name,
   slug,

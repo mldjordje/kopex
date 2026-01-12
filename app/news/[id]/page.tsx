@@ -9,16 +9,16 @@ type PageProps = {
   };
 };
 
-const parseId = (value: string): number | null => {
-  const id = Number(value);
-  if (!Number.isInteger(id) || id <= 0) {
+const normalizeId = (value: string): string | null => {
+  const trimmed = value.trim();
+  if (!trimmed) {
     return null;
   }
-  return id;
+  return trimmed;
 };
 
 export default async function NewsDetailPage({ params }: PageProps) {
-  const id = parseId(params.id);
+  const id = normalizeId(params.id);
   if (!id) {
     return <NewsDetailClient item={null} errorMessage="Neispravan ID vesti." />;
   }

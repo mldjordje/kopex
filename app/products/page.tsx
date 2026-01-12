@@ -90,6 +90,11 @@ export default async function ProductsPage() {
                           </ul>
                         </div>
                       ) : null}
+                      <div className="kopex-product-card__cta">
+                        <Link href={`/products/${product.slug}`} className="kopex-link">
+                          Pogledaj proizvod
+                        </Link>
+                      </div>
                     </div>
                   </article>
                 );
