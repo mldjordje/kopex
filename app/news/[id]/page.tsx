@@ -4,9 +4,9 @@ import { getNewsById } from '@/lib/news';
 export const dynamic = 'force-dynamic';
 
 type PageProps = {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 };
 
 const normalizeId = (value: string): string | null => {
@@ -18,7 +18,8 @@ const normalizeId = (value: string): string | null => {
 };
 
 export default async function NewsDetailPage({ params }: PageProps) {
-  const id = normalizeId(params.id);
+  const resolvedParams = await params;
+  const id = normalizeId(resolvedParams.id);
   if (!id) {
     return <NewsDetailClient item={null} errorMessage="Neispravan ID vesti." />;
   }

@@ -6,9 +6,9 @@ import type { ProductItem } from '@/lib/products';
 export const dynamic = 'force-dynamic';
 
 type PageProps = {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 };
 
 const normalizeSlug = (value: string): string | null => {
@@ -41,7 +41,8 @@ const renderParagraphs = (value: string) =>
     .map((block, index) => <p key={`${index}-${block}`}>{block}</p>);
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const slug = normalizeSlug(params.slug);
+  const resolvedParams = await params;
+  const slug = normalizeSlug(resolvedParams.slug);
   if (!slug) {
     return {
       title: 'Proizvod nije pronadjen | KOPEX MIN-LIV',
@@ -64,7 +65,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 export default async function ProductDetailPage({ params }: PageProps) {
-  const slug = normalizeSlug(params.slug);
+  const resolvedParams = await params;
+  const slug = normalizeSlug(resolvedParams.slug);
   if (!slug) {
     return (
       <div className="kopex-landing">
