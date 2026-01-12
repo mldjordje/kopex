@@ -35,6 +35,20 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
+          rel="preload"
+          as="image"
+          href="/img/kopex/production-02.jpg"
+          media="(max-width: 767px)"
+          fetchPriority="high"
+        />
+        <link
+          rel="preload"
+          as="image"
+          href="/img/kopex/facility-front.jpg"
+          media="(min-width: 768px)"
+          fetchPriority="high"
+        />
+        <link
           rel="stylesheet"
           href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;700&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap"
         />
