@@ -1,6 +1,7 @@
 ﻿'use client';
 
 import Link from 'next/link';
+import { useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 
 const isActivePath = (pathname: string, href: string): boolean => {
@@ -12,6 +13,16 @@ const isActivePath = (pathname: string, href: string): boolean => {
 
 export default function Header() {
   const pathname = usePathname();
+
+  useEffect(() => {
+    const header = document.getElementById('bringer-header');
+    if (!header) {
+      return;
+    }
+
+    header.classList.remove('is-unloading');
+    header.classList.add('in-view');
+  }, [pathname]);
 
   return (
     <header id="bringer-header" className="is-frosted is-sticky" data-appear="fade-down" data-unload="fade-up">
