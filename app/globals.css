@@ -666,6 +666,19 @@ body:not(.theme-light)::before {
   color: var(--kopex-ink);
 }
 
+.kopex-cert-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+  align-items: start;
+}
+
+.kopex-cert-actions {
+  margin-top: 26px;
+  display: flex;
+  justify-content: center;
+}
+
 .kopex-cert-card {
   border-radius: 24px;
   overflow: hidden;

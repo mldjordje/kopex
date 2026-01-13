@@ -9,7 +9,11 @@ export const metadata: Metadata = {
 
 const HALF_SIZES = '(max-width: 739px) 100vw, (max-width: 1200px) 90vw, 50vw';
 const THIRD_SIZES = '(max-width: 739px) 100vw, (max-width: 1200px) 50vw, 33vw';
-const FULL_SIZES = '(max-width: 739px) 100vw, 80vw';
+const CERT_ITEMS = [
+  { src: '/img/kopex/certs/iso-9001.jpg', alt: 'ISO 9001 sertifikat' },
+  { src: '/img/kopex/certs/iso-14001.jpg', alt: 'ISO 14001 sertifikat' },
+  { src: '/img/kopex/certs/iso-45001.jpg', alt: 'ISO 45001 sertifikat' }
+];
 
 export default function AboutPage() {
   return (
@@ -204,14 +208,12 @@ export default function AboutPage() {
             </div>
           </div>
         </div>
-        <div className="bringer-parallax-media">
-          <Image
-            src="/img/kopex/slides/page-11.jpg"
-            alt="Sertifikati"
-            width={960}
-            height={720}
-            sizes={FULL_SIZES}
-          />
+        <div className="kopex-cert-grid">
+          {CERT_ITEMS.map((cert) => (
+            <div className="kopex-cert-card" key={cert.src}>
+              <Image src={cert.src} alt={cert.alt} width={2252} height={4000} sizes={THIRD_SIZES} />
+            </div>
+          ))}
         </div>
       </section>
 

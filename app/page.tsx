@@ -19,7 +19,13 @@ const CARD_SIZES = '(max-width: 739px) 100vw, (max-width: 1024px) 50vw, 33vw';
 const HALF_SIZES = '(max-width: 991px) 100vw, 50vw';
 const MEDIA_LARGE_SIZES = '(max-width: 739px) 100vw, (max-width: 1200px) 60vw, 33vw';
 const MEDIA_SMALL_SIZES = '(max-width: 739px) 100vw, (max-width: 1200px) 40vw, 17vw';
-const CERT_SIZES = '(max-width: 991px) 100vw, 60vw';
+const CERT_SIZES = '(max-width: 739px) 100vw, (max-width: 1200px) 50vw, 33vw';
+
+const CERT_ITEMS = [
+  { src: '/img/kopex/certs/iso-9001.jpg', alt: 'ISO 9001 sertifikat' },
+  { src: '/img/kopex/certs/iso-14001.jpg', alt: 'ISO 14001 sertifikat' },
+  { src: '/img/kopex/certs/iso-45001.jpg', alt: 'ISO 45001 sertifikat' }
+];
 
 const getSnippet = (value: string, limit = 160): string => {
   const block = value
@@ -411,14 +417,21 @@ export default async function HomePage() {
             <h2>Sistem kvaliteta potvr&#273;en sertifikatima i standardima.</h2>
             <p>Kontinuirano uskla&#273;ujemo procese sa zahtevima industrije i kupaca.</p>
           </div>
-          <div className="kopex-cert-card">
-            <Image
-              src="/img/kopex/slides/page-11.jpg"
-              alt="Sertifikati kvaliteta KOPEX MIN-LIV"
-              width={960}
-              height={720}
-              sizes={CERT_SIZES}
-            />
+          <div className="kopex-cert-grid">
+            {CERT_ITEMS.map((cert) => (
+              <div className="kopex-cert-card" key={cert.src}>
+                <Image src={cert.src} alt={cert.alt} width={2252} height={4000} sizes={CERT_SIZES} />
+              </div>
+            ))}
+          </div>
+          <div className="kopex-cert-actions">
+            <a
+              className="kopex-button kopex-button--primary"
+              href="/docs/laboratory-certificate.pdf"
+              download
+            >
+              Preuzmi PDF sertifikat laboratorije
+            </a>
           </div>
         </div>
       </section>
