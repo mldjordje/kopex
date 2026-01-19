@@ -16,7 +16,11 @@ const createPool = () =>
     password: requireEnv('DB_PASSWORD'),
     database: requireEnv('DB_NAME'),
     charset: 'utf8mb4',
-    connectionLimit: 10
+    connectionLimit: 10,
+    waitForConnections: true,
+    queueLimit: 0,
+    enableKeepAlive: true,
+    keepAliveInitialDelay: 0
   });
 
 const globalForDb = globalThis as typeof globalThis & {

@@ -827,4 +827,13 @@ body:not(.theme-light)::before {
     height: auto;
     min-height: calc(100svh - var(--st-footer-height));
   }
+
+  section.section-reveal > * {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  section.section-reveal .bringer-parallax-media {
+    transform: none !important;
+  }
 }

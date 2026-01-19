@@ -747,6 +747,10 @@ jQuery(function ($) {
             return;
         }
         $sections.addClass('section-reveal');
+        if ( typeof core === 'object' && core.iOSDevice ) {
+            $sections.addClass('is-visible');
+            return;
+        }
         if ( !('IntersectionObserver' in window) ) {
             $sections.addClass('is-visible');
             return;
