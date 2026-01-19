@@ -1,16 +1,24 @@
 'use client';
 
 import { useEffect } from 'react';
-import { usePathname } from 'next/navigation';
+import { usePathname, useSearchParams } from 'next/navigation';
 
 export default function RouteStateSync() {
   const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const searchKey = searchParams.toString();
 
   useEffect(() => {
     const body = document.body;
     body.classList.add('is-loaded');
     body.classList.remove('is-loading', 'is-unloading');
-  }, [pathname]);
+
+    document.querySelectorAll<HTMLElement>('[data-appear]').forEach((element) => {
+      element.classList.add('in-view');
+      element.classList.remove('setting-up');
+      element.removeAttribute('data-appear');
+    });
+  }, [pathname, searchKey]);
 
   return null;
 }

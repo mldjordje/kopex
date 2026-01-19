@@ -55,6 +55,7 @@ const HOME_COPY: Record<Language, {
   productNoImage: string;
   productView: string;
   productEmpty: string;
+  productError: string;
   productNoDescription: string;
   newsNoImage: string;
   newsEmpty: string;
@@ -142,11 +143,12 @@ const HOME_COPY: Record<Language, {
       'Finalizacija proizvoda kroz postupke: brušenje, farbanje, varenje i sačmarenje (peskarenje), radi što bolje površine i vizualno dopadljivijeg proizvoda.',
     service05Title: 'Kontrola kvaliteta',
     service05Body:
-      'Sertifikovana laboratorija za hemijska i mehanička ispitivanja odlivaka sa kvantometrom, Sarpijevim klatnom i kidalicom, uključujući ispitivanja magnetnim fluksom i ultrazvukom.'
+      'Sertifikovana laboratorija za hemijska i mehanička ispitivanja odlivaka sa kvantometrom, Sarpijevim klatnom i kidalicom, uključujući ispitivanja magnetnim fluksom i ultrazvukom.',
     heroStats: ['godina tradicije', 'projektovani kapacitet mesečno', 'kapacitet liva po peći'],
     productNoImage: 'Bez slike',
     productView: 'Pogledaj proizvod',
     productEmpty: 'Trenutno nema proizvoda.',
+    productError: 'Ne mogu da učitam proizvode. Proverite bazu i konekciju.',
     productNoDescription: 'Bez opisa.',
     newsNoImage: 'Bez naslovne slike',
     newsEmpty: 'Trenutno nema vesti.',
@@ -234,11 +236,12 @@ const HOME_COPY: Record<Language, {
       'Product finishing through grinding, painting, welding, and shot blasting (sandblasting) for improved surface quality and visual appearance.',
     service05Title: 'Quality control',
     service05Body:
-      'Certified laboratory for chemical and mechanical testing of castings with spectrometer, Charpy pendulum, and tensile tester, including magnetic flux and ultrasonic testing.'
+      'Certified laboratory for chemical and mechanical testing of castings with spectrometer, Charpy pendulum, and tensile tester, including magnetic flux and ultrasonic testing.',
     heroStats: ['years of tradition', 'planned monthly capacity', 'melt capacity per furnace'],
     productNoImage: 'No image',
     productView: 'View product',
     productEmpty: 'No products available right now.',
+    productError: 'Unable to load products. Please check the database and connection.',
     productNoDescription: 'No description.',
     newsNoImage: 'No cover image',
     newsEmpty: 'No news available right now.',
@@ -327,11 +330,12 @@ const HOME_COPY: Record<Language, {
       'Produktfinalisierung durch Schleifen, Lackieren, Schweißen und Strahlen (Sandstrahlen) für eine bessere Oberfläche und ansprechendes Erscheinungsbild.',
     service05Title: 'Qualitätskontrolle',
     service05Body:
-      'Zertifiziertes Labor für chemische und mechanische Prüfungen mit Spektrometer, Charpy-Pendel und Zugprüfmaschine einschließlich Magnetfluss- und Ultraschallprüfungen.'
+      'Zertifiziertes Labor für chemische und mechanische Prüfungen mit Spektrometer, Charpy-Pendel und Zugprüfmaschine einschließlich Magnetfluss- und Ultraschallprüfungen.',
     heroStats: ['Jahre Tradition', 'geplante Monatskapazität', 'Schmelzkapazität pro Ofen'],
     productNoImage: 'Kein Bild',
     productView: 'Produkt ansehen',
     productEmpty: 'Derzeit sind keine Produkte verfügbar.',
+    productError: 'Produkte konnten nicht geladen werden. Bitte Datenbank und Verbindung prüfen.',
     productNoDescription: 'Keine Beschreibung.',
     newsNoImage: 'Kein Titelbild',
     newsEmpty: 'Derzeit gibt es keine News.',
@@ -422,12 +426,14 @@ export default async function HomePage() {
   const language = normalizeLanguage(cookieStore.get(LANGUAGE_COOKIE)?.value);
   const copy = HOME_COPY[language];
   let products: ProductItem[] = [];
+  let productsError: string | null = null;
   let news: NewsItem[] = [];
 
   try {
     products = await getProductsList();
   } catch (error) {
     console.error('Home products error:', error);
+    productsError = copy.productError;
   }
 
   try {
@@ -485,7 +491,10 @@ export default async function HomePage() {
               {copy.productsLead}
             </p>
           </div>
-          {products.length ? (
+          {productsError ? (
+            <div className="kopex-product-card__placeholder">{productsError}</div>
+          ) : null}
+          {!productsError && products.length ? (
             <div className="kopex-product-grid">
               {products.map((product) => {
                 const cover = product.heroImage || product.gallery[0] || '';
@@ -509,9 +518,10 @@ export default async function HomePage() {
                 );
               })}
             </div>
-          ) : (
+          ) : null}
+          {!productsError && products.length === 0 ? (
             <div className="kopex-product-card__placeholder">{copy.productEmpty}</div>
-          )}
+          ) : null}
           <div className="kopex-products-actions">
             <Link href="/products" className="kopex-button kopex-button--primary">
               {copy.productsCta}
