@@ -15,8 +15,10 @@ import {
 } from '@mui/material';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 import MuiThemeProvider from '@/components/MuiThemeProvider';
 import type { NewsItem } from '@/lib/news';
+import { normalizeLanguage, type Language } from '@/lib/language';
 
 const formatDate = (value: string): string => {
   const date = new Date(value);
@@ -51,6 +53,36 @@ export default function NewsPageClient({
   items: NewsItem[];
   errorMessage: string | null;
 }) {
+  const searchParams = useSearchParams();
+  const currentLanguage = normalizeLanguage(
+    searchParams.get('lang') ?? (typeof document !== 'undefined' ? document.documentElement.lang : undefined)
+  );
+  const labels: Record<Language, {
+    title: string;
+    subtitle: string;
+    empty: string;
+    readMore: string;
+  }> = {
+    sr: {
+      title: 'Vesti / Karijera',
+      subtitle: 'Najnovije informacije, objave i oglasi za posao iz Kopex MIN-LIV.',
+      empty: 'Trenutno nema objavljenih vesti ili oglasa.',
+      readMore: 'Pročitaj više'
+    },
+    en: {
+      title: 'News / Careers',
+      subtitle: 'Latest updates, announcements, and job openings from Kopex MIN-LIV.',
+      empty: 'There are currently no published news items or job ads.',
+      readMore: 'Read more'
+    },
+    de: {
+      title: 'News / Karriere',
+      subtitle: 'Aktuelle Informationen, Meldungen und Stellenangebote von Kopex MIN-LIV.',
+      empty: 'Derzeit sind keine News oder Stellenangebote verfügbar.',
+      readMore: 'Mehr lesen'
+    }
+  };
+
   return (
     <MuiThemeProvider>
       <Box sx={{ py: { xs: 6, md: 10 } }}>
@@ -65,18 +97,17 @@ export default function NewsPageClient({
               Kopex MIN-LIV
             </Typography>
             <Typography variant="h3" component="h1">
-              Vesti
+              {labels[currentLanguage].title}
             </Typography>
             <Typography variant="subtitle1" color="text.secondary" sx={{ maxWidth: 720 }}>
-              Najnovije informacije i objave iz Kopex MIN-LIV, sa pregledom najbitnijih
-              novosti.
+              {labels[currentLanguage].subtitle}
             </Typography>
           </Stack>
 
           {errorMessage ? <Alert severity="error">{errorMessage}</Alert> : null}
 
           {!errorMessage && items.length === 0 ? (
-            <Alert severity="info">Trenutno nema objavljenih vesti.</Alert>
+            <Alert severity="info">{labels[currentLanguage].empty}</Alert>
           ) : null}
 
           {!errorMessage && items.length > 0 ? (
@@ -144,7 +175,7 @@ export default function NewsPageClient({
                         variant="contained"
                         color="primary"
                       >
-                          Procitaj vise
+                          {labels[currentLanguage].readMore}
                         </Button>
                       </CardActions>
                     </Card>

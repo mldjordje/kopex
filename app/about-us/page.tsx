@@ -139,8 +139,8 @@ export default function AboutPage() {
           <div className="stg-col-4 stg-tp-col-6 stg-m-bottom-gap">
             <div className="bringer-block">
               <Image
-                src="/img/kopex/slides/page-06.jpg"
-                alt="Sivi liv"
+                src="/img/portfolio/portfolio07.jpg"
+                alt="Sivi liv - odlivci"
                 width={960}
                 height={720}
                 sizes={THIRD_SIZES}
@@ -152,8 +152,8 @@ export default function AboutPage() {
           <div className="stg-col-4 stg-tp-col-6 stg-m-bottom-gap">
             <div className="bringer-block">
               <Image
-                src="/img/kopex/slides/page-07.jpg"
-                alt="Nodularni liv"
+                src="/img/portfolio/portfolio02.jpg"
+                alt="Nodularni liv - odlivci"
                 width={960}
                 height={720}
                 sizes={THIRD_SIZES}
@@ -165,8 +165,8 @@ export default function AboutPage() {
           <div className="stg-col-4 stg-tp-col-12">
             <div className="bringer-block">
               <Image
-                src="/img/kopex/slides/page-08.jpg"
-                alt="Celicni liv"
+                src="/img/portfolio/portfolio04.jpg"
+                alt="Celicni liv - odlivci"
                 width={960}
                 height={720}
                 sizes={THIRD_SIZES}
@@ -229,4 +229,3 @@ export default function AboutPage() {
     </div>
   );
 }
-

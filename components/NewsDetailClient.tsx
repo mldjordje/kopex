@@ -3,8 +3,10 @@
 import { Alert, Box, Button, Chip, Container, Divider, Stack, Typography } from '@mui/material';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 import MuiThemeProvider from '@/components/MuiThemeProvider';
 import type { NewsItem } from '@/lib/news';
+import { normalizeLanguage, type Language } from '@/lib/language';
 
 const formatDate = (value: string): string => {
   const date = new Date(value);
@@ -41,6 +43,31 @@ export default function NewsDetailClient({
   errorMessage?: string | null;
 }) {
   const [cover, ...gallery] = item?.images || [];
+  const searchParams = useSearchParams();
+  const currentLanguage = normalizeLanguage(
+    searchParams.get('lang') ?? (typeof document !== 'undefined' ? document.documentElement.lang : undefined)
+  );
+  const labels: Record<Language, {
+    back: string;
+    notFound: string;
+    gallery: string;
+  }> = {
+    sr: {
+      back: 'Nazad na vesti / karijeru',
+      notFound: 'Vest nije pronađena',
+      gallery: 'Galerija'
+    },
+    en: {
+      back: 'Back to news / careers',
+      notFound: 'News item not found',
+      gallery: 'Gallery'
+    },
+    de: {
+      back: 'Zurück zu News / Karriere',
+      notFound: 'Nachricht nicht gefunden',
+      gallery: 'Galerie'
+    }
+  };
 
   return (
     <MuiThemeProvider>
@@ -54,7 +81,7 @@ export default function NewsDetailClient({
                 href="/news"
                 variant="text"
               >
-                Nazad na vesti
+                {labels[currentLanguage].back}
               </Button>
             </div>
 
@@ -74,7 +101,7 @@ export default function NewsDetailClient({
               </Stack>
             ) : (
               <Typography variant="h4" component="h1">
-                Vest nije pronadjena
+                {labels[currentLanguage].notFound}
               </Typography>
             )}
 
@@ -106,7 +133,7 @@ export default function NewsDetailClient({
             {gallery.length > 0 ? (
               <Stack spacing={2}>
                 <Typography variant="h6" component="h2">
-                  Galerija
+                  {labels[currentLanguage].gallery}
                 </Typography>
                 <Box
                   sx={{
