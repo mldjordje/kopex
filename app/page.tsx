@@ -1,11 +1,13 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
+import { cookies } from 'next/headers';
 import HeroVideo from '@/components/HeroVideo';
 import { getNewsList } from '@/lib/news';
 import { getProductsList } from '@/lib/products';
 import type { NewsItem } from '@/lib/news';
 import type { ProductItem } from '@/lib/products';
+import { LANGUAGE_COOKIE, normalizeLanguage, type Language } from '@/lib/language';
 
 export const metadata: Metadata = {
   title: 'KOPEX MIN-LIV | Industrijska livnica gvo\u017e\u0111a i \u010delika Ni\u0161',
@@ -26,6 +28,146 @@ const CERT_ITEMS = [
   { src: '/img/kopex/certs/iso-14001.jpg', alt: 'ISO 14001 sertifikat' },
   { src: '/img/kopex/certs/iso-45001.jpg', alt: 'ISO 45001 sertifikat' }
 ];
+
+const HOME_COPY: Record<Language, {
+  heroEyebrow: string;
+  heroTitle: string;
+  heroLead: string;
+  heroCtaPrimary: string;
+  heroCtaSecondary: string;
+  heroTrust: string;
+  productsEyebrow: string;
+  productsTitle: string;
+  productsLead: string;
+  productsCta: string;
+  newsEyebrow: string;
+  newsTitle: string;
+  newsLead: string;
+  newsCta: string;
+  servicesEyebrow: string;
+  servicesTitle: string;
+  servicesLead: string;
+  service01Title: string;
+  service01Body: string;
+  service02Title: string;
+  service02Body: string;
+  service03Title: string;
+  service03Body: string;
+  service04Title: string;
+  service04Body: string;
+  service05Title: string;
+  service05Body: string;
+}> = {
+  sr: {
+    heroEyebrow: 'Niš • Industrijska livnica • Od 1884',
+    heroTitle: 'Industrijska livnica gvožđa i čelika za odlivke koji traju.',
+    heroLead:
+      'Od prototipa do serijske proizvodnje: sivi liv, nodularni liv i čelični liv, uz mašinsku obradu, termičku obradu i potpunu kontrolu kvaliteta.',
+    heroCtaPrimary: 'Pošaljite upit',
+    heroCtaSecondary: 'Pogledajte kapacitete',
+    heroTrust:
+      'Partneri iz energetike, rudarstva i industrije: EPS, ZI JIN, Danieli, Lafarge, HBIS i drugi.',
+    productsEyebrow: 'Proizvodi',
+    productsTitle: 'Metalni odlivci za energetiku, rudarstvo i industriju.',
+    productsLead:
+      'Specijalizovani smo za sivi liv, nodularni liv i čelični liv, uključujući legirane čelike za zahtevne uslove rada.',
+    productsCta: 'Svi proizvodi',
+    newsEyebrow: 'Vesti / Karijera',
+    newsTitle: 'Najnovije informacije i oglasi za posao iz Kopex MIN-LIV.',
+    newsLead: 'Pratite najnovije objave, projekte i oglase za zapošljavanje iz naše livnice.',
+    newsCta: 'Sve vesti / karijera',
+    servicesEyebrow: 'Usluge',
+    servicesTitle: 'Kompletan proizvodni ciklus na jednom mestu.',
+    servicesLead: 'Od modelovanja i livenja do završne obrade, dokumentacije i isporuke.',
+    service01Title: 'Kalupovanje i livenje',
+    service01Body:
+      'Izrada odlivaka po crtežima i standardima kupca, uz FLEKSIBILNOST MALOSERIJSKE I POJEDINAČNE PROIZVODNJE.',
+    service02Title: 'Mašinska obrada',
+    service02Body: 'Obrada na standardnim mašinama (glodalica, strug, borverk) i CNC mašinama.',
+    service03Title: 'Termička obrada',
+    service03Body:
+      'Termičko tretiranje odlivaka kroz postupke: gašenja, kaljenja, popuštanja i žarenja u bazenima sa velikim kapacitetom quench emulzije ili vode radi optimalnih hemijskih i mehaničkih svojstava.',
+    service04Title: 'Završne operacije',
+    service04Body:
+      'Finalizacija proizvoda kroz postupke: brušenje, farbanje, varenje i sačmarenje (peskarenje), radi što bolje površine i vizualno dopadljivijeg proizvoda.',
+    service05Title: 'Kontrola kvaliteta',
+    service05Body:
+      'Sertifikovana laboratorija za hemijska i mehanička ispitivanja odlivaka sa kvantometrom, Sarpijevim klatnom i kidalicom, uključujući ispitivanja magnetnim fluksom i ultrazvukom.'
+  },
+  en: {
+    heroEyebrow: 'Niš • Industrial foundry • Since 1884',
+    heroTitle: 'Industrial iron and steel foundry for castings that last.',
+    heroLead:
+      'From prototypes to series production: gray iron, ductile iron, and steel castings, with machining, heat treatment, and full quality control.',
+    heroCtaPrimary: 'Send inquiry',
+    heroCtaSecondary: 'View capacities',
+    heroTrust:
+      'Partners in energy, mining, and industry: EPS, ZI JIN, Danieli, Lafarge, HBIS and others.',
+    productsEyebrow: 'Products',
+    productsTitle: 'Metal castings for energy, mining, and industry.',
+    productsLead:
+      'We specialize in gray iron, ductile iron, and steel castings, including alloyed steels for demanding operating conditions.',
+    productsCta: 'All products',
+    newsEyebrow: 'News / Careers',
+    newsTitle: 'Latest news and job openings from Kopex MIN-LIV.',
+    newsLead: 'Follow the latest updates, projects, and hiring announcements from our foundry.',
+    newsCta: 'All news / careers',
+    servicesEyebrow: 'Services',
+    servicesTitle: 'A complete production cycle in one place.',
+    servicesLead: 'From pattern making and casting to finishing, documentation, and delivery.',
+    service01Title: 'Molding and casting',
+    service01Body:
+      'Casting production according to customer drawings and standards, with FLEXIBILITY FOR SMALL-SERIES AND SINGLE-PIECE PRODUCTION.',
+    service02Title: 'Machining',
+    service02Body: 'Processing on standard machines (milling, lathe, boring mill) and CNC machines.',
+    service03Title: 'Heat treatment',
+    service03Body:
+      'Heat treatment of castings through quenching, hardening, tempering, and annealing in large-capacity quench emulsion or water baths for optimal chemical and mechanical properties.',
+    service04Title: 'Final operations',
+    service04Body:
+      'Product finishing through grinding, painting, welding, and shot blasting (sandblasting) for improved surface quality and visual appearance.',
+    service05Title: 'Quality control',
+    service05Body:
+      'Certified laboratory for chemical and mechanical testing of castings with spectrometer, Charpy pendulum, and tensile tester, including magnetic flux and ultrasonic testing.'
+  },
+  de: {
+    heroEyebrow: 'Niš • Industriegießerei • Seit 1884',
+    heroTitle: 'Industriegießerei für Eisen- und Stahlguss, der lange hält.',
+    heroLead:
+      'Von Prototypen bis zur Serienfertigung: Grauguss, Sphäroguss und Stahlguss, mit spanender Bearbeitung, Wärmebehandlung und vollständiger Qualitätskontrolle.',
+    heroCtaPrimary: 'Anfrage senden',
+    heroCtaSecondary: 'Kapazitäten ansehen',
+    heroTrust:
+      'Partner aus Energie, Bergbau und Industrie: EPS, ZI JIN, Danieli, Lafarge, HBIS und weitere.',
+    productsEyebrow: 'Produkte',
+    productsTitle: 'Metallguss für Energie, Bergbau und Industrie.',
+    productsLead:
+      'Spezialisiert auf Grauguss, Sphäroguss und Stahlguss, einschließlich legierter Stähle für anspruchsvolle Einsatzbedingungen.',
+    productsCta: 'Alle Produkte',
+    newsEyebrow: 'News / Karriere',
+    newsTitle: 'Aktuelle Nachrichten und Stellenangebote von Kopex MIN-LIV.',
+    newsLead: 'Folgen Sie den neuesten Meldungen, Projekten und Einstellungsanzeigen unserer Gießerei.',
+    newsCta: 'Alle News / Karriere',
+    servicesEyebrow: 'Leistungen',
+    servicesTitle: 'Kompletter Produktionszyklus an einem Ort.',
+    servicesLead: 'Von Modellbau und Gießen bis zur Endbearbeitung, Dokumentation und Lieferung.',
+    service01Title: 'Formenbau und Gießen',
+    service01Body:
+      'Herstellung von Gussteilen nach Kundenzeichnungen und Standards, mit FLEXIBILITÄT FÜR KLEINSERIEN UND EINZELFERTIGUNG.',
+    service02Title: 'Mechanische Bearbeitung',
+    service02Body:
+      'Bearbeitung auf Standardmaschinen (Fräse, Drehmaschine, Bohrwerk) sowie CNC-Maschinen.',
+    service03Title: 'Wärmebehandlung',
+    service03Body:
+      'Wärmebehandlung der Gussteile durch Abschrecken, Härten, Anlassen und Glühen in Großbecken mit Quench-Emulsion oder Wasser für optimale chemische und mechanische Eigenschaften.',
+    service04Title: 'Endbearbeitung',
+    service04Body:
+      'Produktfinalisierung durch Schleifen, Lackieren, Schweißen und Strahlen (Sandstrahlen) für eine bessere Oberfläche und ansprechendes Erscheinungsbild.',
+    service05Title: 'Qualitätskontrolle',
+    service05Body:
+      'Zertifiziertes Labor für chemische und mechanische Prüfungen mit Spektrometer, Charpy-Pendel und Zugprüfmaschine einschließlich Magnetfluss- und Ultraschallprüfungen.'
+  }
+};
 
 const getSnippet = (value: string, limit = 160): string => {
   const block = value
@@ -58,6 +200,9 @@ const getProductSnippet = (product: ProductItem): string =>
   getSnippet(product.summary || product.description || '', 150);
 
 export default async function HomePage() {
+  const cookieStore = await cookies();
+  const language = normalizeLanguage(cookieStore.get(LANGUAGE_COOKIE)?.value);
+  const copy = HOME_COPY[language];
   let products: ProductItem[] = [];
   let news: NewsItem[] = [];
 
@@ -82,17 +227,16 @@ export default async function HomePage() {
           <HeroVideo />
         </div>
         <div className="stg-container kopex-hero__content">
-          <p className="kopex-hero__eyebrow">Ni&#353; &#8226; Industrijska livnica &#8226; Od 1884</p>
+          <p className="kopex-hero__eyebrow">{copy.heroEyebrow}</p>
           <h1 className="kopex-hero__title">
-            Industrijska livnica gvo&#382;&#273;a i &#269;elika za odlivke koji traju.
+            {copy.heroTitle}
           </h1>
           <p className="kopex-hero__lead">
-            Od prototipa do serijske proizvodnje: sivi liv, nodularni liv i &#269;eli&#269;ni liv, uz ma&#353;insku
-            obradu, termi&#269;ku obradu i potpunu kontrolu kvaliteta.
+            {copy.heroLead}
           </p>
           <div className="kopex-hero__actions">
-            <Link href="/contacts" className="kopex-button kopex-button--primary">Po&#353;aljite upit</Link>
-            <Link href="/services" className="kopex-button kopex-button--ghost">Pogledajte kapacitete</Link>
+            <Link href="/contacts" className="kopex-button kopex-button--primary">{copy.heroCtaPrimary}</Link>
+            <Link href="/services" className="kopex-button kopex-button--ghost">{copy.heroCtaSecondary}</Link>
           </div>
           <div className="kopex-hero__stats">
             <div className="kopex-stat">
@@ -109,7 +253,7 @@ export default async function HomePage() {
             </div>
           </div>
           <p className="kopex-hero__trust">
-            Partneri iz energetike, rudarstva i industrije: EPS, ZI JIN, Danieli, Lafarge, HBIS i drugi.
+            {copy.heroTrust}
           </p>
         </div>
       </section>
@@ -117,11 +261,10 @@ export default async function HomePage() {
       <section id="proizvodi" className="kopex-section kopex-section--products">
         <div className="stg-container">
           <div className="kopex-section__header">
-            <span className="kopex-eyebrow">Proizvodi</span>
-            <h2>Metalni odlivci za energetiku, rudarstvo i industriju.</h2>
+            <span className="kopex-eyebrow">{copy.productsEyebrow}</span>
+            <h2>{copy.productsTitle}</h2>
             <p>
-              Specijalizovani smo za sivi liv, nodularni liv i &#269;eli&#269;ni liv, uklju&#269;uju&#263;i legirane
-              &#269;elike za zahtevne uslove rada.
+              {copy.productsLead}
             </p>
           </div>
           {products.length ? (
@@ -153,7 +296,7 @@ export default async function HomePage() {
           )}
           <div className="kopex-products-actions">
             <Link href="/products" className="kopex-button kopex-button--primary">
-              Svi proizvodi
+              {copy.productsCta}
             </Link>
           </div>
         </div>
@@ -162,10 +305,10 @@ export default async function HomePage() {
       <section id="vesti" className="kopex-section kopex-section--news">
         <div className="stg-container">
           <div className="kopex-section__header">
-            <span className="kopex-eyebrow">Vesti / Karijera</span>
-            <h2>Najnovije informacije i oglasi za posao iz Kopex MIN-LIV.</h2>
+            <span className="kopex-eyebrow">{copy.newsEyebrow}</span>
+            <h2>{copy.newsTitle}</h2>
             <p>
-              Pratite najnovije objave, projekte i oglase za zaposljavanje iz nase livnice.
+              {copy.newsLead}
             </p>
           </div>
           {latestNews.length ? (
@@ -193,7 +336,7 @@ export default async function HomePage() {
           )}
           <div className="kopex-news-actions">
             <Link href="/news" className="kopex-button kopex-button--primary">
-              Sve vesti / karijera
+              {copy.newsCta}
             </Link>
           </div>
         </div>
@@ -254,52 +397,46 @@ export default async function HomePage() {
       <section className="kopex-section kopex-section--services">
         <div className="stg-container">
           <div className="kopex-section__header">
-            <span className="kopex-eyebrow">Usluge</span>
-            <h2>Kompletan proizvodni ciklus na jednom mestu.</h2>
+            <span className="kopex-eyebrow">{copy.servicesEyebrow}</span>
+            <h2>{copy.servicesTitle}</h2>
             <p>
-              Od modelovanja i livenja do zavr&#353;ne obrade, dokumentacije i isporuke.
+              {copy.servicesLead}
             </p>
           </div>
           <div className="kopex-feature-grid">
             <article className="kopex-feature-card">
               <span className="kopex-feature-card__kicker">01</span>
-              <h3>Kalupovanje i livenje</h3>
+              <h3>{copy.service01Title}</h3>
               <p>
-                Izrada odlivaka po crte&#382;ima i standardima kupca, uz FLEKSIBILNOST MALOSERIJSKE I
-                POJEDINACNE PROIZVODNJE.
+                {copy.service01Body}
               </p>
             </article>
             <article className="kopex-feature-card">
               <span className="kopex-feature-card__kicker">02</span>
-              <h3>Ma&#353;inska obrada</h3>
+              <h3>{copy.service02Title}</h3>
               <p>
-                Obrada na standardnim masinama (glodalica, strug, borverk) i CNC masinama.
+                {copy.service02Body}
               </p>
             </article>
             <article className="kopex-feature-card">
               <span className="kopex-feature-card__kicker">03</span>
-              <h3>Termi&#269;ka obrada</h3>
+              <h3>{copy.service03Title}</h3>
               <p>
-                Termi&#269;ko tretiranje odlivaka kroz postupke: ga&#353;enja, kaljenja, popu&#353;tanja i
-                &#382;arenja u bazenima sa velikim kapacitetom quench emulzije ili vode radi optimalnih
-                hemijskih i mehani&#269;kih svojstava.
+                {copy.service03Body}
               </p>
             </article>
             <article className="kopex-feature-card">
               <span className="kopex-feature-card__kicker">04</span>
-              <h3>Zavr&#353;ne operacije</h3>
+              <h3>{copy.service04Title}</h3>
               <p>
-                Finalizacija proizvoda kroz postupke: bru&#353;enje, farbanje, varenje i sa&#269;marenje
-                (peskarenje), radi &#353;to bolje povr&#353;ine i vizualno dopadljivijeg proizvoda.
+                {copy.service04Body}
               </p>
             </article>
             <article className="kopex-feature-card">
               <span className="kopex-feature-card__kicker">05</span>
-              <h3>Kontrola kvaliteta</h3>
+              <h3>{copy.service05Title}</h3>
               <p>
-                Sertifikovana laboratorija za hemijska i mehani&#269;ka ispitivanja odlivaka sa
-                kvantometrom, Sarpijevim klatnom i kidalicom, uklju&#269;uju&#263;i ispitivanja magnetnim
-                fluksom i ultrazvukom.
+                {copy.service05Body}
               </p>
             </article>
           </div>

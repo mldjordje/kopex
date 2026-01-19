@@ -28,6 +28,10 @@
   font-weight: 600;
 }
 
+.kopex-lang-switch a[aria-current='true'] {
+  text-decoration: underline;
+}
+
 .kopex-lang-switch a:hover {
   text-decoration: underline;
 }

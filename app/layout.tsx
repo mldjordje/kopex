@@ -1,10 +1,12 @@
 import type { Metadata, Viewport } from 'next';
 import type { ReactNode } from 'react';
 import Script from 'next/script';
+import { cookies } from 'next/headers';
 import { Analytics } from '@vercel/analytics/react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import RouteStateSync from '@/components/RouteStateSync';
+import { LANGUAGE_COOKIE, normalizeLanguage } from '@/lib/language';
 import './globals.css';
 
 export const metadata: Metadata = {
@@ -24,13 +26,16 @@ export const viewport: Viewport = {
   initialScale: 1
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children
 }: {
   children: ReactNode;
 }) {
+  const cookieStore = await cookies();
+  const language = normalizeLanguage(cookieStore.get(LANGUAGE_COOKIE)?.value);
+
   return (
-    <html lang="sr">
+    <html lang={language}>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
@@ -76,6 +81,4 @@ export default function RootLayout({
     </html>
   );
 }
-
-
 

@@ -3,7 +3,8 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect } from 'react';
-import { usePathname } from 'next/navigation';
+import { usePathname, useSearchParams } from 'next/navigation';
+import { normalizeLanguage, type Language } from '@/lib/language';
 
 const isActivePath = (pathname: string, href: string): boolean => {
   if (href === '/') {
@@ -14,6 +15,76 @@ const isActivePath = (pathname: string, href: string): boolean => {
 
 export default function Header() {
   const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const currentLanguage = normalizeLanguage(
+    searchParams.get('lang') ?? (typeof document !== 'undefined' ? document.documentElement.lang : undefined)
+  );
+
+  const navLabels: Record<Language, {
+    home: string;
+    products: string;
+    news: string;
+    about: string;
+    management: string;
+    services: string;
+    clients: string;
+    certificates: string;
+    contact: string;
+    cta: string;
+  }> = {
+    sr: {
+      home: 'Početna',
+      products: 'Proizvodi',
+      news: 'Vesti / Karijera',
+      about: 'O nama',
+      management: 'Rukovodstvo firme',
+      services: 'Opremljenost',
+      clients: 'Kupci',
+      certificates: 'Sertifikati',
+      contact: 'Kontakt',
+      cta: 'Kontakt'
+    },
+    en: {
+      home: 'Home',
+      products: 'Products',
+      news: 'News / Careers',
+      about: 'About us',
+      management: 'Management',
+      services: 'Equipment',
+      clients: 'Clients',
+      certificates: 'Certificates',
+      contact: 'Contact',
+      cta: 'Contact'
+    },
+    de: {
+      home: 'Startseite',
+      products: 'Produkte',
+      news: 'News / Karriere',
+      about: 'Über uns',
+      management: 'Geschäftsleitung',
+      services: 'Ausstattung',
+      clients: 'Kunden',
+      certificates: 'Zertifikate',
+      contact: 'Kontakt',
+      cta: 'Kontakt'
+    }
+  };
+
+  const buildLangHref = (language: Language): string => {
+    const params = new URLSearchParams(searchParams.toString());
+    params.set('lang', language);
+    const query = params.toString();
+    return query ? `${pathname}?${query}` : pathname;
+  };
+
+  const buildLocalizedHref = (target: string): string => {
+    const [base, hash] = target.split('#');
+    const params = new URLSearchParams();
+    params.set('lang', currentLanguage);
+    const query = params.toString();
+    const href = query ? `${base}?${query}` : base;
+    return hash ? `${href}#${hash}` : href;
+  };
 
   useEffect(() => {
     const header = document.getElementById('bringer-header');
@@ -29,7 +100,7 @@ export default function Header() {
     <header id="bringer-header" className="is-frosted is-sticky" data-appear="fade-down" data-unload="fade-up">
       <div className="bringer-header-inner">
         <div className="bringer-header-lp">
-          <Link href="/" className="bringer-logo">
+          <Link href={buildLocalizedHref('/')} className="bringer-logo">
             <Image src="/img/kopex/logo.png" alt="KOPEX MIN-LIV" width={160} height={40} />
           </Link>
         </div>
@@ -37,31 +108,31 @@ export default function Header() {
           <nav className="bringer-nav">
             <ul className="main-menu" data-stagger-appear="fade-down" data-stagger-delay="75">
               <li className={isActivePath(pathname, '/') ? 'current-menu-item' : undefined}>
-                <Link href="/">Po&#269;etna</Link>
+                <Link href={buildLocalizedHref('/')}>{navLabels[currentLanguage].home}</Link>
               </li>
               <li>
-                <Link href="/products">Proizvodi</Link>
+                <Link href={buildLocalizedHref('/products')}>{navLabels[currentLanguage].products}</Link>
               </li>
               <li className={isActivePath(pathname, '/news') ? 'current-menu-item' : undefined}>
-                <Link href="/news">Vesti / Karijera</Link>
+                <Link href={buildLocalizedHref('/news')}>{navLabels[currentLanguage].news}</Link>
               </li>
               <li className={isActivePath(pathname, '/about-us') ? 'current-menu-item' : undefined}>
-                <Link href="/about-us">O nama</Link>
+                <Link href={buildLocalizedHref('/about-us')}>{navLabels[currentLanguage].about}</Link>
               </li>
               <li className={isActivePath(pathname, '/management') ? 'current-menu-item' : undefined}>
-                <Link href="/management">Rukovodstvo firme</Link>
+                <Link href={buildLocalizedHref('/management')}>{navLabels[currentLanguage].management}</Link>
               </li>
               <li className={isActivePath(pathname, '/services') ? 'current-menu-item' : undefined}>
-                <Link href="/services">Opremljenost</Link>
+                <Link href={buildLocalizedHref('/services')}>{navLabels[currentLanguage].services}</Link>
               </li>
               <li>
-                <Link href="/#kupci">Kupci</Link>
+                <Link href={buildLocalizedHref('/#kupci')}>{navLabels[currentLanguage].clients}</Link>
               </li>
               <li>
-                <Link href="/#sertifikati">Sertifikati</Link>
+                <Link href={buildLocalizedHref('/#sertifikati')}>{navLabels[currentLanguage].certificates}</Link>
               </li>
               <li className={isActivePath(pathname, '/contacts') ? 'current-menu-item' : undefined}>
-                <Link href="/contacts">Kontakt</Link>
+                <Link href={buildLocalizedHref('/contacts')}>{navLabels[currentLanguage].contact}</Link>
               </li>
             </ul>
           </nav>
@@ -77,25 +148,39 @@ export default function Header() {
             </svg>
           </button>
           <div className="kopex-lang-switch">
-            <Link href="/?lang=sr">SR</Link>
+            <Link href={buildLangHref('sr')} aria-current={currentLanguage === 'sr'}>
+              SR
+            </Link>
             <span aria-hidden="true">/</span>
-            <Link href="/?lang=en">EN</Link>
+            <Link href={buildLangHref('en')} aria-current={currentLanguage === 'en'}>
+              EN
+            </Link>
             <span aria-hidden="true">/</span>
-            <Link href="/?lang=de">DE</Link>
+            <Link href={buildLangHref('de')} aria-current={currentLanguage === 'de'}>
+              DE
+            </Link>
           </div>
-          <Link href="/contacts" className="bringer-button">Kontakt</Link>
+          <Link href={buildLocalizedHref('/contacts')} className="bringer-button">
+            {navLabels[currentLanguage].cta}
+          </Link>
         </div>
       </div>
       <div className="bringer-mobile-header-inner">
-        <Link href="/" className="bringer-logo">
+        <Link href={buildLocalizedHref('/')} className="bringer-logo">
           <Image src="/img/kopex/logo.png" alt="KOPEX MIN-LIV" width={160} height={40} />
         </Link>
         <div className="kopex-lang-switch kopex-lang-switch--mobile">
-          <Link href="/?lang=sr">SR</Link>
+          <Link href={buildLangHref('sr')} aria-current={currentLanguage === 'sr'}>
+            SR
+          </Link>
           <span aria-hidden="true">/</span>
-          <Link href="/?lang=en">EN</Link>
+          <Link href={buildLangHref('en')} aria-current={currentLanguage === 'en'}>
+            EN
+          </Link>
           <span aria-hidden="true">/</span>
-          <Link href="/?lang=de">DE</Link>
+          <Link href={buildLangHref('de')} aria-current={currentLanguage === 'de'}>
+            DE
+          </Link>
         </div>
         <button className="bringer-theme-toggle" type="button" aria-label="Promeni temu" title="Promeni temu">
           <svg className="theme-icon theme-icon-sun" viewBox="0 0 24 24" aria-hidden="true">
