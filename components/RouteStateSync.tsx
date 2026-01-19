@@ -13,6 +13,10 @@ export default function RouteStateSync() {
     body.classList.add('is-loaded');
     body.classList.remove('is-loading', 'is-unloading');
 
+    document.querySelectorAll<HTMLElement>('.is-unloading').forEach((element) => {
+      element.classList.remove('is-unloading');
+    });
+
     document.querySelectorAll<HTMLElement>('[data-appear]').forEach((element) => {
       element.classList.add('in-view');
     });
