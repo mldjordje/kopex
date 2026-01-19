@@ -13,6 +13,30 @@
   display: block;
 }
 
+.kopex-lang-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-right: 1rem;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+}
+
+.kopex-lang-switch a {
+  color: inherit;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.kopex-lang-switch a:hover {
+  text-decoration: underline;
+}
+
+.kopex-lang-switch--mobile {
+  margin-right: 0;
+  font-size: 0.8rem;
+}
+
 body::before {
   content: '';
   position: fixed;

@@ -162,10 +162,10 @@ export default async function HomePage() {
       <section id="vesti" className="kopex-section kopex-section--news">
         <div className="stg-container">
           <div className="kopex-section__header">
-            <span className="kopex-eyebrow">Vesti</span>
-            <h2>Najnovije informacije iz Kopex MIN-LIV.</h2>
+            <span className="kopex-eyebrow">Vesti / Karijera</span>
+            <h2>Najnovije informacije i oglasi za posao iz Kopex MIN-LIV.</h2>
             <p>
-              Pratite najnovije objave, projekte i aktivnosti iz nase livnice.
+              Pratite najnovije objave, projekte i oglase za zaposljavanje iz nase livnice.
             </p>
           </div>
           {latestNews.length ? (
@@ -193,7 +193,7 @@ export default async function HomePage() {
           )}
           <div className="kopex-news-actions">
             <Link href="/news" className="kopex-button kopex-button--primary">
-              Sve vesti
+              Sve vesti / karijera
             </Link>
           </div>
         </div>
@@ -263,26 +263,43 @@ export default async function HomePage() {
           <div className="kopex-feature-grid">
             <article className="kopex-feature-card">
               <span className="kopex-feature-card__kicker">01</span>
-              <h3>Livenje i modelovanje</h3>
+              <h3>Kalupovanje i livenje</h3>
               <p>
-                Izrada odliva po crte&#382;ima i standardima kupca, uz fleksibilnost pojedina&#269;ne i
-                serijske proizvodnje.
+                Izrada odlivaka po crte&#382;ima i standardima kupca, uz FLEKSIBILNOST MALOSERIJSKE I
+                POJEDINACNE PROIZVODNJE.
               </p>
             </article>
             <article className="kopex-feature-card">
               <span className="kopex-feature-card__kicker">02</span>
-              <h3>Ma&#353;inska i termi&#269;ka obrada</h3>
+              <h3>Ma&#353;inska obrada</h3>
               <p>
-                Obrada na CNC opremi, ga&#353;enje i kaljenje, sa&#269;marenje i pe&#353;karenje radi
-                optimalnih mehani&#269;kih svojstava.
+                Obrada na standardnim masinama (glodalica, strug, borverk) i CNC masinama.
               </p>
             </article>
             <article className="kopex-feature-card">
               <span className="kopex-feature-card__kicker">03</span>
+              <h3>Termi&#269;ka obrada</h3>
+              <p>
+                Termi&#269;ko tretiranje odlivaka kroz postupke: ga&#353;enja, kaljenja, popu&#353;tanja i
+                &#382;arenja u bazenima sa velikim kapacitetom quench emulzije ili vode radi optimalnih
+                hemijskih i mehani&#269;kih svojstava.
+              </p>
+            </article>
+            <article className="kopex-feature-card">
+              <span className="kopex-feature-card__kicker">04</span>
+              <h3>Zavr&#353;ne operacije</h3>
+              <p>
+                Finalizacija proizvoda kroz postupke: bru&#353;enje, farbanje, varenje i sa&#269;marenje
+                (peskarenje), radi &#353;to bolje povr&#353;ine i vizualno dopadljivijeg proizvoda.
+              </p>
+            </article>
+            <article className="kopex-feature-card">
+              <span className="kopex-feature-card__kicker">05</span>
               <h3>Kontrola kvaliteta</h3>
               <p>
-                Sertifikovana laboratorija, merna oprema i kompletna dokumentacija garantuju stabilan
-                kvalitet i pouzdanost isporuke.
+                Sertifikovana laboratorija za hemijska i mehani&#269;ka ispitivanja odlivaka sa
+                kvantometrom, Sarpijevim klatnom i kidalicom, uklju&#269;uju&#263;i ispitivanja magnetnim
+                fluksom i ultrazvukom.
               </p>
             </article>
           </div>

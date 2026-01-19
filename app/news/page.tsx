@@ -4,8 +4,8 @@ import type { NewsItem } from '@/lib/news';
 import NewsPageClient from '@/components/NewsPageClient';
 
 export const metadata: Metadata = {
-  title: 'KOPEX MIN-LIV | Vesti',
-  description: 'Najnovije vesti iz KOPEX MIN-LIV.'
+  title: 'KOPEX MIN-LIV | Vesti / Karijera',
+  description: 'Najnovije vesti i oglasi za posao iz KOPEX MIN-LIV.'
 };
 
 export const dynamic = 'force-dynamic';

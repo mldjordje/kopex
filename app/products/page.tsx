@@ -12,6 +12,37 @@ export const metadata: Metadata = {
 export const dynamic = 'force-dynamic';
 
 const CARD_SIZES = '(max-width: 739px) 100vw, (max-width: 1024px) 50vw, 33vw';
+const GROUP_SIZES = '(max-width: 739px) 100vw, (max-width: 1200px) 50vw, 33vw';
+
+const PRODUCT_GROUPS = [
+  {
+    title: 'Nodularni liv',
+    description: 'Odlivci namenjeni zahtevnim mehanickim opterecenjima i dugom veku trajanja.',
+    images: [
+      { src: '/img/portfolio/portfolio02.jpg', alt: 'Nodularni liv - proizvod 1' },
+      { src: '/img/portfolio/portfolio03.jpg', alt: 'Nodularni liv - proizvod 2' },
+      { src: '/img/portfolio/portfolio01.jpg', alt: 'Nodularni liv - proizvod 3' }
+    ]
+  },
+  {
+    title: 'Celicni liv',
+    description: 'Celicni odlivci za visokotemperaturne i abrazivne uslove rada.',
+    images: [
+      { src: '/img/portfolio/portfolio04.jpg', alt: 'Celicni liv - proizvod 1' },
+      { src: '/img/portfolio/portfolio05.jpg', alt: 'Celicni liv - proizvod 2' },
+      { src: '/img/portfolio/portfolio06.jpg', alt: 'Celicni liv - proizvod 3' }
+    ]
+  },
+  {
+    title: 'Sivi liv',
+    description: 'Serijska proizvodnja odlivaka stabilnih dimenzija i pouzdanog kvaliteta.',
+    images: [
+      { src: '/img/portfolio/portfolio07.jpg', alt: 'Sivi liv - proizvod 1' },
+      { src: '/img/portfolio/portfolio08.jpg', alt: 'Sivi liv - proizvod 2' },
+      { src: '/img/portfolio/portfolio09.jpg', alt: 'Sivi liv - proizvod 3' }
+    ]
+  }
+];
 
 const getSnippet = (value: string, limit = 180): string => {
   const block = value
@@ -104,6 +135,39 @@ export default async function ProductsPage() {
               })}
             </div>
           ) : null}
+
+          <div className="stg-top-gap-l">
+            <div className="kopex-section__header">
+              <span className="kopex-eyebrow">Grupe proizvoda</span>
+              <h2>Nodularni, celicni i sivi liv</h2>
+              <p>
+                Pregled dostupnih fotografija proizvoda grupisanih po vrsti liva.
+              </p>
+            </div>
+            <div className="stg-row">
+              {PRODUCT_GROUPS.map((group) => (
+                <div className="stg-col-4 stg-tp-col-12 stg-m-bottom-gap" key={group.title}>
+                  <div className="bringer-block">
+                    <h4>{group.title}</h4>
+                    <p>{group.description}</p>
+                    <div className="kopex-media-grid">
+                      {group.images.map((image, index) => (
+                        <div className="kopex-media-grid__item" key={`${group.title}-${index}`}>
+                          <Image
+                            src={image.src}
+                            alt={image.alt}
+                            width={640}
+                            height={480}
+                            sizes={GROUP_SIZES}
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
 
           <div className="kopex-products-actions">
             <Link href="/contacts" className="kopex-button kopex-button--primary">

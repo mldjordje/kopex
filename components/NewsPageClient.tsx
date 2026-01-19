@@ -65,18 +65,17 @@ export default function NewsPageClient({
               Kopex MIN-LIV
             </Typography>
             <Typography variant="h3" component="h1">
-              Vesti
+              Vesti / Karijera
             </Typography>
             <Typography variant="subtitle1" color="text.secondary" sx={{ maxWidth: 720 }}>
-              Najnovije informacije i objave iz Kopex MIN-LIV, sa pregledom najbitnijih
-              novosti.
+              Najnovije informacije, objave i oglasi za posao iz Kopex MIN-LIV.
             </Typography>
           </Stack>
 
           {errorMessage ? <Alert severity="error">{errorMessage}</Alert> : null}
 
           {!errorMessage && items.length === 0 ? (
-            <Alert severity="info">Trenutno nema objavljenih vesti.</Alert>
+            <Alert severity="info">Trenutno nema objavljenih vesti ili oglasa.</Alert>
           ) : null}
 
           {!errorMessage && items.length > 0 ? (
