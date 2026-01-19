@@ -98,18 +98,26 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     };
   }
 
-  const product = await getProductBySlug(slug);
-  if (!product) {
+  try {
+    const product = await getProductBySlug(slug);
+    if (!product) {
+      return {
+        title: 'Proizvod nije pronadjen | KOPEX MIN-LIV',
+        description: 'Proizvod nije pronadjen.'
+      };
+    }
+
+    return {
+      title: product.seoTitle?.trim() || `${product.name} | KOPEX MIN-LIV`,
+      description: getMetaDescription(product).slice(0, 180)
+    };
+  } catch (error) {
+    console.error('Product metadata error:', error);
     return {
       title: 'Proizvod nije pronadjen | KOPEX MIN-LIV',
       description: 'Proizvod nije pronadjen.'
     };
   }
-
-  return {
-    title: product.seoTitle?.trim() || `${product.name} | KOPEX MIN-LIV`,
-    description: getMetaDescription(product).slice(0, 180)
-  };
 }
 
 export default async function ProductDetailPage({ params }: PageProps) {
