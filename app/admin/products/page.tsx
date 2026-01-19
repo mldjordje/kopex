@@ -1,12 +1,37 @@
 import type { Metadata } from 'next';
+import { cookies } from 'next/headers';
 import AdminProductsPageClient from '@/components/AdminProductsPageClient';
 import { getProductsList } from '@/lib/products';
 import type { ProductItem } from '@/lib/products';
+import { LANGUAGE_COOKIE, normalizeLanguage, type Language } from '@/lib/language';
+import { buildMetadata } from '@/lib/seo';
 
-export const metadata: Metadata = {
-  title: 'KOPEX MIN-LIV | Admin proizvodi',
-  description: 'Administracija proizvoda.'
+const ADMIN_PRODUCTS_META: Record<Language, { title: string; description: string }> = {
+  sr: {
+    title: 'KOPEX MIN-LIV | Admin proizvodi',
+    description: 'Administracija proizvoda KOPEX MIN-LIV.'
+  },
+  en: {
+    title: 'KOPEX MIN-LIV | Admin products',
+    description: 'KOPEX MIN-LIV product administration.'
+  },
+  de: {
+    title: 'KOPEX MIN-LIV | Admin Produkte',
+    description: 'Administration der KOPEX MIN-LIV Produkte.'
+  }
 };
+
+export async function generateMetadata(): Promise<Metadata> {
+  const cookieStore = await cookies();
+  const language = normalizeLanguage(cookieStore.get(LANGUAGE_COOKIE)?.value);
+  const meta = ADMIN_PRODUCTS_META[language];
+  return buildMetadata({
+    language,
+    title: meta.title,
+    description: meta.description,
+    path: `/admin/products?lang=${language}`
+  });
+}
 
 export const dynamic = 'force-dynamic';
 

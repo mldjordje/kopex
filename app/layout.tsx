@@ -7,17 +7,38 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import RouteStateSync from '@/components/RouteStateSync';
 import { LANGUAGE_COOKIE, normalizeLanguage } from '@/lib/language';
+import { SEO_IMAGE, SITE_NAME } from '@/lib/seo';
 import './globals.css';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://kopexmin.rs'),
   title: {
-    default: 'KOPEX MIN-LIV | Industrijska livnica gvo\u017e\u0111a i \u010delika Ni\u0161',
-    template: '%s | KOPEX MIN-LIV'
+    default: SITE_NAME,
+    template: `%s | ${SITE_NAME}`
   },
   description: 'Industrijska livnica u Ni\u0161u za livenje metala i proizvodnju metalnih odlivaka.',
   icons: {
-    icon: '/img/favicon.png'
+    icon: SEO_IMAGE,
+    shortcut: SEO_IMAGE,
+    apple: SEO_IMAGE
+  },
+  openGraph: {
+    title: SITE_NAME,
+    description: 'Industrijska livnica u Ni\u0161u za livenje metala i proizvodnju metalnih odlivaka.',
+    siteName: SITE_NAME,
+    type: 'website',
+    images: [
+      {
+        url: SEO_IMAGE,
+        alt: SITE_NAME
+      }
+    ]
+  },
+  twitter: {
+    card: 'summary',
+    title: SITE_NAME,
+    description: 'Industrijska livnica u Ni\u0161u za livenje metala i proizvodnju metalnih odlivaka.',
+    images: [SEO_IMAGE]
   }
 };
 

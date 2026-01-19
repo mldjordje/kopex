@@ -2,11 +2,38 @@ import type { Metadata } from 'next';
 import Image from 'next/image';
 import { cookies } from 'next/headers';
 import { LANGUAGE_COOKIE, normalizeLanguage, type Language } from '@/lib/language';
+import { buildMetadata } from '@/lib/seo';
 
-export const metadata: Metadata = {
-  title: 'KOPEX MIN-LIV | Kontakt',
-  description: 'Kontaktirajte KOPEX MIN-LIV A.D. Ni\u0161 - Bulevar 12. februara 82, Ni\u0161.'
+const CONTACTS_META: Record<Language, { title: string; description: string; keywords: string[] }> = {
+  sr: {
+    title: 'KOPEX MIN-LIV | Kontakt',
+    description: 'Kontaktirajte KOPEX MIN-LIV u Nisu - Bulevar 12. februara 82. Telefon, email i mapa.',
+    keywords: ['kontakt', 'adresa', 'telefon', 'email', 'Kopex MIN-LIV', 'Nis']
+  },
+  en: {
+    title: 'KOPEX MIN-LIV | Contact',
+    description: 'Contact KOPEX MIN-LIV in Nis - Bulevar 12. februara 82. Phone, email, and map.',
+    keywords: ['contact', 'address', 'phone', 'email', 'KOPEX MIN-LIV', 'Nis']
+  },
+  de: {
+    title: 'KOPEX MIN-LIV | Kontakt',
+    description: 'Kontaktieren Sie KOPEX MIN-LIV in Nis - Bulevar 12. februara 82. Telefon, E-Mail und Karte.',
+    keywords: ['kontakt', 'adresse', 'telefon', 'email', 'KOPEX MIN-LIV', 'Nis']
+  }
 };
+
+export async function generateMetadata(): Promise<Metadata> {
+  const cookieStore = await cookies();
+  const language = normalizeLanguage(cookieStore.get(LANGUAGE_COOKIE)?.value);
+  const meta = CONTACTS_META[language];
+  return buildMetadata({
+    language,
+    title: meta.title,
+    description: meta.description,
+    keywords: meta.keywords,
+    path: `/contacts?lang=${language}`
+  });
+}
 
 const FULL_SIZES = '(max-width: 739px) 100vw, 80vw';
 

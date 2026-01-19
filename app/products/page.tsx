@@ -5,11 +5,38 @@ import { cookies } from 'next/headers';
 import { getProductsList } from '@/lib/products';
 import type { ProductItem } from '@/lib/products';
 import { LANGUAGE_COOKIE, normalizeLanguage, type Language } from '@/lib/language';
+import { buildMetadata } from '@/lib/seo';
 
-export const metadata: Metadata = {
-  title: 'KOPEX MIN-LIV | Proizvodi',
-  description: 'Pregled proizvoda i odlivaka iz Kopex MIN-LIV.'
+const PRODUCTS_META: Record<Language, { title: string; description: string; keywords: string[] }> = {
+  sr: {
+    title: 'KOPEX MIN-LIV | Proizvodi',
+    description: 'Pregled odlivaka, dokumentacije i kategorija proizvoda KOPEX MIN-LIV.',
+    keywords: ['proizvodi', 'odlivci', 'dokumentacija', 'Kopex MIN-LIV']
+  },
+  en: {
+    title: 'KOPEX MIN-LIV | Products',
+    description: 'Overview of castings, documentation, and product categories from KOPEX MIN-LIV.',
+    keywords: ['products', 'castings', 'documentation', 'KOPEX MIN-LIV']
+  },
+  de: {
+    title: 'KOPEX MIN-LIV | Produkte',
+    description: 'Ubersicht uber Gussteile, Dokumentation und Produktkategorien von KOPEX MIN-LIV.',
+    keywords: ['produkte', 'gussteile', 'dokumentation', 'KOPEX MIN-LIV']
+  }
 };
+
+export async function generateMetadata(): Promise<Metadata> {
+  const cookieStore = await cookies();
+  const language = normalizeLanguage(cookieStore.get(LANGUAGE_COOKIE)?.value);
+  const meta = PRODUCTS_META[language];
+  return buildMetadata({
+    language,
+    title: meta.title,
+    description: meta.description,
+    keywords: meta.keywords,
+    path: `/products?lang=${language}`
+  });
+}
 
 export const dynamic = 'force-dynamic';
 

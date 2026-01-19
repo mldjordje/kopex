@@ -5,6 +5,7 @@ import { cookies } from 'next/headers';
 import { getProductBySlug } from '@/lib/products';
 import type { ProductItem } from '@/lib/products';
 import { LANGUAGE_COOKIE, normalizeLanguage, type Language } from '@/lib/language';
+import { buildMetadata } from '@/lib/seo';
 
 export const dynamic = 'force-dynamic';
 
@@ -53,6 +54,27 @@ const PRODUCT_DETAIL_COPY: Record<Language, {
   }
 };
 
+const PRODUCT_META_LABELS: Record<Language, { invalidTitle: string; invalidDescription: string; notFoundTitle: string; notFoundDescription: string }> = {
+  sr: {
+    invalidTitle: 'Neispravan proizvod | KOPEX MIN-LIV',
+    invalidDescription: 'Neispravan ili nepoznat proizvod.',
+    notFoundTitle: 'Proizvod nije pronadjen | KOPEX MIN-LIV',
+    notFoundDescription: 'Proizvod nije pronadjen.'
+  },
+  en: {
+    invalidTitle: 'Invalid product | KOPEX MIN-LIV',
+    invalidDescription: 'Invalid or unknown product.',
+    notFoundTitle: 'Product not found | KOPEX MIN-LIV',
+    notFoundDescription: 'Product not found.'
+  },
+  de: {
+    invalidTitle: 'Ungultiges Produkt | KOPEX MIN-LIV',
+    invalidDescription: 'Ungultiges oder unbekanntes Produkt.',
+    notFoundTitle: 'Produkt nicht gefunden | KOPEX MIN-LIV',
+    notFoundDescription: 'Produkt nicht gefunden.'
+  }
+};
+
 type PageProps = {
   params: Promise<{
     slug: string;
@@ -89,34 +111,48 @@ const renderParagraphs = (value: string) =>
     .map((block, index) => <p key={`${index}-${block}`}>{block}</p>);
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const cookieStore = await cookies();
+  const language = normalizeLanguage(cookieStore.get(LANGUAGE_COOKIE)?.value);
+  const labels = PRODUCT_META_LABELS[language];
   const resolvedParams = await params;
   const slug = normalizeSlug(resolvedParams.slug);
   if (!slug) {
-    return {
-      title: 'Proizvod nije pronadjen | KOPEX MIN-LIV',
-      description: 'Proizvod nije pronadjen.'
-    };
+    return buildMetadata({
+      language,
+      title: labels.invalidTitle,
+      description: labels.invalidDescription,
+      path: `/products?lang=${language}`
+    });
   }
 
   try {
     const product = await getProductBySlug(slug);
     if (!product) {
-      return {
-        title: 'Proizvod nije pronadjen | KOPEX MIN-LIV',
-        description: 'Proizvod nije pronadjen.'
-      };
+      return buildMetadata({
+        language,
+        title: labels.notFoundTitle,
+        description: labels.notFoundDescription,
+        path: `/products/${slug}?lang=${language}`
+      });
     }
 
-    return {
-      title: product.seoTitle?.trim() || `${product.name} | KOPEX MIN-LIV`,
-      description: getMetaDescription(product).slice(0, 180)
-    };
+    const title = product.seoTitle?.trim() || `${product.name} | KOPEX MIN-LIV`;
+    const description = getMetaDescription(product).slice(0, 180);
+    return buildMetadata({
+      language,
+      title,
+      description,
+      path: `/products/${product.slug}?lang=${language}`,
+      type: 'article'
+    });
   } catch (error) {
     console.error('Product metadata error:', error);
-    return {
-      title: 'Proizvod nije pronadjen | KOPEX MIN-LIV',
-      description: 'Proizvod nije pronadjen.'
-    };
+    return buildMetadata({
+      language,
+      title: labels.notFoundTitle,
+      description: labels.notFoundDescription,
+      path: `/products/${slug}?lang=${language}`
+    });
   }
 }
 

@@ -3,11 +3,38 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { cookies } from 'next/headers';
 import { LANGUAGE_COOKIE, normalizeLanguage, type Language } from '@/lib/language';
+import { buildMetadata } from '@/lib/seo';
 
-export const metadata: Metadata = {
-  title: 'KOPEX MIN-LIV | O nama',
-  description: 'Istorijat i kapaciteti KOPEX MIN-LIV A.D. Ni\u0161, livnice sa tradicijom od 1884. godine.'
+const ABOUT_META: Record<Language, { title: string; description: string; keywords: string[] }> = {
+  sr: {
+    title: 'KOPEX MIN-LIV | O nama',
+    description: 'Istorijat livnice KOPEX MIN-LIV, kapaciteti, laboratorija i sertifikati kvaliteta.',
+    keywords: ['o nama', 'istorijat', 'kapaciteti', 'laboratorija', 'sertifikati', 'Kopex MIN-LIV']
+  },
+  en: {
+    title: 'KOPEX MIN-LIV | About us',
+    description: 'History of the KOPEX MIN-LIV foundry, capacity, laboratory, and quality certifications.',
+    keywords: ['about us', 'history', 'capacity', 'laboratory', 'certifications', 'KOPEX MIN-LIV']
+  },
+  de: {
+    title: 'KOPEX MIN-LIV | Uber uns',
+    description: 'Geschichte der KOPEX MIN-LIV Giesserei, Kapazitat, Labor und Qualitatszertifikate.',
+    keywords: ['uber uns', 'geschichte', 'kapazitat', 'labor', 'zertifikate', 'KOPEX MIN-LIV']
+  }
 };
+
+export async function generateMetadata(): Promise<Metadata> {
+  const cookieStore = await cookies();
+  const language = normalizeLanguage(cookieStore.get(LANGUAGE_COOKIE)?.value);
+  const meta = ABOUT_META[language];
+  return buildMetadata({
+    language,
+    title: meta.title,
+    description: meta.description,
+    keywords: meta.keywords,
+    path: `/about-us?lang=${language}`
+  });
+}
 
 const HALF_SIZES = '(max-width: 739px) 100vw, (max-width: 1200px) 90vw, 50vw';
 const THIRD_SIZES = '(max-width: 739px) 100vw, (max-width: 1200px) 50vw, 33vw';

@@ -31,3 +31,14 @@ export const getLanguageLocale = (language: Language): string => {
       return 'sr-RS';
   }
 };
+
+export const getOpenGraphLocale = (language: Language): string => {
+  switch (language) {
+    case 'en':
+      return 'en_US';
+    case 'de':
+      return 'de_DE';
+    default:
+      return 'sr_RS';
+  }
+};

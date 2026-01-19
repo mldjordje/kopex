@@ -3,11 +3,38 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { cookies } from 'next/headers';
 import { LANGUAGE_COOKIE, normalizeLanguage, type Language } from '@/lib/language';
+import { buildMetadata } from '@/lib/seo';
 
-export const metadata: Metadata = {
-  title: 'KOPEX MIN-LIV | Rukovodstvo firme',
-  description: 'Organizaciona sema rukovodstva KOPEX MIN-LIV A.D. Ni\u0161 sa funkcijama tima.'
+const MANAGEMENT_META: Record<Language, { title: string; description: string; keywords: string[] }> = {
+  sr: {
+    title: 'KOPEX MIN-LIV | Rukovodstvo firme',
+    description: 'Rukovodstvo i organizaciona struktura KOPEX MIN-LIV sa funkcijama tima.',
+    keywords: ['rukovodstvo', 'menadzment', 'organizacija', 'Kopex MIN-LIV']
+  },
+  en: {
+    title: 'KOPEX MIN-LIV | Company management',
+    description: 'Management structure and key roles within KOPEX MIN-LIV.',
+    keywords: ['management', 'leadership', 'organization', 'KOPEX MIN-LIV']
+  },
+  de: {
+    title: 'KOPEX MIN-LIV | Geschaftsleitung',
+    description: 'Managementstruktur und Schlusselfunktionen bei KOPEX MIN-LIV.',
+    keywords: ['geschaftsleitung', 'management', 'organisation', 'KOPEX MIN-LIV']
+  }
 };
+
+export async function generateMetadata(): Promise<Metadata> {
+  const cookieStore = await cookies();
+  const language = normalizeLanguage(cookieStore.get(LANGUAGE_COOKIE)?.value);
+  const meta = MANAGEMENT_META[language];
+  return buildMetadata({
+    language,
+    title: meta.title,
+    description: meta.description,
+    keywords: meta.keywords,
+    path: `/management?lang=${language}`
+  });
+}
 
 const CARD_SIZES = '(max-width: 739px) 100vw, (max-width: 1200px) 50vw, 33vw';
 

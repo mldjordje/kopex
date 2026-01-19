@@ -3,11 +3,38 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { cookies } from 'next/headers';
 import { LANGUAGE_COOKIE, normalizeLanguage, type Language } from '@/lib/language';
+import { buildMetadata } from '@/lib/seo';
 
-export const metadata: Metadata = {
-  title: 'KOPEX MIN-LIV | Opremljenost',
-  description: 'Tehnicka opremljenost i kapaciteti livnice KOPEX MIN-LIV A.D. Ni\u0161.'
+const SERVICES_META: Record<Language, { title: string; description: string; keywords: string[] }> = {
+  sr: {
+    title: 'KOPEX MIN-LIV | Opremljenost i kapaciteti',
+    description: 'Tehnicka opremljenost, laboratorija i kapaciteti livnice KOPEX MIN-LIV u Nisu.',
+    keywords: ['opremljenost', 'kapaciteti', 'livnica', 'laboratorija', 'Kopex MIN-LIV']
+  },
+  en: {
+    title: 'KOPEX MIN-LIV | Equipment and capacities',
+    description: 'Technical equipment, laboratory, and production capacities of the KOPEX MIN-LIV foundry in Nis.',
+    keywords: ['equipment', 'capacities', 'foundry', 'laboratory', 'KOPEX MIN-LIV']
+  },
+  de: {
+    title: 'KOPEX MIN-LIV | Ausstattung und Kapazitat',
+    description: 'Technische Ausstattung, Labor und Produktionskapazitaten der KOPEX MIN-LIV Giesserei in Nis.',
+    keywords: ['ausstattung', 'kapazitat', 'giesserei', 'labor', 'KOPEX MIN-LIV']
+  }
 };
+
+export async function generateMetadata(): Promise<Metadata> {
+  const cookieStore = await cookies();
+  const language = normalizeLanguage(cookieStore.get(LANGUAGE_COOKIE)?.value);
+  const meta = SERVICES_META[language];
+  return buildMetadata({
+    language,
+    title: meta.title,
+    description: meta.description,
+    keywords: meta.keywords,
+    path: `/services?lang=${language}`
+  });
+}
 
 const PARALLAX_SIZES = '(max-width: 739px) 100vw, (max-width: 1200px) 90vw, 50vw';
 

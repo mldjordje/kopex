@@ -4,11 +4,38 @@ import { getNewsList } from '@/lib/news';
 import type { NewsItem } from '@/lib/news';
 import NewsPageClient from '@/components/NewsPageClient';
 import { LANGUAGE_COOKIE, normalizeLanguage, type Language } from '@/lib/language';
+import { buildMetadata } from '@/lib/seo';
 
-export const metadata: Metadata = {
-  title: 'KOPEX MIN-LIV | Vesti / Karijera',
-  description: 'Najnovije vesti i oglasi za posao iz KOPEX MIN-LIV.'
+const NEWS_META: Record<Language, { title: string; description: string; keywords: string[] }> = {
+  sr: {
+    title: 'KOPEX MIN-LIV | Vesti i karijera',
+    description: 'Najnovije vesti, projekti i oglasi za posao iz KOPEX MIN-LIV.',
+    keywords: ['vesti', 'karijera', 'oglasi', 'Kopex MIN-LIV']
+  },
+  en: {
+    title: 'KOPEX MIN-LIV | News and careers',
+    description: 'Latest news, projects, and job openings from KOPEX MIN-LIV.',
+    keywords: ['news', 'careers', 'jobs', 'KOPEX MIN-LIV']
+  },
+  de: {
+    title: 'KOPEX MIN-LIV | News und Karriere',
+    description: 'Aktuelle Nachrichten, Projekte und Stellenangebote von KOPEX MIN-LIV.',
+    keywords: ['news', 'karriere', 'stellenangebote', 'KOPEX MIN-LIV']
+  }
 };
+
+export async function generateMetadata(): Promise<Metadata> {
+  const cookieStore = await cookies();
+  const language = normalizeLanguage(cookieStore.get(LANGUAGE_COOKIE)?.value);
+  const meta = NEWS_META[language];
+  return buildMetadata({
+    language,
+    title: meta.title,
+    description: meta.description,
+    keywords: meta.keywords,
+    path: `/news?lang=${language}`
+  });
+}
 
 export const dynamic = 'force-dynamic';
 

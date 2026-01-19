@@ -8,12 +8,41 @@ import { getProductsList } from '@/lib/products';
 import type { NewsItem } from '@/lib/news';
 import type { ProductItem } from '@/lib/products';
 import { getLanguageLocale, LANGUAGE_COOKIE, normalizeLanguage, type Language } from '@/lib/language';
+import { buildMetadata } from '@/lib/seo';
 
-export const metadata: Metadata = {
-  title: 'KOPEX MIN-LIV | Industrijska livnica gvo\u017e\u0111a i \u010delika Ni\u0161',
-  description:
-    'Kopex MIN-LIV A.D. Ni\u0161 je industrijska livnica Srbije za livenje metala i proizvodnju metalnih odlivaka: sivi liv, nodularni liv i \u010deli\u010dni liv, uz mehani\u010dku obradu metala (machining), termi\u010dku obradu, sa\u010dmarenje/pe\u0161karenje i kontrolu kvaliteta.'
+const HOME_META: Record<Language, { title: string; description: string; keywords: string[] }> = {
+  sr: {
+    title: 'KOPEX MIN-LIV | Industrijska livnica gvozdja i celika Nis',
+    description:
+      'Industrijska livnica u Nisu za sivi, nodularni i celicni liv, uz masinsku obradu, termicku obradu i kontrolu kvaliteta.',
+    keywords: ['livnica', 'odlivci', 'gvozdje', 'celik', 'Nis', 'industrija', 'Kopex MIN-LIV']
+  },
+  en: {
+    title: 'KOPEX MIN-LIV | Industrial iron and steel foundry in Nis',
+    description:
+      'Industrial foundry in Nis for gray iron, ductile iron, and steel castings, with machining, heat treatment, and full quality control.',
+    keywords: ['foundry', 'castings', 'iron', 'steel', 'Nis', 'industrial', 'KOPEX MIN-LIV']
+  },
+  de: {
+    title: 'KOPEX MIN-LIV | Industriegisserei fur Eisen- und Stahlguss in Nis',
+    description:
+      'Industriegisserei in Nis fur Grauguss, Spharoguss und Stahlguss mit Bearbeitung, Warmebehandlung und Qualitatskontrolle.',
+    keywords: ['Giesserei', 'Gussteile', 'Eisen', 'Stahl', 'Nis', 'Industrie', 'KOPEX MIN-LIV']
+  }
 };
+
+export async function generateMetadata(): Promise<Metadata> {
+  const cookieStore = await cookies();
+  const language = normalizeLanguage(cookieStore.get(LANGUAGE_COOKIE)?.value);
+  const meta = HOME_META[language];
+  return buildMetadata({
+    language,
+    title: meta.title,
+    description: meta.description,
+    keywords: meta.keywords,
+    path: `/?lang=${language}`
+  });
+}
 
 export const dynamic = 'force-dynamic';
 
