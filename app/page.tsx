@@ -234,7 +234,7 @@ const HOME_COPY: Record<Language, {
       'Product finishing through grinding, painting, welding, and shot blasting (sandblasting) for improved surface quality and visual appearance.',
     service05Title: 'Quality control',
     service05Body:
-      'Certified laboratory for chemical and mechanical testing of castings with spectrometer, Charpy pendulum, and tensile tester, including magnetic flux and ultrasonic testing.'
+      'Certified laboratory for chemical and mechanical testing of castings with spectrometer, Charpy pendulum, and tensile tester, including magnetic flux and ultrasonic testing.',
     heroStats: ['years of tradition', 'planned monthly capacity', 'melt capacity per furnace'],
     productNoImage: 'No image',
     productView: 'View product',
