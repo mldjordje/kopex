@@ -238,7 +238,7 @@ export default async function AboutPage() {
         <div className="stg-row stg-large-gap stg-valign-middle stg-tp-column-reverse">
           <div className="stg-col-6">
             <h2>{copy.historyTitle}</h2>
-            <ul className="bringer-detailed-list">
+            <ul className="bringer-detailed-list bringer-detailed-list--mobile-details">
               {copy.historyItems.map((item) => (
                 <li key={item.year}>
                   <div className="bringer-detailed-list-title">
