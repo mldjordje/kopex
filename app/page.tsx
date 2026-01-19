@@ -142,7 +142,7 @@ const HOME_COPY: Record<Language, {
       'Finalizacija proizvoda kroz postupke: brušenje, farbanje, varenje i sačmarenje (peskarenje), radi što bolje površine i vizualno dopadljivijeg proizvoda.',
     service05Title: 'Kontrola kvaliteta',
     service05Body:
-      'Sertifikovana laboratorija za hemijska i mehanička ispitivanja odlivaka sa kvantometrom, Sarpijevim klatnom i kidalicom, uključujući ispitivanja magnetnim fluksom i ultrazvukom.'
+      'Sertifikovana laboratorija za hemijska i mehanička ispitivanja odlivaka sa kvantometrom, Sarpijevim klatnom i kidalicom, uključujući ispitivanja magnetnim fluksom i ultrazvukom.',
     heroStats: ['godina tradicije', 'projektovani kapacitet mesečno', 'kapacitet liva po peći'],
     productNoImage: 'Bez slike',
     productView: 'Pogledaj proizvod',
