@@ -10,7 +10,7 @@ export default function Footer() {
             <div className="stg-col-5 stg-tp-col-12 stg-tp-bottom-gap-l">
               <div className="bringer-info-widget">
                 <Link href="/" className="bringer-logo footer-logo">
-                  <Image src="/img/logo.png" alt="KOPEX MIN-LIV" width={160} height={40} />
+                  <Image src="/img/kopex/logo.png" alt="KOPEX MIN-LIV" width={160} height={40} />
                 </Link>
                 <div className="bringer-info-description">KOPEX MIN-LIV A.D. Ni&#353; je industrijska livnica Srbije sa tradicijom od 1884. godine, specijalizovana za metalne odlivke od sivog, nodularnog i &#269;eli&#269;nog liva.</div>
                 <span className="bringer-label">Pratite nas:</span>
@@ -48,7 +48,8 @@ export default function Footer() {
                     <li><Link href="/about-us">O nama</Link></li>
                     <li><Link href="/services">Opremljenost</Link></li>
                     <li><Link href="/products">Proizvodi</Link></li>
-                    <li><Link href="/news">Vesti</Link></li>
+                    <li><Link href="/news">Vesti / Karijera</Link></li>
+                    <li><Link href="/management">Rukovodstvo firme</Link></li>
                     <li><Link href="/#kupci">Kupci</Link></li>
                     <li><Link href="/contacts">Kontakt</Link></li>
                   </ul>
@@ -66,4 +67,3 @@ export default function Footer() {
     </footer>
   );
 }
-

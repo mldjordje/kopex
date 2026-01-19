@@ -54,7 +54,7 @@ export default function NewsDetailClient({
                 href="/news"
                 variant="text"
               >
-                Nazad na vesti
+                Nazad na vesti / karijeru
               </Button>
             </div>
 

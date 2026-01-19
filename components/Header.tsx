@@ -30,7 +30,7 @@ export default function Header() {
       <div className="bringer-header-inner">
         <div className="bringer-header-lp">
           <Link href="/" className="bringer-logo">
-            <Image src="/img/logo.png" alt="KOPEX MIN-LIV" width={160} height={40} />
+            <Image src="/img/kopex/logo.png" alt="KOPEX MIN-LIV" width={160} height={40} />
           </Link>
         </div>
         <div className="bringer-header-mp">
@@ -43,10 +43,13 @@ export default function Header() {
                 <Link href="/products">Proizvodi</Link>
               </li>
               <li className={isActivePath(pathname, '/news') ? 'current-menu-item' : undefined}>
-                <Link href="/news">Vesti</Link>
+                <Link href="/news">Vesti / Karijera</Link>
               </li>
               <li className={isActivePath(pathname, '/about-us') ? 'current-menu-item' : undefined}>
                 <Link href="/about-us">O nama</Link>
+              </li>
+              <li className={isActivePath(pathname, '/management') ? 'current-menu-item' : undefined}>
+                <Link href="/management">Rukovodstvo firme</Link>
               </li>
               <li className={isActivePath(pathname, '/services') ? 'current-menu-item' : undefined}>
                 <Link href="/services">Opremljenost</Link>
@@ -73,13 +76,27 @@ export default function Header() {
               <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
             </svg>
           </button>
+          <div className="kopex-lang-switch">
+            <Link href="/?lang=sr">SR</Link>
+            <span aria-hidden="true">/</span>
+            <Link href="/?lang=en">EN</Link>
+            <span aria-hidden="true">/</span>
+            <Link href="/?lang=de">DE</Link>
+          </div>
           <Link href="/contacts" className="bringer-button">Kontakt</Link>
         </div>
       </div>
       <div className="bringer-mobile-header-inner">
         <Link href="/" className="bringer-logo">
-          <Image src="/img/logo.png" alt="KOPEX MIN-LIV" width={160} height={40} />
+          <Image src="/img/kopex/logo.png" alt="KOPEX MIN-LIV" width={160} height={40} />
         </Link>
+        <div className="kopex-lang-switch kopex-lang-switch--mobile">
+          <Link href="/?lang=sr">SR</Link>
+          <span aria-hidden="true">/</span>
+          <Link href="/?lang=en">EN</Link>
+          <span aria-hidden="true">/</span>
+          <Link href="/?lang=de">DE</Link>
+        </div>
         <button className="bringer-theme-toggle" type="button" aria-label="Promeni temu" title="Promeni temu">
           <svg className="theme-icon theme-icon-sun" viewBox="0 0 24 24" aria-hidden="true">
             <circle cx="12" cy="12" r="4"></circle>
@@ -100,4 +117,3 @@ export default function Header() {
     </header>
   );
 }
-
