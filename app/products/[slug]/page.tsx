@@ -1,13 +1,57 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
+import { cookies } from 'next/headers';
 import { getProductBySlug } from '@/lib/products';
 import type { ProductItem } from '@/lib/products';
+import { LANGUAGE_COOKIE, normalizeLanguage, type Language } from '@/lib/language';
 
 export const dynamic = 'force-dynamic';
 
 const HERO_SIZES = '(max-width: 739px) 100vw, 50vw';
 const GALLERY_SIZES = '(max-width: 739px) 50vw, 16vw';
+
+const PRODUCT_DETAIL_COPY: Record<Language, {
+  eyebrow: string;
+  noImage: string;
+  noDescription: string;
+  documentsLabel: string;
+  backLabel: string;
+  invalidMessage: string;
+  notFoundMessage: string;
+  loadError: string;
+}> = {
+  sr: {
+    eyebrow: 'Proizvodi',
+    noImage: 'Bez slike',
+    noDescription: 'Bez opisa.',
+    documentsLabel: 'Dokumenta:',
+    backLabel: 'Nazad na proizvode',
+    invalidMessage: 'Neispravan proizvod.',
+    notFoundMessage: 'Proizvod nije pronađen.',
+    loadError: 'Ne mogu da učitam proizvod. Pokušajte kasnije.'
+  },
+  en: {
+    eyebrow: 'Products',
+    noImage: 'No image',
+    noDescription: 'No description.',
+    documentsLabel: 'Documents:',
+    backLabel: 'Back to products',
+    invalidMessage: 'Invalid product.',
+    notFoundMessage: 'Product not found.',
+    loadError: 'Unable to load product. Please try again later.'
+  },
+  de: {
+    eyebrow: 'Produkte',
+    noImage: 'Kein Bild',
+    noDescription: 'Keine Beschreibung.',
+    documentsLabel: 'Dokumente:',
+    backLabel: 'Zurück zu den Produkten',
+    invalidMessage: 'Ungültiges Produkt.',
+    notFoundMessage: 'Produkt nicht gefunden.',
+    loadError: 'Produkt konnte nicht geladen werden. Bitte später erneut versuchen.'
+  }
+};
 
 type PageProps = {
   params: Promise<{
@@ -69,6 +113,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 export default async function ProductDetailPage({ params }: PageProps) {
+  const cookieStore = await cookies();
+  const language = normalizeLanguage(cookieStore.get(LANGUAGE_COOKIE)?.value);
+  const copy = PRODUCT_DETAIL_COPY[language];
   const resolvedParams = await params;
   const slug = normalizeSlug(resolvedParams.slug);
   if (!slug) {
@@ -76,7 +123,7 @@ export default async function ProductDetailPage({ params }: PageProps) {
       <div className="kopex-landing">
         <section className="kopex-section kopex-section--products">
           <div className="stg-container">
-            <div className="kopex-product-card__placeholder">Neispravan proizvod.</div>
+            <div className="kopex-product-card__placeholder">{copy.invalidMessage}</div>
           </div>
         </section>
       </div>
@@ -90,7 +137,7 @@ export default async function ProductDetailPage({ params }: PageProps) {
         <div className="kopex-landing">
           <section className="kopex-section kopex-section--products">
             <div className="stg-container">
-              <div className="kopex-product-card__placeholder">Proizvod nije pronadjen.</div>
+              <div className="kopex-product-card__placeholder">{copy.notFoundMessage}</div>
             </div>
           </section>
         </div>
@@ -106,8 +153,8 @@ export default async function ProductDetailPage({ params }: PageProps) {
       <div className="kopex-landing">
         <section className="kopex-section kopex-section--products">
           <div className="stg-container">
-            <div className="kopex-section__header">
-              <span className="kopex-eyebrow">Proizvodi</span>
+          <div className="kopex-section__header">
+              <span className="kopex-eyebrow">{copy.eyebrow}</span>
               <h1>{product.name}</h1>
               {product.category ? (
                 <p className="kopex-product-detail__category">{product.category}</p>
@@ -119,7 +166,7 @@ export default async function ProductDetailPage({ params }: PageProps) {
                 {hero ? (
                   <Image src={hero} alt={product.name} width={1080} height={720} sizes={HERO_SIZES} />
                 ) : (
-                  <div className="kopex-product-card__placeholder">Bez slike</div>
+                  <div className="kopex-product-card__placeholder">{copy.noImage}</div>
                 )}
 
                 {gallery.length ? (
@@ -147,12 +194,12 @@ export default async function ProductDetailPage({ params }: PageProps) {
                     {renderParagraphs(product.description)}
                   </div>
                 ) : (
-                  <p>Bez opisa.</p>
+                  <p>{copy.noDescription}</p>
                 )}
 
                 {product.documents.length ? (
                   <div className="kopex-product-detail__docs">
-                    <span>Dokumenta:</span>
+                    <span>{copy.documentsLabel}</span>
                     <ul>
                       {product.documents.map((doc) => (
                         <li key={doc.url}>
@@ -169,7 +216,7 @@ export default async function ProductDetailPage({ params }: PageProps) {
 
             <div className="kopex-products-actions">
               <Link href="/products" className="kopex-button kopex-button--ghost">
-                Nazad na proizvode
+                {copy.backLabel}
               </Link>
             </div>
           </div>
@@ -183,7 +230,7 @@ export default async function ProductDetailPage({ params }: PageProps) {
         <section className="kopex-section kopex-section--products">
           <div className="stg-container">
             <div className="kopex-product-card__placeholder">
-              Ne mogu da ucitam proizvod. Pokusajte kasnije.
+              {copy.loadError}
             </div>
           </div>
         </section>

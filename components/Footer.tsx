@@ -32,6 +32,8 @@ export default function Footer() {
     phone: string;
     email: string;
     follow: string;
+    description: string;
+    copyright: string;
   }> = {
     sr: {
       contact: 'Kontakt',
@@ -42,10 +44,12 @@ export default function Footer() {
       news: 'Vesti / Karijera',
       management: 'Rukovodstvo firme',
       clients: 'Kupci',
-      address: 'Bulevar 12. februara 82, Niš',
+      address: 'Bulevar 12. februara 82, Ni\u0161',
       phone: 'Telefon: +381 18 245 678',
       email: 'Email: info@kopexmin.rs',
-      follow: 'Pratite nas:'
+      follow: 'Pratite nas:',
+      description: 'KOPEX MIN-LIV A.D. Ni\u0161 je industrijska livnica Srbije sa tradicijom od 1884. godine, specijalizovana za metalne odlivke od sivog, nodularnog i \u010deli\u010dnog liva.',
+      copyright: '\u00a9 2025 KOPEX MIN-LIV A.D. Ni\u0161. Sva prava zadr\u017eana.'
     },
     en: {
       contact: 'Contact',
@@ -56,24 +60,28 @@ export default function Footer() {
       news: 'News / Careers',
       management: 'Management',
       clients: 'Clients',
-      address: 'Bulevar 12. februara 82, Niš',
+      address: 'Bulevar 12. februara 82, Ni\u0161',
       phone: 'Phone: +381 18 245 678',
       email: 'Email: info@kopexmin.rs',
-      follow: 'Follow us:'
+      follow: 'Follow us:',
+      description: 'KOPEX MIN-LIV A.D. Ni\u0161 is an industrial foundry in Serbia with a tradition since 1884, specializing in metal castings of gray iron, ductile iron, and steel.',
+      copyright: '\u00a9 2025 KOPEX MIN-LIV A.D. Ni\u0161. All rights reserved.'
     },
     de: {
       contact: 'Kontakt',
       quickLinks: 'Schnellzugriff',
-      about: 'Über uns',
+      about: '\u00dcber uns',
       services: 'Ausstattung',
       products: 'Produkte',
       news: 'News / Karriere',
-      management: 'Geschäftsleitung',
+      management: 'Gesch\u00e4ftsleitung',
       clients: 'Kunden',
-      address: 'Bulevar 12. februara 82, Niš',
+      address: 'Bulevar 12. februara 82, Ni\u0161',
       phone: 'Telefon: +381 18 245 678',
       email: 'E-Mail: info@kopexmin.rs',
-      follow: 'Folgen Sie uns:'
+      follow: 'Folgen Sie uns:',
+      description: 'KOPEX MIN-LIV A.D. Ni\u0161 ist eine industrielle Gie\u00dferei in Serbien mit Tradition seit 1884 und spezialisiert auf Metallgussteile aus Grauguss, Sph\u00e4roguss und Stahlguss.',
+      copyright: '\u00a9 2025 KOPEX MIN-LIV A.D. Ni\u0161. Alle Rechte vorbehalten.'
     }
   };
 
@@ -85,9 +93,9 @@ export default function Footer() {
             <div className="stg-col-5 stg-tp-col-12 stg-tp-bottom-gap-l">
               <div className="bringer-info-widget">
                 <Link href={buildLocalizedHref('/')} className="bringer-logo footer-logo">
-                  <Image src="/img/kopex/logo.png" alt="KOPEX MIN-LIV" width={160} height={40} />
+                  <Image src="/img/newlogo.png" alt="KOPEX MIN-LIV" width={160} height={40} />
                 </Link>
-                <div className="bringer-info-description">KOPEX MIN-LIV A.D. Ni&#353; je industrijska livnica Srbije sa tradicijom od 1884. godine, specijalizovana za metalne odlivke od sivog, nodularnog i &#269;eli&#269;nog liva.</div>
+                <div className="bringer-info-description">{labels[currentLanguage].description}</div>
                 <span className="bringer-label">{labels[currentLanguage].follow}</span>
                 <ul className="bringer-socials-list" data-stagger-appear="fade-up" data-stagger-delay="75">
                   <li>
@@ -136,7 +144,7 @@ export default function Footer() {
       </div>
       <div className="bringer-footer-line stg-container">
         <div className="align-center">
-          &copy; 2025 KOPEX MIN-LIV A.D. Ni&#353;. Sva prava zadr&#382;ana.
+          {labels[currentLanguage].copyright}
         </div>
       </div>
     </footer>

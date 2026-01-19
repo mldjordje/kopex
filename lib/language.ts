@@ -20,3 +20,14 @@ export const getLanguageLabel = (language: Language): string => {
       return 'SR';
   }
 };
+
+export const getLanguageLocale = (language: Language): string => {
+  switch (language) {
+    case 'en':
+      return 'en-US';
+    case 'de':
+      return 'de-DE';
+    default:
+      return 'sr-RS';
+  }
+};

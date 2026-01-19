@@ -6,18 +6,41 @@ import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import MuiThemeProvider from '@/components/MuiThemeProvider';
 import type { NewsItem } from '@/lib/news';
-import { normalizeLanguage, type Language } from '@/lib/language';
+import { getLanguageLocale, normalizeLanguage, type Language } from '@/lib/language';
 
-const formatDate = (value: string): string => {
+const formatDate = (value: string, language: Language): string => {
   const date = new Date(value);
   if (Number.isNaN(date.getTime())) {
     return value;
   }
-  return new Intl.DateTimeFormat('sr-RS', {
+  return new Intl.DateTimeFormat(getLanguageLocale(language), {
     day: '2-digit',
     month: 'long',
     year: 'numeric'
   }).format(date);
+};
+
+const getSerbianPlural = (count: number, one: string, few: string, many: string): string => {
+  const mod10 = count % 10;
+  const mod100 = count % 100;
+  if (mod10 === 1 && mod100 !== 11) {
+    return one;
+  }
+  if (mod10 >= 2 && mod10 <= 4 && (mod100 < 12 || mod100 > 14)) {
+    return few;
+  }
+  return many;
+};
+
+const getImageCountLabel = (language: Language, count: number): string => {
+  switch (language) {
+    case 'en':
+      return `${count} ${count === 1 ? 'image' : 'images'}`;
+    case 'de':
+      return `${count} ${count === 1 ? 'Bild' : 'Bilder'}`;
+    default:
+      return `${count} ${getSerbianPlural(count, 'slika', 'slike', 'slika')}`;
+  }
 };
 
 const renderParagraphs = (body: string) => {
@@ -51,21 +74,25 @@ export default function NewsDetailClient({
     back: string;
     notFound: string;
     gallery: string;
+    imageAltFallback: string;
   }> = {
     sr: {
       back: 'Nazad na vesti / karijeru',
-      notFound: 'Vest nije pronađena',
-      gallery: 'Galerija'
+      notFound: 'Vest nije prona\u0111ena',
+      gallery: 'Galerija',
+      imageAltFallback: 'Vest'
     },
     en: {
       back: 'Back to news / careers',
       notFound: 'News item not found',
-      gallery: 'Gallery'
+      gallery: 'Gallery',
+      imageAltFallback: 'News'
     },
     de: {
-      back: 'Zurück zu News / Karriere',
+      back: 'Zur\u00fcck zu News / Karriere',
       notFound: 'Nachricht nicht gefunden',
-      gallery: 'Galerie'
+      gallery: 'Galerie',
+      imageAltFallback: 'Nachricht'
     }
   };
 
@@ -93,9 +120,13 @@ export default function NewsDetailClient({
                   {item.title}
                 </Typography>
                 <Stack direction="row" spacing={1} alignItems="center">
-                  <Chip size="small" label={formatDate(item.createdAt)} />
+                  <Chip size="small" label={formatDate(item.createdAt, currentLanguage)} />
                   {item.images.length > 0 ? (
-                    <Chip size="small" variant="outlined" label={`${item.images.length} slika`} />
+                    <Chip
+                      size="small"
+                      variant="outlined"
+                      label={getImageCountLabel(currentLanguage, item.images.length)}
+                    />
                   ) : null}
                 </Stack>
               </Stack>
@@ -117,7 +148,7 @@ export default function NewsDetailClient({
                 <Box sx={{ position: 'relative', height: { xs: 240, sm: 420 }, lineHeight: 0 }}>
                   <Image
                     src={cover}
-                    alt={item?.title ?? 'Vest'}
+                    alt={item?.title ?? labels[currentLanguage].imageAltFallback}
                     fill
                     sizes={COVER_SIZES}
                     style={{ objectFit: 'cover' }}
@@ -155,7 +186,7 @@ export default function NewsDetailClient({
                       <Box sx={{ position: 'relative', height: 240, lineHeight: 0 }}>
                         <Image
                           src={image}
-                          alt={`${item?.title ?? 'Vest'} ${index + 2}`}
+                          alt={`${item?.title ?? labels[currentLanguage].imageAltFallback} ${index + 2}`}
                           fill
                           sizes={GALLERY_SIZES}
                           style={{ objectFit: 'cover' }}

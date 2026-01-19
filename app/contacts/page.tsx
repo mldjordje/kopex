@@ -1,5 +1,7 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
+import { cookies } from 'next/headers';
+import { LANGUAGE_COOKIE, normalizeLanguage, type Language } from '@/lib/language';
 
 export const metadata: Metadata = {
   title: 'KOPEX MIN-LIV | Kontakt',
@@ -8,14 +10,140 @@ export const metadata: Metadata = {
 
 const FULL_SIZES = '(max-width: 739px) 100vw, 80vw';
 
-export default function ContactsPage() {
+const CONTACTS_COPY: Record<Language, {
+  title: string;
+  lead: string;
+  connectTitle: string;
+  connectLead: string;
+  phoneTitle: string;
+  phoneBody: string;
+  emailTitle: string;
+  emailBody: string;
+  socialTitle: string;
+  socialBody: string;
+  visitTitle: string;
+  visitLead: string;
+  addressTitle: string;
+  addressValue: string;
+  addressBody: string;
+  formError: string;
+  nameLabel: string;
+  namePlaceholder: string;
+  emailLabel: string;
+  emailPlaceholder: string;
+  messageLabel: string;
+  messagePlaceholder: string;
+  formButton: string;
+  ctaTitle: string;
+  ctaLead: string;
+  counter1Label: string;
+  counter2Label: string;
+  counter3Label: string;
+}> = {
+  sr: {
+    title: 'Kontakt',
+    lead: 'Kopex Min A.D. Niš je tu da odgovori na sva vaša pitanja i pruži podršku u vezi sa našim uslugama i proizvodima.',
+    connectTitle: 'Povežite se sa nama',
+    connectLead: 'Evo kako možete stupiti u kontakt sa timom Kopex Min.',
+    phoneTitle: 'Telefon',
+    phoneBody: 'Pozovite nas direktno i razgovarajte sa našim timom stručnjaka.',
+    emailTitle: 'Email',
+    emailBody: 'Pošaljite nam detaljnu poruku. Odgovorićemo u najkraćem roku.',
+    socialTitle: 'Društvene mreže',
+    socialBody: 'Pratite nas na društvenim mrežama i saznajte više o našim projektima i proizvodnji.',
+    visitTitle: 'Posetite našu fabriku',
+    visitLead: 'Dogovorite obilazak i upoznajte naš tim i proizvodne kapacitete.',
+    addressTitle: 'Adresa',
+    addressValue: 'Bulevar 12. februara 82, Niš 18000',
+    addressBody: 'Posetite našu fabriku i upoznajte se sa proizvodnim procesom.',
+    formError: 'Molimo popunite formu.',
+    nameLabel: 'Ime i prezime',
+    namePlaceholder: 'Ime i prezime',
+    emailLabel: 'Email',
+    emailPlaceholder: 'email@primer.rs',
+    messageLabel: 'Poruka',
+    messagePlaceholder: 'Vaša poruka',
+    formButton: 'Pošalji poruku',
+    ctaTitle: 'Zainteresovani ste za saradnju?',
+    ctaLead: 'Pošaljite nam upit i dostavite specifikacije. Naš tim odgovara brzo i precizno.',
+    counter1Label: 'Godina osnivanja',
+    counter2Label: 'Mesečni kapacitet',
+    counter3Label: 'Max težina odlivka'
+  },
+  en: {
+    title: 'Contact',
+    lead: 'Kopex Min A.D. Niš is here to answer all your questions and support you regarding our services and products.',
+    connectTitle: 'Get in touch',
+    connectLead: 'Here is how you can reach the Kopex Min team.',
+    phoneTitle: 'Phone',
+    phoneBody: 'Call us directly and talk to our expert team.',
+    emailTitle: 'Email',
+    emailBody: 'Send us a detailed message. We will reply as soon as possible.',
+    socialTitle: 'Social media',
+    socialBody: 'Follow us on social media and learn more about our projects and production.',
+    visitTitle: 'Visit our plant',
+    visitLead: 'Arrange a tour and meet our team and production capacities.',
+    addressTitle: 'Address',
+    addressValue: 'Bulevar 12. februara 82, Niš 18000',
+    addressBody: 'Visit our plant and see the production process.',
+    formError: 'Please fill out the form.',
+    nameLabel: 'Full name',
+    namePlaceholder: 'Full name',
+    emailLabel: 'Email',
+    emailPlaceholder: 'email@example.com',
+    messageLabel: 'Message',
+    messagePlaceholder: 'Your message',
+    formButton: 'Send message',
+    ctaTitle: 'Interested in cooperation?',
+    ctaLead: 'Send an inquiry and provide specifications. Our team responds quickly and precisely.',
+    counter1Label: 'Founded',
+    counter2Label: 'Monthly capacity',
+    counter3Label: 'Max casting weight'
+  },
+  de: {
+    title: 'Kontakt',
+    lead: 'Kopex Min A.D. Niš beantwortet gerne Ihre Fragen und unterstützt Sie zu unseren Leistungen und Produkten.',
+    connectTitle: 'Kontaktieren Sie uns',
+    connectLead: 'So erreichen Sie das Kopex Min Team.',
+    phoneTitle: 'Telefon',
+    phoneBody: 'Rufen Sie uns direkt an und sprechen Sie mit unserem Expertenteam.',
+    emailTitle: 'E-Mail',
+    emailBody: 'Senden Sie uns eine detaillierte Nachricht. Wir antworten schnellstmöglich.',
+    socialTitle: 'Soziale Medien',
+    socialBody: 'Folgen Sie uns in den sozialen Medien und erfahren Sie mehr über unsere Projekte und Produktion.',
+    visitTitle: 'Besuchen Sie unser Werk',
+    visitLead: 'Vereinbaren Sie einen Rundgang und lernen Sie unser Team und die Produktionskapazitäten kennen.',
+    addressTitle: 'Adresse',
+    addressValue: 'Bulevar 12. februara 82, Niš 18000',
+    addressBody: 'Besuchen Sie unser Werk und lernen Sie den Produktionsprozess kennen.',
+    formError: 'Bitte füllen Sie das Formular aus.',
+    nameLabel: 'Name und Nachname',
+    namePlaceholder: 'Name und Nachname',
+    emailLabel: 'E-Mail',
+    emailPlaceholder: 'email@beispiel.de',
+    messageLabel: 'Nachricht',
+    messagePlaceholder: 'Ihre Nachricht',
+    formButton: 'Nachricht senden',
+    ctaTitle: 'Interessiert an einer Zusammenarbeit?',
+    ctaLead: 'Senden Sie eine Anfrage und Spezifikationen. Unser Team antwortet schnell und präzise.',
+    counter1Label: 'Gründungsjahr',
+    counter2Label: 'Monatskapazität',
+    counter3Label: 'Max. Gussteilgewicht'
+  }
+};
+
+export default async function ContactsPage() {
+  const cookieStore = await cookies();
+  const language = normalizeLanguage(cookieStore.get(LANGUAGE_COOKIE)?.value);
+  const copy = CONTACTS_COPY[language];
+
   return (
     <div className="stg-container">
       <section className="backlight-bottom">
         <div className="stg-row stg-bottom-gap-l">
           <div className="stg-col-8 stg-offset-2 align-center">
-            <h1 className="bringer-page-title">Kontakt</h1>
-            <p className="bringer-large-text">Kopex Min A.D. Ni&#353; je tu da odgovori na sva va&#353;a pitanja i pru&#382;i podr&#353;ku u vezi sa na&#353;im uslugama i proizvodima.</p>
+            <h1 className="bringer-page-title">{copy.title}</h1>
+            <p className="bringer-large-text">{copy.lead}</p>
           </div>
         </div>
         <div className="bringer-parallax-media" data-parallax-speed="20">
@@ -33,8 +161,8 @@ export default function ContactsPage() {
         <div className="stg-row bringer-section-title">
           <div className="stg-col-8 stg-offset-2">
             <div className="align-center">
-              <h2>Pove&#382;ite se sa nama</h2>
-              <p className="bringer-large-text">Evo kako mo&#382;ete stupiti u kontakt sa timom Kopex Min.</p>
+              <h2>{copy.connectTitle}</h2>
+              <p className="bringer-large-text">{copy.connectLead}</p>
             </div>
           </div>
         </div>
@@ -43,26 +171,26 @@ export default function ContactsPage() {
             <div className="bringer-block stg-aspect-square stg-vertical-space-between">
               <a href="tel:+38118245678" className="bringer-grid-item-link"></a>
               <div>
-                <h5>Telefon<span className="bringer-accent">.</span></h5>
+                <h5>{copy.phoneTitle}<span className="bringer-accent">.</span></h5>
                 <h6>+381 18 245 678</h6>
               </div>
-              <p>Pozovite nas direktno i razgovarajte sa na&#353;im timom stru&#269;njaka.</p>
+              <p>{copy.phoneBody}</p>
             </div>
           </div>
           <div className="stg-col-4 stg-tp-col-6 stg-tp-bottom-gap">
             <div className="bringer-block stg-aspect-square stg-vertical-space-between">
               <a href="mailto:info@kopexmin.rs" className="bringer-grid-item-link"></a>
               <div>
-                <h5>Email<span className="bringer-accent">.</span></h5>
+                <h5>{copy.emailTitle}<span className="bringer-accent">.</span></h5>
                 <h6>info@kopexmin.rs</h6>
               </div>
-              <p>Po&#353;aljite nam detaljnu poruku. Odgovori&#263;emo u najkra&#263;em roku.</p>
+              <p>{copy.emailBody}</p>
             </div>
           </div>
           <div className="stg-col-4 stg-tp-col-12">
             <div className="bringer-block stg-aspect-square stg-tp-aspect-rectangle stg-vertical-space-between">
               <div>
-                <h5>Dru&#353;tvene mre&#382;e<span className="bringer-accent">.</span></h5>
+                <h5>{copy.socialTitle}<span className="bringer-accent">.</span></h5>
                 <ul className="bringer-socials-list stg-small-gap" data-stagger-appear="fade-up" data-stagger-delay="75">
                   <li>
                     <a href="https://www.facebook.com/" target="_blank" rel="noreferrer" className="bringer-socials-facebook">
@@ -76,7 +204,7 @@ export default function ContactsPage() {
                   </li>
                 </ul>
               </div>
-              <p>Pratite nas na dru&#353;tvenim mre&#382;ama i saznajte vi&#353;e o na&#353;im projektima i proizvodnji.</p>
+              <p>{copy.socialBody}</p>
             </div>
           </div>
         </div>
@@ -86,8 +214,8 @@ export default function ContactsPage() {
         <div className="stg-row bringer-section-title">
           <div className="stg-col-8 stg-offset-2">
             <div className="align-center">
-              <h2>Posetite na&#353;u fabriku</h2>
-              <p className="bringer-large-text">Dogovorite obilazak i upoznajte na&#353; tim i proizvodne kapacitete.</p>
+              <h2>{copy.visitTitle}</h2>
+              <p className="bringer-large-text">{copy.visitLead}</p>
             </div>
           </div>
         </div>
@@ -96,10 +224,10 @@ export default function ContactsPage() {
             <div className="bringer-block stg-aspect-square stg-vertical-space-between">
               <a href="https://www.google.com/maps/place/Kopex+MIN,+Bulevar+12.+februara,+Ni%C5%A1+18000" className="bringer-grid-item-link" target="_blank" rel="noreferrer"></a>
               <div>
-                <h5>Adresa<span className="bringer-accent">.</span></h5>
-                <h6>Bulevar 12. februara 82, Ni&#353; 18000</h6>
+                <h5>{copy.addressTitle}<span className="bringer-accent">.</span></h5>
+                <h6>{copy.addressValue}</h6>
               </div>
-              <p>Posetite na&#353;u fabriku i upoznajte se sa proizvodnim procesom.</p>
+              <p>{copy.addressBody}</p>
             </div>
           </div>
           <div className="stg-col-8 stg-tp-col-6">
@@ -121,15 +249,20 @@ export default function ContactsPage() {
         <div className="stg-row stg-valign-middle stg-cta-with-image stg-tp-column-reverse">
           <div className="stg-col-5">
             <div className="bringer-offset-image" data-bg-src="/img/cta/contact-section-bg.jpg"></div>
-            <form action="/api/contact" method="post" className="bringer-contact-form bringer-block" data-fill-error="Molimo popunite formu.">
+            <form
+              action="/api/contact"
+              method="post"
+              className="bringer-contact-form bringer-block"
+              data-fill-error={copy.formError}
+            >
               <div className="bringer-form-content">
-                <label htmlFor="name">Ime i prezime</label>
-                <input type="text" id="name" name="name" placeholder="Ime i prezime" required />
-                <label htmlFor="email">Email</label>
-                <input type="email" id="email" name="email" placeholder="email@primer.rs" required />
-                <label htmlFor="message">Poruka</label>
-                <textarea id="message" name="message" placeholder="Vasa poruka" required></textarea>
-                <button type="submit">Posalji poruku</button>
+                <label htmlFor="name">{copy.nameLabel}</label>
+                <input type="text" id="name" name="name" placeholder={copy.namePlaceholder} required />
+                <label htmlFor="email">{copy.emailLabel}</label>
+                <input type="email" id="email" name="email" placeholder={copy.emailPlaceholder} required />
+                <label htmlFor="message">{copy.messageLabel}</label>
+                <textarea id="message" name="message" placeholder={copy.messagePlaceholder} required></textarea>
+                <button type="submit">{copy.formButton}</button>
                 <div className="bringer-contact-form__response"></div>
               </div>
               <span className="bringer-form-spinner"></span>
@@ -137,22 +270,22 @@ export default function ContactsPage() {
           </div>
           <div className="stg-col-6 stg-offset-1">
             <div className="bringer-cta-form-content">
-              <div className="bringer-cta-form-title">Zainteresovani ste za saradnju?</div>
+              <div className="bringer-cta-form-title">{copy.ctaTitle}</div>
               <div className="bringer-cta-text">
-                <p className="bringer-large-text">Posaljite nam upit i dostavite specifikacije. Nas tim odgovara brzo i precizno.</p>
+                <p className="bringer-large-text">{copy.ctaLead}</p>
               </div>
               <div className="bringer-cta-counters bringer-grid-3cols bringer-m-grid-3cols" data-stagger-appear="fade-up" data-stagger-delay="100">
                 <div className="bringer-counter bringer-small-counter" data-delay="3000">
                   <div className="bringer-counter-number">1884</div>
-                  <div className="bringer-counter-label">Godina osnivanja</div>
+                  <div className="bringer-counter-label">{copy.counter1Label}</div>
                 </div>
                 <div className="bringer-counter bringer-small-counter" data-delay="3000">
                   <div className="bringer-counter-number" data-suffix=" t">100</div>
-                  <div className="bringer-counter-label">Mesecni kapacitet</div>
+                  <div className="bringer-counter-label">{copy.counter2Label}</div>
                 </div>
                 <div className="bringer-counter bringer-small-counter" data-delay="3000">
                   <div className="bringer-counter-number" data-suffix=" t">6</div>
-                  <div className="bringer-counter-label">Max tezina odlivka</div>
+                  <div className="bringer-counter-label">{copy.counter3Label}</div>
                 </div>
               </div>
             </div>

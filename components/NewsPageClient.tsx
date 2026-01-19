@@ -18,18 +18,41 @@ import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import MuiThemeProvider from '@/components/MuiThemeProvider';
 import type { NewsItem } from '@/lib/news';
-import { normalizeLanguage, type Language } from '@/lib/language';
+import { getLanguageLocale, normalizeLanguage, type Language } from '@/lib/language';
 
-const formatDate = (value: string): string => {
+const formatDate = (value: string, language: Language): string => {
   const date = new Date(value);
   if (Number.isNaN(date.getTime())) {
     return value;
   }
-  return new Intl.DateTimeFormat('sr-RS', {
+  return new Intl.DateTimeFormat(getLanguageLocale(language), {
     day: '2-digit',
     month: 'long',
     year: 'numeric'
   }).format(date);
+};
+
+const getSerbianPlural = (count: number, one: string, few: string, many: string): string => {
+  const mod10 = count % 10;
+  const mod100 = count % 100;
+  if (mod10 === 1 && mod100 !== 11) {
+    return one;
+  }
+  if (mod10 >= 2 && mod10 <= 4 && (mod100 < 12 || mod100 > 14)) {
+    return few;
+  }
+  return many;
+};
+
+const getImageCountLabel = (language: Language, count: number): string => {
+  switch (language) {
+    case 'en':
+      return `${count} ${count === 1 ? 'image' : 'images'}`;
+    case 'de':
+      return `${count} ${count === 1 ? 'Bild' : 'Bilder'}`;
+    default:
+      return `${count} ${getSerbianPlural(count, 'slika', 'slike', 'slika')}`;
+  }
 };
 
 const getSnippet = (body: string): string => {
@@ -62,24 +85,28 @@ export default function NewsPageClient({
     subtitle: string;
     empty: string;
     readMore: string;
+    noImage: string;
   }> = {
     sr: {
       title: 'Vesti / Karijera',
       subtitle: 'Najnovije informacije, objave i oglasi za posao iz Kopex MIN-LIV.',
       empty: 'Trenutno nema objavljenih vesti ili oglasa.',
-      readMore: 'Pročitaj više'
+      readMore: 'Pro\u010ditaj vi\u0161e',
+      noImage: 'Bez naslovne slike'
     },
     en: {
       title: 'News / Careers',
       subtitle: 'Latest updates, announcements, and job openings from Kopex MIN-LIV.',
       empty: 'There are currently no published news items or job ads.',
-      readMore: 'Read more'
+      readMore: 'Read more',
+      noImage: 'No cover image'
     },
     de: {
       title: 'News / Karriere',
       subtitle: 'Aktuelle Informationen, Meldungen und Stellenangebote von Kopex MIN-LIV.',
-      empty: 'Derzeit sind keine News oder Stellenangebote verfügbar.',
-      readMore: 'Mehr lesen'
+      empty: 'Derzeit sind keine News oder Stellenangebote verf\u00fcgbar.',
+      readMore: 'Mehr lesen',
+      noImage: 'Kein Titelbild'
     }
   };
 
@@ -145,18 +172,18 @@ export default function NewsPageClient({
                           }}
                         >
                           <Typography variant="subtitle2" color="text.secondary">
-                            Bez naslovne slike
+                            {labels[currentLanguage].noImage}
                           </Typography>
                         </Box>
                       )}
                       <CardContent sx={{ flexGrow: 1 }}>
                         <Stack direction="row" spacing={1} alignItems="center" sx={{ mb: 1 }}>
-                          <Chip size="small" label={formatDate(item.createdAt)} />
+                          <Chip size="small" label={formatDate(item.createdAt, currentLanguage)} />
                           {item.images.length > 1 ? (
                             <Chip
                               size="small"
                               variant="outlined"
-                              label={`${item.images.length} slika`}
+                              label={getImageCountLabel(currentLanguage, item.images.length)}
                             />
                           ) : null}
                         </Stack>

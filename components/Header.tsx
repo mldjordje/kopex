@@ -31,9 +31,10 @@ export default function Header() {
     certificates: string;
     contact: string;
     cta: string;
+    themeToggle: string;
   }> = {
     sr: {
-      home: 'Početna',
+      home: 'Po\u010detna',
       products: 'Proizvodi',
       news: 'Vesti / Karijera',
       about: 'O nama',
@@ -42,7 +43,8 @@ export default function Header() {
       clients: 'Kupci',
       certificates: 'Sertifikati',
       contact: 'Kontakt',
-      cta: 'Kontakt'
+      cta: 'Kontakt',
+      themeToggle: 'Promeni temu'
     },
     en: {
       home: 'Home',
@@ -54,19 +56,21 @@ export default function Header() {
       clients: 'Clients',
       certificates: 'Certificates',
       contact: 'Contact',
-      cta: 'Contact'
+      cta: 'Contact',
+      themeToggle: 'Toggle theme'
     },
     de: {
       home: 'Startseite',
       products: 'Produkte',
       news: 'News / Karriere',
-      about: 'Über uns',
-      management: 'Geschäftsleitung',
+      about: '\u00dcber uns',
+      management: 'Gesch\u00e4ftsleitung',
       services: 'Ausstattung',
       clients: 'Kunden',
       certificates: 'Zertifikate',
       contact: 'Kontakt',
-      cta: 'Kontakt'
+      cta: 'Kontakt',
+      themeToggle: 'Theme wechseln'
     }
   };
 
@@ -101,7 +105,7 @@ export default function Header() {
       <div className="bringer-header-inner">
         <div className="bringer-header-lp">
           <Link href={buildLocalizedHref('/')} className="bringer-logo">
-            <Image src="/img/kopex/logo.png" alt="KOPEX MIN-LIV" width={160} height={40} />
+            <Image src="/img/newlogo.png" alt="KOPEX MIN-LIV" width={160} height={40} />
           </Link>
         </div>
         <div className="bringer-header-mp">
@@ -138,7 +142,12 @@ export default function Header() {
           </nav>
         </div>
         <div className="bringer-header-rp">
-          <button className="bringer-theme-toggle" type="button" aria-label="Promeni temu" title="Promeni temu">
+          <button
+            className="bringer-theme-toggle"
+            type="button"
+            aria-label={navLabels[currentLanguage].themeToggle}
+            title={navLabels[currentLanguage].themeToggle}
+          >
             <svg className="theme-icon theme-icon-sun" viewBox="0 0 24 24" aria-hidden="true">
               <circle cx="12" cy="12" r="4"></circle>
               <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"></path>
@@ -167,7 +176,7 @@ export default function Header() {
       </div>
       <div className="bringer-mobile-header-inner">
         <Link href={buildLocalizedHref('/')} className="bringer-logo">
-          <Image src="/img/kopex/logo.png" alt="KOPEX MIN-LIV" width={160} height={40} />
+          <Image src="/img/newlogo.png" alt="KOPEX MIN-LIV" width={160} height={40} />
         </Link>
         <div className="kopex-lang-switch kopex-lang-switch--mobile">
           <Link href={buildLangHref('sr')} aria-current={currentLanguage === 'sr'}>
@@ -182,7 +191,12 @@ export default function Header() {
             DE
           </Link>
         </div>
-        <button className="bringer-theme-toggle" type="button" aria-label="Promeni temu" title="Promeni temu">
+        <button
+          className="bringer-theme-toggle"
+          type="button"
+          aria-label={navLabels[currentLanguage].themeToggle}
+          title={navLabels[currentLanguage].themeToggle}
+        >
           <svg className="theme-icon theme-icon-sun" viewBox="0 0 24 24" aria-hidden="true">
             <circle cx="12" cy="12" r="4"></circle>
             <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"></path>
