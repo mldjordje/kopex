@@ -41,8 +41,6 @@ export async function generateMetadata(): Promise<Metadata> {
 export const dynamic = 'force-dynamic';
 
 const CARD_SIZES = '(max-width: 739px) 100vw, (max-width: 1024px) 50vw, 33vw';
-const GROUP_SIZES = '(max-width: 739px) 100vw, (max-width: 1200px) 50vw, 33vw';
-
 const PRODUCTS_COPY: Record<Language, {
   eyebrow: string;
   title: string;
@@ -52,11 +50,9 @@ const PRODUCTS_COPY: Record<Language, {
   noImage: string;
   docsLabel: string;
   viewProduct: string;
-  groupsEyebrow: string;
-  groupsTitle: string;
-  groupsLead: string;
   cta: string;
   noDescription: string;
+  categoriesLabel: string;
 }> = {
   sr: {
     eyebrow: 'Proizvodi',
@@ -67,11 +63,9 @@ const PRODUCTS_COPY: Record<Language, {
     noImage: 'Bez slike',
     docsLabel: 'Dokumenta:',
     viewProduct: 'Pogledaj proizvod',
-    groupsEyebrow: 'Grupe proizvoda',
-    groupsTitle: 'Nodularni, čelični i sivi liv',
-    groupsLead: 'Pregled dostupnih fotografija proizvoda grupisanih po vrsti liva.',
     cta: 'Pošaljite upit',
-    noDescription: 'Bez opisa.'
+    noDescription: 'Bez opisa.',
+    categoriesLabel: 'Kategorije'
   },
   en: {
     eyebrow: 'Products',
@@ -82,11 +76,9 @@ const PRODUCTS_COPY: Record<Language, {
     noImage: 'No image',
     docsLabel: 'Documents:',
     viewProduct: 'View product',
-    groupsEyebrow: 'Product groups',
-    groupsTitle: 'Ductile, steel, and gray iron',
-    groupsLead: 'Overview of available product photos grouped by casting type.',
     cta: 'Send inquiry',
-    noDescription: 'No description.'
+    noDescription: 'No description.',
+    categoriesLabel: 'Categories'
   },
   de: {
     eyebrow: 'Produkte',
@@ -97,106 +89,65 @@ const PRODUCTS_COPY: Record<Language, {
     noImage: 'Kein Bild',
     docsLabel: 'Dokumente:',
     viewProduct: 'Produkt ansehen',
-    groupsEyebrow: 'Produktgruppen',
-    groupsTitle: 'Sphäro-, Stahl- und Grauguss',
-    groupsLead: 'Übersicht verfügbarer Produktfotos nach Gussart gruppiert.',
     cta: 'Anfrage senden',
-    noDescription: 'Keine Beschreibung.'
+    noDescription: 'Keine Beschreibung.',
+    categoriesLabel: 'Kategorien'
   }
 };
 
-const PRODUCT_GROUPS: Record<Language, Array<{
-  title: string;
-  description: string;
-  images: Array<{ src: string; alt: string }>;
-}>> = {
-  sr: [
-    {
-      title: 'Nodularni liv',
-      description: 'Odlivci namenjeni zahtevnim mehaničkim opterećenjima i dugom veku trajanja.',
-      images: [
-        { src: '/img/portfolio/portfolio02.jpg', alt: 'Nodularni liv - proizvod 1' },
-        { src: '/img/portfolio/portfolio03.jpg', alt: 'Nodularni liv - proizvod 2' },
-        { src: '/img/portfolio/portfolio01.jpg', alt: 'Nodularni liv - proizvod 3' }
-      ]
-    },
-    {
-      title: 'Čelični liv',
-      description: 'Čelični odlivci za visokotemperaturne i abrazivne uslove rada.',
-      images: [
-        { src: '/img/portfolio/portfolio04.jpg', alt: 'Čelični liv - proizvod 1' },
-        { src: '/img/portfolio/portfolio05.jpg', alt: 'Čelični liv - proizvod 2' },
-        { src: '/img/portfolio/portfolio06.jpg', alt: 'Čelični liv - proizvod 3' }
-      ]
-    },
-    {
+type CategoryKey = 'gray' | 'ductile' | 'steel';
+
+const CATEGORY_ORDER: CategoryKey[] = ['gray', 'ductile', 'steel'];
+
+const CATEGORY_CONTENT: Record<Language, Record<CategoryKey, { title: string; hero: { src: string; alt: string } }>> = {
+  sr: {
+    gray: {
       title: 'Sivi liv',
-      description: 'Serijska proizvodnja odlivaka stabilnih dimenzija i pouzdanog kvaliteta.',
-      images: [
-        { src: '/img/portfolio/portfolio07.jpg', alt: 'Sivi liv - proizvod 1' },
-        { src: '/img/portfolio/portfolio08.jpg', alt: 'Sivi liv - proizvod 2' },
-        { src: '/img/portfolio/portfolio09.jpg', alt: 'Sivi liv - proizvod 3' }
-      ]
+      hero: { src: '/img/products/hero-gray.png', alt: 'Sivi liv - hero fotografija' }
+    },
+    ductile: {
+      title: 'Nodularni liv',
+      hero: { src: '/img/products/hero-ductile.png', alt: 'Nodularni liv - hero fotografija' }
+    },
+    steel: {
+      title: 'Čelični liv',
+      hero: { src: '/img/products/hero-steel.png', alt: 'Čelični liv - hero fotografija' }
     }
-  ],
-  en: [
-    {
-      title: 'Ductile iron',
-      description: 'Castings designed for demanding mechanical loads and long service life.',
-      images: [
-        { src: '/img/portfolio/portfolio02.jpg', alt: 'Ductile iron - product 1' },
-        { src: '/img/portfolio/portfolio03.jpg', alt: 'Ductile iron - product 2' },
-        { src: '/img/portfolio/portfolio01.jpg', alt: 'Ductile iron - product 3' }
-      ]
-    },
-    {
-      title: 'Steel castings',
-      description: 'Steel castings for high-temperature and abrasive operating conditions.',
-      images: [
-        { src: '/img/portfolio/portfolio04.jpg', alt: 'Steel casting - product 1' },
-        { src: '/img/portfolio/portfolio05.jpg', alt: 'Steel casting - product 2' },
-        { src: '/img/portfolio/portfolio06.jpg', alt: 'Steel casting - product 3' }
-      ]
-    },
-    {
+  },
+  en: {
+    gray: {
       title: 'Gray iron',
-      description: 'Series production of castings with stable dimensions and reliable quality.',
-      images: [
-        { src: '/img/portfolio/portfolio07.jpg', alt: 'Gray iron - product 1' },
-        { src: '/img/portfolio/portfolio08.jpg', alt: 'Gray iron - product 2' },
-        { src: '/img/portfolio/portfolio09.jpg', alt: 'Gray iron - product 3' }
-      ]
+      hero: { src: '/img/products/hero-gray.png', alt: 'Gray iron hero image' }
+    },
+    ductile: {
+      title: 'Ductile iron',
+      hero: { src: '/img/products/hero-ductile.png', alt: 'Ductile iron hero image' }
+    },
+    steel: {
+      title: 'Steel castings',
+      hero: { src: '/img/products/hero-steel.png', alt: 'Steel castings hero image' }
     }
-  ],
-  de: [
-    {
-      title: 'Sphäroguss',
-      description: 'Gussteile für hohe mechanische Belastungen und lange Lebensdauer.',
-      images: [
-        { src: '/img/portfolio/portfolio02.jpg', alt: 'Sphäroguss - Produkt 1' },
-        { src: '/img/portfolio/portfolio03.jpg', alt: 'Sphäroguss - Produkt 2' },
-        { src: '/img/portfolio/portfolio01.jpg', alt: 'Sphäroguss - Produkt 3' }
-      ]
-    },
-    {
-      title: 'Stahlguss',
-      description: 'Stahlgussteile für Hochtemperatur- und abrasive Einsatzbedingungen.',
-      images: [
-        { src: '/img/portfolio/portfolio04.jpg', alt: 'Stahlguss - Produkt 1' },
-        { src: '/img/portfolio/portfolio05.jpg', alt: 'Stahlguss - Produkt 2' },
-        { src: '/img/portfolio/portfolio06.jpg', alt: 'Stahlguss - Produkt 3' }
-      ]
-    },
-    {
+  },
+  de: {
+    gray: {
       title: 'Grauguss',
-      description: 'Serienfertigung von Gussteilen mit stabilen Abmessungen und zuverlässiger Qualität.',
-      images: [
-        { src: '/img/portfolio/portfolio07.jpg', alt: 'Grauguss - Produkt 1' },
-        { src: '/img/portfolio/portfolio08.jpg', alt: 'Grauguss - Produkt 2' },
-        { src: '/img/portfolio/portfolio09.jpg', alt: 'Grauguss - Produkt 3' }
-      ]
+      hero: { src: '/img/products/hero-gray.png', alt: 'Grauguss Hero-Bild' }
+    },
+    ductile: {
+      title: 'Sphäroguss',
+      hero: { src: '/img/products/hero-ductile.png', alt: 'Sphäroguss Hero-Bild' }
+    },
+    steel: {
+      title: 'Stahlguss',
+      hero: { src: '/img/products/hero-steel.png', alt: 'Stahlguss Hero-Bild' }
     }
-  ]
+  }
+};
+
+const CATEGORY_MATCHERS: Record<CategoryKey, RegExp[]> = {
+  gray: [/sivi/gi, /sivo/gi, /gray/gi, /grau/gi, /grauguss/gi],
+  ductile: [/nodular/gi, /ductile/gi, /spharo/gi, /sphaero/gi],
+  steel: [/celic/gi, /c(el|e)ic/gi, /steel/gi, /stahl/gi, /legir/gi, /alloy/gi, /niskoleg/gi, /mangan/gi]
 };
 
 const getSnippet = (value: string, limit: number, fallback: string): string => {
@@ -217,16 +168,45 @@ const getSnippet = (value: string, limit: number, fallback: string): string => {
 const getProductSnippet = (product: ProductItem, fallback: string): string =>
   getSnippet(product.summary || product.description || '', 180, fallback);
 
+const normalizeCategoryValue = (value: string): string =>
+  value
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .trim();
+
+const resolveCategoryKey = (value: string | null | undefined): CategoryKey => {
+  if (!value) {
+    return 'steel';
+  }
+  const normalized = normalizeCategoryValue(value);
+  const match = (Object.entries(CATEGORY_MATCHERS) as Array<[CategoryKey, RegExp[]]>)
+    .find(([, patterns]) => patterns.some((pattern) => pattern.test(normalized)));
+  return match?.[0] ?? 'steel';
+};
+
 export default async function ProductsPage() {
   const cookieStore = await cookies();
   const language = normalizeLanguage(cookieStore.get(LANGUAGE_COOKIE)?.value);
   const copy = PRODUCTS_COPY[language];
-  const groups = PRODUCT_GROUPS[language];
+  const categoryContent = CATEGORY_CONTENT[language];
+  const categories = CATEGORY_ORDER.map((key) => ({
+    key,
+    id: `category-${key}`,
+    title: categoryContent[key].title,
+    hero: categoryContent[key].hero,
+    items: [] as ProductItem[]
+  }));
+  const categoryMap = new Map(categories.map((category) => [category.key, category]));
   let items: ProductItem[] = [];
   let errorMessage: string | null = null;
 
   try {
     items = await getProductsList();
+    items.forEach((product) => {
+      const categoryKey = resolveCategoryKey(product.category);
+      categoryMap.get(categoryKey)?.items.push(product);
+    });
   } catch (error) {
     console.error('Products page error:', error);
     errorMessage = copy.errorMessage;
@@ -252,80 +232,73 @@ export default async function ProductsPage() {
             <div className="kopex-product-card__placeholder">{copy.emptyMessage}</div>
           ) : null}
 
-          {!errorMessage && items.length > 0 ? (
-            <div className="kopex-product-grid">
-              {items.map((product) => {
-                const cover = product.heroImage || product.gallery[0] || '';
-                return (
-                  <article className="kopex-product-card" key={product.id}>
-                    {cover ? (
-                      <Image src={cover} alt={product.name} width={960} height={720} sizes={CARD_SIZES} />
-                    ) : (
-                      <div className="kopex-product-card__placeholder">{copy.noImage}</div>
-                    )}
-                    <div className="kopex-product-card__body">
-                      {product.category ? (
-                        <span className="kopex-product-card__meta">{product.category}</span>
-                      ) : null}
-                      <h3>{product.name}</h3>
-                      <p>{getProductSnippet(product, copy.noDescription)}</p>
-                      {product.documents.length ? (
-                        <div className="kopex-product-card__docs">
-                          <span>{copy.docsLabel}</span>
-                          <ul>
-                            {product.documents.map((doc) => (
-                              <li key={doc.url}>
-                                <a href={doc.url} target="_blank" rel="noreferrer">
-                                  {doc.name}
-                                </a>
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      ) : null}
-                      <div className="kopex-product-card__cta">
-                        <Link href={`/products/${product.slug}`} className="kopex-link">
-                          {copy.viewProduct}
-                        </Link>
-                      </div>
-                    </div>
-                  </article>
-                );
-              })}
-            </div>
-          ) : null}
-
-          <div className="stg-top-gap-l">
-            <div className="kopex-section__header">
-              <span className="kopex-eyebrow">{copy.groupsEyebrow}</span>
-              <h2>{copy.groupsTitle}</h2>
-              <p>
-                {copy.groupsLead}
-              </p>
-            </div>
-            <div className="stg-row">
-              {groups.map((group) => (
-                <div className="stg-col-4 stg-tp-col-12 stg-m-bottom-gap" key={group.title}>
-                  <div className="bringer-block">
-                    <h4>{group.title}</h4>
-                    <p>{group.description}</p>
-                    <div className="kopex-media-grid">
-                      {group.images.map((image, index) => (
-                        <div className="kopex-media-grid__item" key={`${group.title}-${index}`}>
-                          <Image
-                            src={image.src}
-                            alt={image.alt}
-                            width={640}
-                            height={480}
-                            sizes={GROUP_SIZES}
-                          />
-                        </div>
-                      ))}
-                    </div>
-                  </div>
+          <div className="kopex-product-categories">
+            <nav className="kopex-category-nav" aria-label={copy.categoriesLabel}>
+              <span className="kopex-category-nav__label">{copy.categoriesLabel}</span>
+              <div className="kopex-category-nav__list">
+                {categories.map((category) => (
+                  <a key={category.id} href={`#${category.id}`} className="kopex-category-nav__link">
+                    {category.title}
+                  </a>
+                ))}
+              </div>
+            </nav>
+            {categories.map((category) => (
+              <div className="kopex-product-category" id={category.id} key={category.id}>
+                <div className="kopex-product-category__hero">
+                  <Image
+                    src={category.hero.src}
+                    alt={category.hero.alt}
+                    width={1200}
+                    height={720}
+                    sizes="(max-width: 739px) 100vw, (max-width: 1200px) 80vw, 900px"
+                  />
                 </div>
-              ))}
-            </div>
+                <h2 className="kopex-product-category__title">{category.title}</h2>
+                {category.items.length ? (
+                  <div className="kopex-product-grid">
+                    {category.items.map((product) => {
+                      const cover = product.heroImage || product.gallery[0] || '';
+                      return (
+                        <article className="kopex-product-card" key={product.id}>
+                          {cover ? (
+                            <Image src={cover} alt={product.name} width={960} height={720} sizes={CARD_SIZES} />
+                          ) : (
+                            <div className="kopex-product-card__placeholder">{copy.noImage}</div>
+                          )}
+                          <div className="kopex-product-card__body">
+                            {product.category ? (
+                              <span className="kopex-product-card__meta">{product.category}</span>
+                            ) : null}
+                            <h3>{product.name}</h3>
+                            <p>{getProductSnippet(product, copy.noDescription)}</p>
+                            {product.documents.length ? (
+                              <div className="kopex-product-card__docs">
+                                <span>{copy.docsLabel}</span>
+                                <ul>
+                                  {product.documents.map((doc) => (
+                                    <li key={doc.url}>
+                                      <a href={doc.url} target="_blank" rel="noreferrer">
+                                        {doc.name}
+                                      </a>
+                                    </li>
+                                  ))}
+                                </ul>
+                              </div>
+                            ) : null}
+                            <div className="kopex-product-card__cta">
+                              <Link href={`/products/${product.slug}`} className="kopex-link">
+                                {copy.viewProduct}
+                              </Link>
+                            </div>
+                          </div>
+                        </article>
+                      );
+                    })}
+                  </div>
+                ) : null}
+              </div>
+            ))}
           </div>
 
           <div className="kopex-products-actions">
