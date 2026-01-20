@@ -57,6 +57,8 @@ const PRODUCTS_COPY: Record<Language, {
   groupsLead: string;
   cta: string;
   noDescription: string;
+  categoriesLabel: string;
+  uncategorized: string;
 }> = {
   sr: {
     eyebrow: 'Proizvodi',
@@ -71,7 +73,9 @@ const PRODUCTS_COPY: Record<Language, {
     groupsTitle: 'Nodularni, čelični i sivi liv',
     groupsLead: 'Pregled dostupnih fotografija proizvoda grupisanih po vrsti liva.',
     cta: 'Pošaljite upit',
-    noDescription: 'Bez opisa.'
+    noDescription: 'Bez opisa.',
+    categoriesLabel: 'Kategorije',
+    uncategorized: 'Ostalo'
   },
   en: {
     eyebrow: 'Products',
@@ -86,7 +90,9 @@ const PRODUCTS_COPY: Record<Language, {
     groupsTitle: 'Ductile, steel, and gray iron',
     groupsLead: 'Overview of available product photos grouped by casting type.',
     cta: 'Send inquiry',
-    noDescription: 'No description.'
+    noDescription: 'No description.',
+    categoriesLabel: 'Categories',
+    uncategorized: 'Other'
   },
   de: {
     eyebrow: 'Produkte',
@@ -101,7 +107,9 @@ const PRODUCTS_COPY: Record<Language, {
     groupsTitle: 'Sphäro-, Stahl- und Grauguss',
     groupsLead: 'Übersicht verfügbarer Produktfotos nach Gussart gruppiert.',
     cta: 'Anfrage senden',
-    noDescription: 'Keine Beschreibung.'
+    noDescription: 'Keine Beschreibung.',
+    categoriesLabel: 'Kategorien',
+    uncategorized: 'Weitere'
   }
 };
 
@@ -217,6 +225,16 @@ const getSnippet = (value: string, limit: number, fallback: string): string => {
 const getProductSnippet = (product: ProductItem, fallback: string): string =>
   getSnippet(product.summary || product.description || '', 180, fallback);
 
+const createCategoryId = (value: string): string => {
+  const slug = value
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/(^-|-$)/g, '');
+  return `category-${slug || 'general'}`;
+};
+
 export default async function ProductsPage() {
   const cookieStore = await cookies();
   const language = normalizeLanguage(cookieStore.get(LANGUAGE_COOKIE)?.value);
@@ -224,9 +242,25 @@ export default async function ProductsPage() {
   const groups = PRODUCT_GROUPS[language];
   let items: ProductItem[] = [];
   let errorMessage: string | null = null;
+  let categories: Array<{ id: string; title: string; items: ProductItem[] }> = [];
 
   try {
     items = await getProductsList();
+    const categoryMap = new Map<string, { id: string; title: string; items: ProductItem[] }>();
+    items.forEach((product) => {
+      const categoryName = (product.category || copy.uncategorized).trim() || copy.uncategorized;
+      const existing = categoryMap.get(categoryName);
+      if (existing) {
+        existing.items.push(product);
+      } else {
+        categoryMap.set(categoryName, {
+          id: createCategoryId(categoryName),
+          title: categoryName,
+          items: [product]
+        });
+      }
+    });
+    categories = Array.from(categoryMap.values());
   } catch (error) {
     console.error('Products page error:', error);
     errorMessage = copy.errorMessage;
@@ -253,45 +287,62 @@ export default async function ProductsPage() {
           ) : null}
 
           {!errorMessage && items.length > 0 ? (
-            <div className="kopex-product-grid">
-              {items.map((product) => {
-                const cover = product.heroImage || product.gallery[0] || '';
-                return (
-                  <article className="kopex-product-card" key={product.id}>
-                    {cover ? (
-                      <Image src={cover} alt={product.name} width={960} height={720} sizes={CARD_SIZES} />
-                    ) : (
-                      <div className="kopex-product-card__placeholder">{copy.noImage}</div>
-                    )}
-                    <div className="kopex-product-card__body">
-                      {product.category ? (
-                        <span className="kopex-product-card__meta">{product.category}</span>
-                      ) : null}
-                      <h3>{product.name}</h3>
-                      <p>{getProductSnippet(product, copy.noDescription)}</p>
-                      {product.documents.length ? (
-                        <div className="kopex-product-card__docs">
-                          <span>{copy.docsLabel}</span>
-                          <ul>
-                            {product.documents.map((doc) => (
-                              <li key={doc.url}>
-                                <a href={doc.url} target="_blank" rel="noreferrer">
-                                  {doc.name}
-                                </a>
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      ) : null}
-                      <div className="kopex-product-card__cta">
-                        <Link href={`/products/${product.slug}`} className="kopex-link">
-                          {copy.viewProduct}
-                        </Link>
-                      </div>
-                    </div>
-                  </article>
-                );
-              })}
+            <div className="kopex-product-categories">
+              <nav className="kopex-category-nav" aria-label={copy.categoriesLabel}>
+                <span className="kopex-category-nav__label">{copy.categoriesLabel}</span>
+                <div className="kopex-category-nav__list">
+                  {categories.map((category) => (
+                    <a key={category.id} href={`#${category.id}`} className="kopex-category-nav__link">
+                      {category.title}
+                    </a>
+                  ))}
+                </div>
+              </nav>
+              {categories.map((category) => (
+                <div className="kopex-product-category" id={category.id} key={category.id}>
+                  <h2 className="kopex-product-category__title">{category.title}</h2>
+                  <div className="kopex-product-grid">
+                    {category.items.map((product) => {
+                      const cover = product.heroImage || product.gallery[0] || '';
+                      return (
+                        <article className="kopex-product-card" key={product.id}>
+                          {cover ? (
+                            <Image src={cover} alt={product.name} width={960} height={720} sizes={CARD_SIZES} />
+                          ) : (
+                            <div className="kopex-product-card__placeholder">{copy.noImage}</div>
+                          )}
+                          <div className="kopex-product-card__body">
+                            {product.category ? (
+                              <span className="kopex-product-card__meta">{product.category}</span>
+                            ) : null}
+                            <h3>{product.name}</h3>
+                            <p>{getProductSnippet(product, copy.noDescription)}</p>
+                            {product.documents.length ? (
+                              <div className="kopex-product-card__docs">
+                                <span>{copy.docsLabel}</span>
+                                <ul>
+                                  {product.documents.map((doc) => (
+                                    <li key={doc.url}>
+                                      <a href={doc.url} target="_blank" rel="noreferrer">
+                                        {doc.name}
+                                      </a>
+                                    </li>
+                                  ))}
+                                </ul>
+                              </div>
+                            ) : null}
+                            <div className="kopex-product-card__cta">
+                              <Link href={`/products/${product.slug}`} className="kopex-link">
+                                {copy.viewProduct}
+                              </Link>
+                            </div>
+                          </div>
+                        </article>
+                      );
+                    })}
+                  </div>
+                </div>
+              ))}
             </div>
           ) : null}
 
