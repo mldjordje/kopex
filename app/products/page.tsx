@@ -225,6 +225,14 @@ const getSnippet = (value: string, limit: number, fallback: string): string => {
 const getProductSnippet = (product: ProductItem, fallback: string): string =>
   getSnippet(product.summary || product.description || '', 180, fallback);
 
+const normalizeCategoryKey = (value: string): string =>
+  value
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+
 const createCategoryId = (value: string): string => {
   const slug = value
     .toLowerCase()
@@ -249,11 +257,12 @@ export default async function ProductsPage() {
     const categoryMap = new Map<string, { id: string; title: string; items: ProductItem[] }>();
     items.forEach((product) => {
       const categoryName = (product.category || copy.uncategorized).trim() || copy.uncategorized;
-      const existing = categoryMap.get(categoryName);
+      const categoryKey = normalizeCategoryKey(categoryName);
+      const existing = categoryMap.get(categoryKey);
       if (existing) {
         existing.items.push(product);
       } else {
-        categoryMap.set(categoryName, {
+        categoryMap.set(categoryKey, {
           id: createCategoryId(categoryName),
           title: categoryName,
           items: [product]
