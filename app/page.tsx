@@ -84,6 +84,7 @@ const HOME_COPY: Record<Language, {
   productNoImage: string;
   productView: string;
   productEmpty: string;
+  productError: string;
   productNoDescription: string;
   newsNoImage: string;
   newsEmpty: string;
@@ -176,6 +177,7 @@ const HOME_COPY: Record<Language, {
     productNoImage: 'Bez slike',
     productView: 'Pogledaj proizvod',
     productEmpty: 'Trenutno nema proizvoda.',
+    productError: 'Ne mogu da učitam proizvode. Proverite bazu i konekciju.',
     productNoDescription: 'Bez opisa.',
     newsNoImage: 'Bez naslovne slike',
     newsEmpty: 'Trenutno nema vesti.',
@@ -268,6 +270,7 @@ const HOME_COPY: Record<Language, {
     productNoImage: 'No image',
     productView: 'View product',
     productEmpty: 'No products available right now.',
+    productError: 'Unable to load products. Please check the database and connection.',
     productNoDescription: 'No description.',
     newsNoImage: 'No cover image',
     newsEmpty: 'No news available right now.',
@@ -361,6 +364,7 @@ const HOME_COPY: Record<Language, {
     productNoImage: 'Kein Bild',
     productView: 'Produkt ansehen',
     productEmpty: 'Derzeit sind keine Produkte verfügbar.',
+    productError: 'Produkte konnten nicht geladen werden. Bitte Datenbank und Verbindung prüfen.',
     productNoDescription: 'Keine Beschreibung.',
     newsNoImage: 'Kein Titelbild',
     newsEmpty: 'Derzeit gibt es keine News.',
@@ -451,12 +455,14 @@ export default async function HomePage() {
   const language = normalizeLanguage(cookieStore.get(LANGUAGE_COOKIE)?.value);
   const copy = HOME_COPY[language];
   let products: ProductItem[] = [];
+  let productsError: string | null = null;
   let news: NewsItem[] = [];
 
   try {
     products = await getProductsList();
   } catch (error) {
     console.error('Home products error:', error);
+    productsError = copy.productError;
   }
 
   try {
@@ -514,7 +520,10 @@ export default async function HomePage() {
               {copy.productsLead}
             </p>
           </div>
-          {products.length ? (
+          {productsError ? (
+            <div className="kopex-product-card__placeholder">{productsError}</div>
+          ) : null}
+          {!productsError && products.length ? (
             <div className="kopex-product-grid">
               {products.map((product) => {
                 const cover = product.heroImage || product.gallery[0] || '';
@@ -538,9 +547,10 @@ export default async function HomePage() {
                 );
               })}
             </div>
-          ) : (
+          ) : null}
+          {!productsError && products.length === 0 ? (
             <div className="kopex-product-card__placeholder">{copy.productEmpty}</div>
-          )}
+          ) : null}
           <div className="kopex-products-actions">
             <Link href="/products" className="kopex-button kopex-button--primary">
               {copy.productsCta}
