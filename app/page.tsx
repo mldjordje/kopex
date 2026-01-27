@@ -141,7 +141,7 @@ const HOME_COPY: Record<Language, {
     heroEyebrow: 'Niš • Industrijska livnica • Od 1884',
     heroTitle: 'Industrijska livnica gvožđa i čelika za odlivke koji traju.',
     heroLead:
-      'Od prototipa do serijske proizvodnje: sivi liv, nodularni liv i čelični liv, uz mašinsku obradu, termičku obradu i potpunu kontrolu kvaliteta.',
+      'Od prototipa do serijske proizvodnje: sivi liv, nodularni liv i čelični liv, uz mašinsku obradu, termičku obradu i potpunu kontrolu kvaliteta u sertifikovanoj laboratoriji.',
     heroCtaPrimary: 'Pošaljite upit',
     heroCtaSecondary: 'Pogledajte kapacitete',
     heroTrust:
@@ -197,7 +197,7 @@ const HOME_COPY: Record<Language, {
     equipmentCard1Title: 'Indukcione peći',
     equipmentCard1Body: 'Kapacitet 2,5 t, uz mogućnost liva do 3 t (nodularni i čelični) i 6 t (sivi liv).',
     equipmentCard2Title: 'Priprema peska',
-    equipmentCard2Body: 'Bentonitna mešavina, furanske smole i estre, Alfaset postupak i regeneracija peska.',
+    equipmentCard2Body: 'Alfaset postupak i regeneracija peska.',
     equipmentCard3Title: 'Termička obrada',
     equipmentCard3Body: 'Peći 10 t (2100x1400x3500) i bazeni za gašenje/kaljenje 4000x3000x4000.',
     equipmentCard4Title: 'Kontrola kvaliteta',
@@ -233,7 +233,7 @@ const HOME_COPY: Record<Language, {
     heroEyebrow: 'Niš • Industrial foundry • Since 1884',
     heroTitle: 'Industrial iron and steel foundry for castings that last.',
     heroLead:
-      'From prototypes to series production: gray iron, ductile iron, and steel castings, with machining, heat treatment, and full quality control.',
+      'From prototypes to series production: gray iron, ductile iron, and steel castings, with machining, heat treatment, and full quality control in a certified laboratory.',
     heroCtaPrimary: 'Send inquiry',
     heroCtaSecondary: 'View capacities',
     heroTrust:
@@ -289,7 +289,7 @@ const HOME_COPY: Record<Language, {
     equipmentCard1Title: 'Induction furnaces',
     equipmentCard1Body: 'Capacity 2.5 t, with melt casting up to 3 t (ductile and steel) and 6 t (gray iron).',
     equipmentCard2Title: 'Sand preparation',
-    equipmentCard2Body: 'Bentonite mixture, furan resins and esters, Alfaset process, and sand reclamation.',
+    equipmentCard2Body: 'Alfaset process and sand reclamation.',
     equipmentCard3Title: 'Heat treatment',
     equipmentCard3Body: 'Furnaces 10 t (2100x1400x3500) and quench tanks 4000x3000x4000.',
     equipmentCard4Title: 'Quality control',
@@ -325,7 +325,7 @@ const HOME_COPY: Record<Language, {
     heroEyebrow: 'Niš • Industriegießerei • Seit 1884',
     heroTitle: 'Industriegießerei für Eisen- und Stahlguss, der lange hält.',
     heroLead:
-      'Von Prototypen bis zur Serienfertigung: Grauguss, Sphäroguss und Stahlguss, mit spanender Bearbeitung, Wärmebehandlung und vollständiger Qualitätskontrolle.',
+      'Von Prototypen bis zur Serienfertigung: Grauguss, Sphäroguss und Stahlguss, mit spanender Bearbeitung, Wärmebehandlung und vollständiger Qualitätskontrolle in einem zertifizierten Labor.',
     heroCtaPrimary: 'Anfrage senden',
     heroCtaSecondary: 'Kapazitäten ansehen',
     heroTrust:
@@ -382,7 +382,7 @@ const HOME_COPY: Record<Language, {
     equipmentCard1Title: 'Induktionsöfen',
     equipmentCard1Body: 'Kapazität 2,5 t, mit Guss bis 3 t (Sphäro- und Stahlguss) und 6 t (Grauguss).',
     equipmentCard2Title: 'Sandaufbereitung',
-    equipmentCard2Body: 'Bentonitmischung, Furanharze und Ester, Alfaset-Verfahren sowie Sandregeneration.',
+    equipmentCard2Body: 'Alfaset-Verfahren sowie Sandregeneration.',
     equipmentCard3Title: 'Wärmebehandlung',
     equipmentCard3Body: 'Ofen 10 t (2100x1400x3500) und Abschreckbecken 4000x3000x4000.',
     equipmentCard4Title: 'Qualitätskontrolle',

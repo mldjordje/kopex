@@ -64,7 +64,7 @@ const SERVICES_COPY: Record<Language, {
       },
       {
         title: 'Priprema peska',
-        body: 'Bentonitna mešavina, furanske smole i estre; Alfaset postupak i regeneracija peska.'
+        body: 'Alfaset postupak i regeneracija peska.'
       },
       {
         title: 'Mikseri i postupci',
@@ -118,7 +118,7 @@ const SERVICES_COPY: Record<Language, {
       },
       {
         title: 'Sand preparation',
-        body: 'Bentonite mixture, furan resins and esters; Alfaset process and sand reclamation.'
+        body: 'Alfaset process and sand reclamation.'
       },
       {
         title: 'Mixers and processes',
@@ -172,7 +172,7 @@ const SERVICES_COPY: Record<Language, {
       },
       {
         title: 'Sandaufbereitung',
-        body: 'Bentonitmischung, Furanharze und Ester; Alfaset-Verfahren und Sandregeneration.'
+        body: 'Alfaset-Verfahren und Sandregeneration.'
       },
       {
         title: 'Mischer und Verfahren',
@@ -253,7 +253,7 @@ export default async function ServicesPage() {
           <div className="stg-col-6 stg-tp-col-12">
             <div className="bringer-parallax-media">
               <Image
-                src="/img/kopex/slides/page-04.jpg"
+                src="/img/kopex/production-03.jpg"
                 alt={copy.equipmentImageAlt}
                 width={960}
                 height={720}
@@ -302,7 +302,7 @@ export default async function ServicesPage() {
           <div className="stg-col-6 stg-tp-bottom-gap-l">
             <div className="bringer-parallax-media">
               <Image
-                src="/img/kopex/slides/page-05.jpg"
+                src="/img/kopex/production-04.jpg"
                 alt={copy.labImageAlt}
                 width={960}
                 height={720}

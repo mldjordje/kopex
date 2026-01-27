@@ -63,6 +63,8 @@ const CONTACTS_COPY: Record<Language, {
   formButton: string;
   ctaTitle: string;
   ctaLead: string;
+  inquiryPhonesTitle: string;
+  inquiryPhones: [string, string, string];
   counter1Label: string;
   counter2Label: string;
   counter3Label: string;
@@ -93,6 +95,12 @@ const CONTACTS_COPY: Record<Language, {
     formButton: 'Pošalji poruku',
     ctaTitle: 'Zainteresovani ste za saradnju?',
     ctaLead: 'Pošaljite nam upit i dostavite specifikacije. Naš tim odgovara brzo i precizno.',
+    inquiryPhonesTitle: 'Telefon za upit',
+    inquiryPhones: [
+      'Komercijala / 063 465 494, 063 1059 426, 063 105 7902',
+      'Nabavka / 063 105 7742',
+      'Finansije / 063 105 0649'
+    ],
     counter1Label: 'Godina osnivanja',
     counter2Label: 'Mesečni kapacitet',
     counter3Label: 'Max težina odlivka'
@@ -123,6 +131,12 @@ const CONTACTS_COPY: Record<Language, {
     formButton: 'Send message',
     ctaTitle: 'Interested in cooperation?',
     ctaLead: 'Send an inquiry and provide specifications. Our team responds quickly and precisely.',
+    inquiryPhonesTitle: 'Inquiry phones',
+    inquiryPhones: [
+      'Commercial / 063 465 494, 063 1059 426, 063 105 7902',
+      'Procurement / 063 105 7742',
+      'Finance / 063 105 0649'
+    ],
     counter1Label: 'Founded',
     counter2Label: 'Monthly capacity',
     counter3Label: 'Max casting weight'
@@ -153,6 +167,12 @@ const CONTACTS_COPY: Record<Language, {
     formButton: 'Nachricht senden',
     ctaTitle: 'Interessiert an einer Zusammenarbeit?',
     ctaLead: 'Senden Sie eine Anfrage und Spezifikationen. Unser Team antwortet schnell und präzise.',
+    inquiryPhonesTitle: 'Telefon fur Anfragen',
+    inquiryPhones: [
+      'Kommerziell / 063 465 494, 063 1059 426, 063 105 7902',
+      'Einkauf / 063 105 7742',
+      'Finanzen / 063 105 0649'
+    ],
     counter1Label: 'Gründungsjahr',
     counter2Label: 'Monatskapazität',
     counter3Label: 'Max. Gussteilgewicht'
@@ -175,7 +195,7 @@ export default async function ContactsPage() {
         </div>
         <div className="bringer-parallax-media" data-parallax-speed="20">
           <Image
-            src="/img/kopex/facility-yard.jpg"
+            src="/img/kopex/facility-front.jpg"
             alt="Kontakt"
             width={1920}
             height={960}
@@ -196,20 +216,32 @@ export default async function ContactsPage() {
         <div className="stg-row" data-stagger-appear="fade-up" data-delay="200" data-stagger-unload="fade-up">
           <div className="stg-col-4 stg-tp-col-6 stg-tp-bottom-gap">
             <div className="bringer-block stg-aspect-square stg-vertical-space-between">
-              <a href="tel:+38118245678" className="bringer-grid-item-link"></a>
+              <a href="tel:+38163465494" className="bringer-grid-item-link"></a>
               <div>
                 <h5>{copy.phoneTitle}<span className="bringer-accent">.</span></h5>
-                <h6>+381 18 245 678</h6>
+                <h6>
+                  Komercijala / 063 465 494, 063 1059 426, 063 105 7902
+                  <br />
+                  Nabavka / 063 105 7742
+                  <br />
+                  Finansije / 063 589 779
+                </h6>
               </div>
               <p>{copy.phoneBody}</p>
             </div>
           </div>
           <div className="stg-col-4 stg-tp-col-6 stg-tp-bottom-gap">
             <div className="bringer-block stg-aspect-square stg-vertical-space-between">
-              <a href="mailto:info@kopexmin.rs" className="bringer-grid-item-link"></a>
+              <a href="mailto:dragan.drenic@kopexmin.rs" className="bringer-grid-item-link"></a>
               <div>
                 <h5>{copy.emailTitle}<span className="bringer-accent">.</span></h5>
-                <h6>info@kopexmin.rs</h6>
+                <h6>
+                  Komercijala / dragan.drenic@kopexmin.rs / marija.nesic@kopexmin.rs / marina.radenkovic@kopexmin.rs
+                  <br />
+                  Nabavka / dejan.ivanovic@kopexmin.rs
+                  <br />
+                  Finansije / olivera.milic@kopexmin.rs
+                </h6>
               </div>
               <p>{copy.emailBody}</p>
             </div>
@@ -249,7 +281,7 @@ export default async function ContactsPage() {
         <div className="stg-row">
           <div className="stg-col-4 stg-tp-col-6 stg-m-bottom-gap">
             <div className="bringer-block stg-aspect-square stg-vertical-space-between">
-              <a href="https://www.google.com/maps/place/Kopex+MIN,+Bulevar+12.+februara,+Ni%C5%A1+18000" className="bringer-grid-item-link" target="_blank" rel="noreferrer"></a>
+              <a href="https://www.google.com/maps/search/?api=1&query=43.338027060655605,21.87638235891067" className="bringer-grid-item-link" target="_blank" rel="noreferrer"></a>
               <div>
                 <h5>{copy.addressTitle}<span className="bringer-accent">.</span></h5>
                 <h6>{copy.addressValue}</h6>
@@ -260,7 +292,7 @@ export default async function ContactsPage() {
           <div className="stg-col-8 stg-tp-col-6">
             <iframe
               className="bringer-google-map"
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5803.742555558329!2d21.869471595950657!3d43.33788258447494!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4755b717fb152f47%3A0xfb48ec15f0fdaa00!2sKopex%20MIN%2C%20Bulevar%2012.%20februara%2C%20Ni%C5%A1%2018000!5e0!3m2!1sen!2srs!4v1755568799285!5m2!1sen!2srs"
+              src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d1575.621671353834!2d21.87638235891067!3d43.338027060655605!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e1!3m2!1sen!2srs!4v1769506330845!5m2!1sen!2srs"
               referrerPolicy="no-referrer-when-downgrade"
               width={790}
               height={379}
@@ -275,7 +307,7 @@ export default async function ContactsPage() {
       <section className="backlight-top is-fullwidth">
         <div className="stg-row stg-valign-middle stg-cta-with-image stg-tp-column-reverse">
           <div className="stg-col-5">
-            <div className="bringer-offset-image" data-bg-src="/img/cta/contact-section-bg.jpg"></div>
+            <div className="bringer-offset-image" data-bg-src="/img/kopex/production-02.jpg"></div>
             <form
               action="/api/contact"
               method="post"
@@ -300,6 +332,17 @@ export default async function ContactsPage() {
               <div className="bringer-cta-form-title">{copy.ctaTitle}</div>
               <div className="bringer-cta-text">
                 <p className="bringer-large-text">{copy.ctaLead}</p>
+              </div>
+              <div className="bringer-cta-text">
+                <p>
+                  <strong>{copy.inquiryPhonesTitle}</strong>
+                  <br />
+                  {copy.inquiryPhones[0]}
+                  <br />
+                  {copy.inquiryPhones[1]}
+                  <br />
+                  {copy.inquiryPhones[2]}
+                </p>
               </div>
               <div className="bringer-cta-counters bringer-grid-3cols bringer-m-grid-3cols" data-stagger-appear="fade-up" data-stagger-delay="100">
                 <div className="bringer-counter bringer-small-counter" data-delay="3000">

@@ -105,17 +105,17 @@ const ABOUT_COPY: Record<Language, {
       {
         title: 'Sivi liv',
         body: 'Stabilna serijska proizvodnja i pouzdan kvalitet.',
-        image: { src: '/img/portfolio/portfolio07.jpg', alt: 'Sivi liv - odlivci' }
+        image: { src: '/img/kopex/slides/page-06.jpg', alt: 'Sivi liv - odlivci' }
       },
       {
         title: 'Nodularni liv',
         body: 'Visoke mehaničke osobine i dug vek trajanja.',
-        image: { src: '/img/portfolio/portfolio02.jpg', alt: 'Nodularni liv - odlivci' }
+        image: { src: '/img/kopex/slides/page-07.jpg', alt: 'Nodularni liv - odlivci' }
       },
       {
         title: 'Čelični liv',
         body: 'Specijalizacija za legirane i manganske čelike.',
-        image: { src: '/img/portfolio/portfolio04.jpg', alt: 'Čelični liv - odlivci' }
+        image: { src: '/img/kopex/slides/page-08.jpg', alt: 'Čelični liv - odlivci' }
       }
     ],
     clientsTitle: 'Kupci',
@@ -160,17 +160,17 @@ const ABOUT_COPY: Record<Language, {
       {
         title: 'Gray iron',
         body: 'Stable series production and reliable quality.',
-        image: { src: '/img/portfolio/portfolio07.jpg', alt: 'Gray iron - castings' }
+        image: { src: '/img/kopex/slides/page-06.jpg', alt: 'Gray iron - castings' }
       },
       {
         title: 'Ductile iron',
         body: 'High mechanical properties and long service life.',
-        image: { src: '/img/portfolio/portfolio02.jpg', alt: 'Ductile iron - castings' }
+        image: { src: '/img/kopex/slides/page-07.jpg', alt: 'Ductile iron - castings' }
       },
       {
         title: 'Steel castings',
         body: 'Specialization in alloyed and manganese steels.',
-        image: { src: '/img/portfolio/portfolio04.jpg', alt: 'Steel castings' }
+        image: { src: '/img/kopex/slides/page-08.jpg', alt: 'Steel castings' }
       }
     ],
     clientsTitle: 'Clients',
@@ -215,17 +215,17 @@ const ABOUT_COPY: Record<Language, {
       {
         title: 'Grauguss',
         body: 'Stabile Serienfertigung und zuverlässige Qualität.',
-        image: { src: '/img/portfolio/portfolio07.jpg', alt: 'Grauguss - Gussteile' }
+        image: { src: '/img/kopex/slides/page-06.jpg', alt: 'Grauguss - Gussteile' }
       },
       {
         title: 'Sphäroguss',
         body: 'Hohe mechanische Eigenschaften und lange Lebensdauer.',
-        image: { src: '/img/portfolio/portfolio02.jpg', alt: 'Sphäroguss - Gussteile' }
+        image: { src: '/img/kopex/slides/page-07.jpg', alt: 'Sphäroguss - Gussteile' }
       },
       {
         title: 'Stahlguss',
         body: 'Spezialisierung auf legierte und manganhaltige Stähle.',
-        image: { src: '/img/portfolio/portfolio04.jpg', alt: 'Stahlguss - Gussteile' }
+        image: { src: '/img/kopex/slides/page-08.jpg', alt: 'Stahlguss - Gussteile' }
       }
     ],
     clientsTitle: 'Kunden',
@@ -297,7 +297,7 @@ export default async function AboutPage() {
           <div className="stg-col-6 stg-tp-col-12">
             <div className="bringer-parallax-media">
               <Image
-                src="/img/kopex/slides/page-04.jpg"
+                src="/img/kopex/production-01.jpg"
                 alt={copy.capacitiesImageAlt}
                 width={960}
                 height={720}
@@ -327,7 +327,7 @@ export default async function AboutPage() {
           <div className="stg-col-6 stg-tp-bottom-gap-l">
             <div className="bringer-parallax-media">
               <Image
-                src="/img/kopex/slides/page-05.jpg"
+                src="/img/kopex/production-02.jpg"
                 alt={copy.labImageAlt}
                 width={960}
                 height={720}

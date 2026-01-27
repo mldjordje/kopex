@@ -144,9 +144,146 @@ const CATEGORY_CONTENT: Record<Language, Record<CategoryKey, { title: string; he
   }
 };
 
+type CategoryGalleryItem = { src: string; alt: string; title: string; body: string };
+
+const CATEGORY_GALLERY: Record<Language, Record<CategoryKey, CategoryGalleryItem[]>> = {
+  sr: {
+    gray: [
+      {
+        src: '/img/kopex/slides/page-06.jpg',
+        alt: 'Sivi liv - reprezentativni odlivak',
+        title: 'Sivi liv',
+        body: 'Reprezentativni odlivak iz proizvodnje sivog liva.'
+      },
+      {
+        src: '/img/kopex/slides/page-09.jpg',
+        alt: 'Sivi liv - odlivak iz proizvodnje',
+        title: 'Sivi liv',
+        body: 'Primer odlivka sa sivim livom za industrijsku primenu.'
+      }
+    ],
+    ductile: [
+      {
+        src: '/img/kopex/slides/page-07.jpg',
+        alt: 'Nodularni liv - reprezentativni odlivak',
+        title: 'Nodularni liv',
+        body: 'Reprezentativni odlivak od nodularnog liva.'
+      },
+      {
+        src: '/img/kopex/slides/page-10.jpg',
+        alt: 'Nodularni liv - odlivak iz proizvodnje',
+        title: 'Nodularni liv',
+        body: 'Primer odlivka za zahtevne mehanicke uslove rada.'
+      }
+    ],
+    steel: [
+      {
+        src: '/img/kopex/slides/page-08.jpg',
+        alt: 'Celicni liv - reprezentativni odlivak',
+        title: 'Celicni liv',
+        body: 'Reprezentativni odlivak od celicnog liva.'
+      },
+      {
+        src: '/img/kopex/slides/page-11.jpg',
+        alt: 'Celicni liv - odlivak iz proizvodnje',
+        title: 'Celicni liv',
+        body: 'Primer odlivka za visoka opterecenja i temperaturu.'
+      }
+    ]
+  },
+  en: {
+    gray: [
+      {
+        src: '/img/kopex/slides/page-06.jpg',
+        alt: 'Gray iron representative casting',
+        title: 'Gray iron',
+        body: 'Representative casting from gray iron production.'
+      },
+      {
+        src: '/img/kopex/slides/page-09.jpg',
+        alt: 'Gray iron casting from production',
+        title: 'Gray iron',
+        body: 'Example casting for industrial applications.'
+      }
+    ],
+    ductile: [
+      {
+        src: '/img/kopex/slides/page-07.jpg',
+        alt: 'Ductile iron representative casting',
+        title: 'Ductile iron',
+        body: 'Representative ductile iron casting.'
+      },
+      {
+        src: '/img/kopex/slides/page-10.jpg',
+        alt: 'Ductile iron casting from production',
+        title: 'Ductile iron',
+        body: 'Example casting for demanding mechanical conditions.'
+      }
+    ],
+    steel: [
+      {
+        src: '/img/kopex/slides/page-08.jpg',
+        alt: 'Steel representative casting',
+        title: 'Steel castings',
+        body: 'Representative steel casting.'
+      },
+      {
+        src: '/img/kopex/slides/page-11.jpg',
+        alt: 'Steel casting from production',
+        title: 'Steel castings',
+        body: 'Example casting for high loads and temperatures.'
+      }
+    ]
+  },
+  de: {
+    gray: [
+      {
+        src: '/img/kopex/slides/page-06.jpg',
+        alt: 'Grauguss reprasentatives Gussteil',
+        title: 'Grauguss',
+        body: 'Reprasentatives Gussteil aus der Graugussproduktion.'
+      },
+      {
+        src: '/img/kopex/slides/page-09.jpg',
+        alt: 'Grauguss Gussteil aus der Produktion',
+        title: 'Grauguss',
+        body: 'Beispielgussteil fur industrielle Anwendungen.'
+      }
+    ],
+    ductile: [
+      {
+        src: '/img/kopex/slides/page-07.jpg',
+        alt: 'Spharoguss reprasentatives Gussteil',
+        title: 'Spharoguss',
+        body: 'Reprasentatives Gussteil aus Spharoguss.'
+      },
+      {
+        src: '/img/kopex/slides/page-10.jpg',
+        alt: 'Spharoguss Gussteil aus der Produktion',
+        title: 'Spharoguss',
+        body: 'Beispielgussteil fur anspruchsvolle mechanische Anforderungen.'
+      }
+    ],
+    steel: [
+      {
+        src: '/img/kopex/slides/page-08.jpg',
+        alt: 'Stahlguss reprasentatives Gussteil',
+        title: 'Stahlguss',
+        body: 'Reprasentatives Gussteil aus Stahlguss.'
+      },
+      {
+        src: '/img/kopex/slides/page-11.jpg',
+        alt: 'Stahlguss Gussteil aus der Produktion',
+        title: 'Stahlguss',
+        body: 'Beispielgussteil fur hohe Belastungen und Temperaturen.'
+      }
+    ]
+  }
+};
+
 const CATEGORY_MATCHERS: Record<CategoryKey, RegExp[]> = {
   gray: [/sivi/gi, /sivo/gi, /gray/gi, /grau/gi, /grauguss/gi],
-  ductile: [/nodular/gi, /ductile/gi, /spharo/gi, /sphaero/gi],
+  ductile: [/nodular/gi, /nodij/gi, /ductile/gi, /spharo/gi, /sphaero/gi],
   steel: [/celic/gi, /c(el|e)ic/gi, /steel/gi, /stahl/gi, /legir/gi, /alloy/gi, /niskoleg/gi, /mangan/gi]
 };
 
@@ -185,11 +322,28 @@ const resolveCategoryKey = (value: string | null | undefined): CategoryKey => {
   return match?.[0] ?? 'steel';
 };
 
+const resolveCategoryKeyFromProduct = (product: ProductItem): CategoryKey => {
+  const candidates = [product.category, product.name, product.summary, product.description]
+    .filter((value): value is string => typeof value === 'string' && value.trim().length > 0);
+
+  for (const value of candidates) {
+    const normalized = normalizeCategoryValue(value);
+    const match = (Object.entries(CATEGORY_MATCHERS) as Array<[CategoryKey, RegExp[]]>)
+      .find(([, patterns]) => patterns.some((pattern) => pattern.test(normalized)));
+    if (match) {
+      return match[0];
+    }
+  }
+
+  return 'steel';
+};
+
 export default async function ProductsPage() {
   const cookieStore = await cookies();
   const language = normalizeLanguage(cookieStore.get(LANGUAGE_COOKIE)?.value);
   const copy = PRODUCTS_COPY[language];
   const categoryContent = CATEGORY_CONTENT[language];
+  const categoryGallery = CATEGORY_GALLERY[language];
   const categories = CATEGORY_ORDER.map((key) => ({
     key,
     id: `category-${key}`,
@@ -204,7 +358,7 @@ export default async function ProductsPage() {
   try {
     items = await getProductsList();
     items.forEach((product) => {
-      const categoryKey = resolveCategoryKey(product.category);
+      const categoryKey = resolveCategoryKeyFromProduct(product);
       categoryMap.get(categoryKey)?.items.push(product);
     });
   } catch (error) {
@@ -296,7 +450,19 @@ export default async function ProductsPage() {
                       );
                     })}
                   </div>
-                ) : null}
+                ) : (
+                  <div className="kopex-product-grid">
+                    {categoryGallery[category.key].map((item) => (
+                      <article className="kopex-product-card" key={item.src}>
+                        <Image src={item.src} alt={item.alt} width={960} height={720} sizes={CARD_SIZES} />
+                        <div className="kopex-product-card__body">
+                          <h3>{item.title}</h3>
+                          <p>{item.body}</p>
+                        </div>
+                      </article>
+                    ))}
+                  </div>
+                )}
               </div>
             ))}
           </div>

@@ -41,83 +41,68 @@ const CARD_SIZES = '(max-width: 739px) 100vw, (max-width: 1200px) 50vw, 33vw';
 const MANAGEMENT_TEAM: Record<Language, Array<{ name: string; role: string; image: string }>> = {
   sr: [
     {
-      name: 'Generalni direktor',
-      role: 'Strategija, razvoj i ukupno poslovno rukovodjenje',
+      name: 'Dragoljub Maksimovic, dipl. Inz. metalurgije',
+      role: 'Direktor i vlasnik',
       image: '/img/team/team01-thmb.jpg'
     },
     {
-      name: 'Direktor proizvodnje',
-      role: 'Planiranje proizvodnje, kapaciteti i optimizacija procesa',
+      name: 'Milos Radivojevic, dipl. Inz. masinstva',
+      role: 'Tehnicki direktor',
       image: '/img/team/team02-thmb.jpg'
     },
     {
-      name: 'Direktor kvaliteta',
-      role: 'Laboratorijska ispitivanja, sertifikati i kontrola kvaliteta',
+      name: 'Dragan Drenic, dipl. ekon.',
+      role: 'Komercijalni direktor',
+      image: '/img/dragandrenic.jpg'
+    },
+    {
+      name: 'Marina Radenovic',
+      role: 'Rukovodilac odeljenja cistionice i masinske obrade',
       image: '/img/team/team03-thmb.jpg'
-    },
-    {
-      name: 'Direktor tehnike',
-      role: 'Masinska i termicka obrada, odrzavanje i tehnoloski razvoj',
-      image: '/img/team/team04-thmb.jpg'
-    },
-    {
-      name: 'Direktor prodaje',
-      role: 'Komunikacija sa kupcima, ponude i ugovaranje',
-      image: '/img/team/team05-thmb.jpg'
     }
   ],
   en: [
     {
-      name: 'General Manager',
-      role: 'Strategy, development, and overall business leadership',
+      name: 'Dragoljub Maksimovic, dipl. Inz. metalurgije',
+      role: 'Owner and Director',
       image: '/img/team/team01-thmb.jpg'
     },
     {
-      name: 'Production Director',
-      role: 'Production planning, capacity management, and process optimization',
+      name: 'Milos Radivojevic, dipl. Inz. masinstva',
+      role: 'Technical Director',
       image: '/img/team/team02-thmb.jpg'
     },
     {
-      name: 'Quality Director',
-      role: 'Laboratory testing, certifications, and quality assurance',
+      name: 'Dragan Drenic, dipl. ekon.',
+      role: 'Commercial Director',
+      image: '/img/dragandrenic.jpg'
+    },
+    {
+      name: 'Marina Radenovic',
+      role: 'Head of Cleaning and Machining Department',
       image: '/img/team/team03-thmb.jpg'
-    },
-    {
-      name: 'Technical Director',
-      role: 'Machining, heat treatment, maintenance, and technology development',
-      image: '/img/team/team04-thmb.jpg'
-    },
-    {
-      name: 'Sales Director',
-      role: 'Customer communication, offers, and contract management',
-      image: '/img/team/team05-thmb.jpg'
     }
   ],
   de: [
     {
-      name: 'Geschäftsführer',
-      role: 'Strategie, Entwicklung und Gesamtverantwortung',
+      name: 'Dragoljub Maksimovic, dipl. Inz. metalurgije',
+      role: 'Inhaber und Direktor',
       image: '/img/team/team01-thmb.jpg'
     },
     {
-      name: 'Produktionsleiter',
-      role: 'Produktionsplanung, Kapazitätssteuerung und Prozessoptimierung',
+      name: 'Milos Radivojevic, dipl. Inz. masinstva',
+      role: 'Technischer Direktor',
       image: '/img/team/team02-thmb.jpg'
     },
     {
-      name: 'Qualitätsleiter',
-      role: 'Laborprüfungen, Zertifizierungen und Qualitätssicherung',
+      name: 'Dragan Drenic, dipl. ekon.',
+      role: 'Kaufmaennischer Direktor',
+      image: '/img/dragandrenic.jpg'
+    },
+    {
+      name: 'Marina Radenovic',
+      role: 'Leiterin der Putzerei und mechanischen Bearbeitung',
       image: '/img/team/team03-thmb.jpg'
-    },
-    {
-      name: 'Technischer Leiter',
-      role: 'Mechanische Bearbeitung, Wärmebehandlung, Wartung und Technologieentwicklung',
-      image: '/img/team/team04-thmb.jpg'
-    },
-    {
-      name: 'Vertriebsleiter',
-      role: 'Kundenkommunikation, Angebote und Vertragsmanagement',
-      image: '/img/team/team05-thmb.jpg'
     }
   ]
 };
@@ -136,7 +121,7 @@ const MANAGEMENT_COPY: Record<Language, {
     lead: 'Sema menadzmenta Kopex MIN-LIV A.D. Niš sa jasnim funkcijama odgovornosti.',
     sectionTitle: 'Menadzment',
     sectionLead: 'Ključni ljudi koji koordinisu proizvodnju, kvalitet, tehnicki razvoj i prodaju.',
-    ctaTitle: 'Kontakt sa rukovodstvom',
+    ctaTitle: '',
     ctaLead: 'Za poslovne upite i saradnju, nas tim je spreman da pruži sve potrebne informacije.',
     ctaButton: 'Kontaktirajte nas'
   },
@@ -145,7 +130,7 @@ const MANAGEMENT_COPY: Record<Language, {
     lead: 'Management structure of Kopex MIN-LIV A.D. Niš with clear responsibilities.',
     sectionTitle: 'Management team',
     sectionLead: 'Key people coordinating production, quality, technical development, and sales.',
-    ctaTitle: 'Contact the management team',
+    ctaTitle: '',
     ctaLead: 'For business inquiries and cooperation, our team is ready to provide the needed information.',
     ctaButton: 'Contact us'
   },
@@ -154,7 +139,7 @@ const MANAGEMENT_COPY: Record<Language, {
     lead: 'Organisationsstruktur der Kopex MIN-LIV A.D. Niš mit klaren Verantwortlichkeiten.',
     sectionTitle: 'Management',
     sectionLead: 'Schlüsselpersonen für Produktion, Qualität, technische Entwicklung und Vertrieb.',
-    ctaTitle: 'Kontakt zur Geschäftsleitung',
+    ctaTitle: '',
     ctaLead: 'Für geschäftliche Anfragen und Zusammenarbeit steht unser Team gerne zur Verfügung.',
     ctaButton: 'Kontaktieren Sie uns'
   }
@@ -211,7 +196,7 @@ export default async function ManagementPage() {
 
       <section>
         <div className="align-center stg-bottom-gap-l">
-          <h2>{copy.ctaTitle}</h2>
+          {copy.ctaTitle ? <h2>{copy.ctaTitle}</h2> : null}
           <p className="bringer-large-text">
             {copy.ctaLead}
           </p>
