@@ -474,6 +474,66 @@ body:not(.theme-light)::before {
   gap: 26px;
 }
 
+.kopex-product-slider {
+  position: relative;
+}
+
+.kopex-product-slider__nav {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.kopex-product-slider__button {
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  border: 1px solid rgba(46, 60, 67, 0.2);
+  background: #fff;
+  color: var(--kopex-ink);
+  font-size: 1.4rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.kopex-product-slider__button:hover {
+  border-color: rgba(46, 60, 67, 0.4);
+  box-shadow: 0 12px 20px rgba(17, 21, 23, 0.12);
+}
+
+.kopex-product-slider__track {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(260px, 32%);
+  gap: 26px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: 6px;
+  padding-bottom: 6px;
+}
+
+.kopex-product-slider__track > * {
+  scroll-snap-align: start;
+}
+
+@media (max-width: 991px) {
+  .kopex-product-slider__track {
+    grid-auto-columns: minmax(240px, 70%);
+  }
+}
+
+@media (max-width: 739px) {
+  .kopex-product-slider__nav {
+    display: none;
+  }
+
+  .kopex-product-slider__track {
+    grid-auto-columns: minmax(220px, 85%);
+  }
+}
+
 .kopex-product-card {
   border-radius: 24px;
   overflow: hidden;

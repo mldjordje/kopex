@@ -3,6 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { cookies } from 'next/headers';
 import HeroVideo from '@/components/HeroVideo';
+import ProductSlider from '@/components/ProductSlider';
 import { getNewsList } from '@/lib/news';
 import { getProductsList } from '@/lib/products';
 import type { NewsItem } from '@/lib/news';
@@ -63,6 +64,9 @@ const HOME_COPY: Record<Language, {
   productsTitle: string;
   productsLead: string;
   productsCta: string;
+  productsSliderPrev: string;
+  productsSliderNext: string;
+  productsSliderLabel: string;
   newsEyebrow: string;
   newsTitle: string;
   newsLead: string;
@@ -150,7 +154,10 @@ const HOME_COPY: Record<Language, {
     productsTitle: 'Metalni odlivci za energetiku, rudarstvo i industriju.',
     productsLead:
       'Specijalizovani smo za sivi liv, nodularni liv i čelični liv, uključujući legirane čelike za zahtevne uslove rada.',
-    productsCta: 'Svi proizvodi',
+    productsCta: 'Pogledaj sve proizvode',
+    productsSliderPrev: 'Prethodni proizvodi',
+    productsSliderNext: 'Sledeći proizvodi',
+    productsSliderLabel: 'Izdvojeni proizvodi',
     newsEyebrow: 'Vesti / Karijera',
     newsTitle: 'Najnovije informacije i oglasi za posao iz Kopex MIN-LIV.',
     newsLead: 'Pratite najnovije objave, projekte i oglase za zapošljavanje iz naše livnice.',
@@ -242,7 +249,10 @@ const HOME_COPY: Record<Language, {
     productsTitle: 'Metal castings for energy, mining, and industry.',
     productsLead:
       'We specialize in gray iron, ductile iron, and steel castings, including alloyed steels for demanding operating conditions.',
-    productsCta: 'All products',
+    productsCta: 'View all products',
+    productsSliderPrev: 'Previous products',
+    productsSliderNext: 'Next products',
+    productsSliderLabel: 'Featured products',
     newsEyebrow: 'News / Careers',
     newsTitle: 'Latest news and job openings from Kopex MIN-LIV.',
     newsLead: 'Follow the latest updates, projects, and hiring announcements from our foundry.',
@@ -334,7 +344,10 @@ const HOME_COPY: Record<Language, {
     productsTitle: 'Metallguss für Energie, Bergbau und Industrie.',
     productsLead:
       'Spezialisiert auf Grauguss, Sphäroguss und Stahlguss, einschließlich legierter Stähle für anspruchsvolle Einsatzbedingungen.',
-    productsCta: 'Alle Produkte',
+    productsCta: 'Alle Produkte ansehen',
+    productsSliderPrev: 'Vorherige Produkte',
+    productsSliderNext: 'Naechste Produkte',
+    productsSliderLabel: 'Ausgewahlte Produkte',
     newsEyebrow: 'News / Karriere',
     newsTitle: 'Aktuelle Nachrichten und Stellenangebote von Kopex MIN-LIV.',
     newsLead: 'Folgen Sie den neuesten Meldungen, Projekten und Einstellungsanzeigen unserer Gießerei.',
@@ -466,6 +479,7 @@ export default async function HomePage() {
   }
 
   const latestNews = news.slice(0, 3);
+  const featuredProducts = products.slice(0, 6);
 
   return (
     <div className="kopex-landing">
@@ -515,11 +529,15 @@ export default async function HomePage() {
             </p>
           </div>
           {products.length ? (
-            <div className="kopex-product-grid">
-              {products.map((product) => {
+            <ProductSlider
+              prevLabel={copy.productsSliderPrev}
+              nextLabel={copy.productsSliderNext}
+              trackLabel={copy.productsSliderLabel}
+            >
+              {featuredProducts.map((product) => {
                 const cover = product.heroImage || product.gallery[0] || '';
                 return (
-                  <article className="kopex-product-card" key={product.id}>
+                  <article className="kopex-product-card" key={product.id} role="listitem">
                     {cover ? (
                       <Image src={cover} alt={product.name} width={960} height={720} sizes={CARD_SIZES} />
                     ) : (
@@ -537,7 +555,7 @@ export default async function HomePage() {
                   </article>
                 );
               })}
-            </div>
+            </ProductSlider>
           ) : (
             <div className="kopex-product-card__placeholder">{copy.productEmpty}</div>
           )}
