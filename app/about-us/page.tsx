@@ -3,6 +3,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { cookies } from 'next/headers';
 import { LANGUAGE_COOKIE, normalizeLanguage, type Language } from '@/lib/language';
+import { getProductsList } from '@/lib/products';
+import type { ProductItem } from '@/lib/products';
 import { buildMetadata } from '@/lib/seo';
 
 const ABOUT_META: Record<Language, { title: string; description: string; keywords: string[] }> = {
@@ -43,6 +45,42 @@ const CERT_SOURCES = [
   '/img/kopex/certs/iso-14001.jpg',
   '/img/kopex/certs/iso-45001.jpg'
 ];
+
+type CategoryKey = 'gray' | 'ductile' | 'steel';
+
+const CATEGORY_KEYS: CategoryKey[] = ['gray', 'ductile', 'steel'];
+
+const CATEGORY_MATCHERS: Record<CategoryKey, RegExp[]> = {
+  gray: [/sivi/gi, /sivo/gi, /gray/gi, /grau/gi, /grauguss/gi],
+  ductile: [/nodular/gi, /nodij/gi, /ductile/gi, /spharo/gi, /sphaero/gi],
+  steel: [/celic/gi, /c(el|e)ic/gi, /steel/gi, /stahl/gi, /legir/gi, /alloy/gi, /niskoleg/gi, /mangan/gi]
+};
+
+const normalizeCategoryValue = (value: string): string =>
+  value
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .trim();
+
+const resolveCategoryKeyFromProduct = (product: ProductItem): CategoryKey => {
+  const candidates = [product.category, product.name, product.summary, product.description]
+    .filter((value): value is string => typeof value === 'string' && value.trim().length > 0);
+
+  for (const value of candidates) {
+    const normalized = normalizeCategoryValue(value);
+    const match = (Object.entries(CATEGORY_MATCHERS) as Array<[CategoryKey, RegExp[]]>)
+      .find(([, patterns]) => patterns.some((pattern) => pattern.test(normalized)));
+    if (match) {
+      return match[0];
+    }
+  }
+
+  return 'steel';
+};
+
+const resolveProductImage = (product: ProductItem): string | null =>
+  product.heroImage || product.gallery[0] || null;
 
 const ABOUT_COPY: Record<Language, {
   title: string;
@@ -249,6 +287,27 @@ export default async function AboutPage() {
   const cookieStore = await cookies();
   const language = normalizeLanguage(cookieStore.get(LANGUAGE_COOKIE)?.value);
   const copy = ABOUT_COPY[language];
+  const productImages: Record<CategoryKey, string | null> = {
+    gray: null,
+    ductile: null,
+    steel: null
+  };
+
+  try {
+    const products = await getProductsList();
+    products.forEach((product) => {
+      const categoryKey = resolveCategoryKeyFromProduct(product);
+      if (productImages[categoryKey]) {
+        return;
+      }
+      const image = resolveProductImage(product);
+      if (image) {
+        productImages[categoryKey] = image;
+      }
+    });
+  } catch (error) {
+    console.error('About products error:', error);
+  }
 
   return (
     <div className="stg-container">
@@ -359,7 +418,7 @@ export default async function AboutPage() {
             >
               <div className="bringer-block">
                 <Image
-                  src={item.image.src}
+                  src={productImages[CATEGORY_KEYS[index]] || item.image.src}
                   alt={item.image.alt}
                   width={960}
                   height={720}
