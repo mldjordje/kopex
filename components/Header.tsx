@@ -105,7 +105,7 @@ export default function Header() {
       <div className="bringer-header-inner">
         <div className="bringer-header-lp">
           <Link href={buildLocalizedHref('/')} className="bringer-logo">
-            <Image src="/img/newlogo-removebg-preview.png" alt="KOPEX MIN-LIV" width={160} height={40} />
+            <Image src="/img/kopexlogolatest-removebg-preview.png" alt="KOPEX MIN-LIV" width={160} height={40} />
           </Link>
         </div>
         <div className="bringer-header-mp">
@@ -176,7 +176,7 @@ export default function Header() {
       </div>
       <div className="bringer-mobile-header-inner">
         <Link href={buildLocalizedHref('/')} className="bringer-logo">
-          <Image src="/img/newlogo-removebg-preview.png" alt="KOPEX MIN-LIV" width={160} height={40} />
+          <Image src="/img/kopexlogolatest-removebg-preview.png" alt="KOPEX MIN-LIV" width={160} height={40} />
         </Link>
         <div className="kopex-lang-switch kopex-lang-switch--mobile">
           <Link href={buildLangHref('sr')} aria-current={currentLanguage === 'sr'}>

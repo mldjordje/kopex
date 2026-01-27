@@ -93,7 +93,7 @@ export default function Footer() {
             <div className="stg-col-5 stg-tp-col-12 stg-tp-bottom-gap-l">
               <div className="bringer-info-widget">
                 <Link href={buildLocalizedHref('/')} className="bringer-logo footer-logo">
-                  <Image src="/img/newlogo-removebg-preview.png" alt="KOPEX MIN-LIV" width={160} height={40} />
+                  <Image src="/img/kopexlogolatest-removebg-preview.png" alt="KOPEX MIN-LIV" width={160} height={40} />
                 </Link>
                 <div className="bringer-info-description">{labels[currentLanguage].description}</div>
                 <span className="bringer-label">{labels[currentLanguage].follow}</span>
