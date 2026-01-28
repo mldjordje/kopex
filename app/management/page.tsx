@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import { cookies } from 'next/headers';
-import { LANGUAGE_COOKIE, normalizeLanguage, type Language } from '@/lib/language';
+import { LANGUAGE_COOKIE, resolveLanguage, type Language } from '@/lib/language';
 import { buildMetadata } from '@/lib/seo';
 
 const MANAGEMENT_META: Record<Language, { title: string; description: string; keywords: string[] }> = {
@@ -23,9 +23,14 @@ const MANAGEMENT_META: Record<Language, { title: string; description: string; ke
   }
 };
 
-export async function generateMetadata(): Promise<Metadata> {
+export async function generateMetadata({
+  searchParams
+}: {
+  searchParams?: Promise<Record<string, string | string[] | undefined>>;
+}): Promise<Metadata> {
   const cookieStore = await cookies();
-  const language = normalizeLanguage(cookieStore.get(LANGUAGE_COOKIE)?.value);
+  const resolvedSearchParams = await searchParams;
+  const language = resolveLanguage(resolvedSearchParams?.lang, cookieStore.get(LANGUAGE_COOKIE)?.value);
   const meta = MANAGEMENT_META[language];
   return buildMetadata({
     language,
@@ -145,9 +150,14 @@ const MANAGEMENT_COPY: Record<Language, {
   }
 };
 
-export default async function ManagementPage() {
+export default async function ManagementPage({
+  searchParams
+}: {
+  searchParams?: Promise<Record<string, string | string[] | undefined>>;
+}) {
   const cookieStore = await cookies();
-  const language = normalizeLanguage(cookieStore.get(LANGUAGE_COOKIE)?.value);
+  const resolvedSearchParams = await searchParams;
+  const language = resolveLanguage(resolvedSearchParams?.lang, cookieStore.get(LANGUAGE_COOKIE)?.value);
   const copy = MANAGEMENT_COPY[language];
   const team = MANAGEMENT_TEAM[language];
 

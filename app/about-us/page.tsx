@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import { cookies } from 'next/headers';
-import { LANGUAGE_COOKIE, normalizeLanguage, type Language } from '@/lib/language';
+import { LANGUAGE_COOKIE, resolveLanguage, type Language } from '@/lib/language';
 import { getProductsList } from '@/lib/products';
 import type { ProductItem } from '@/lib/products';
 import { buildMetadata } from '@/lib/seo';
@@ -25,9 +25,14 @@ const ABOUT_META: Record<Language, { title: string; description: string; keyword
   }
 };
 
-export async function generateMetadata(): Promise<Metadata> {
+export async function generateMetadata({
+  searchParams
+}: {
+  searchParams?: Promise<Record<string, string | string[] | undefined>>;
+}): Promise<Metadata> {
   const cookieStore = await cookies();
-  const language = normalizeLanguage(cookieStore.get(LANGUAGE_COOKIE)?.value);
+  const resolvedSearchParams = await searchParams;
+  const language = resolveLanguage(resolvedSearchParams?.lang, cookieStore.get(LANGUAGE_COOKIE)?.value);
   const meta = ABOUT_META[language];
   return buildMetadata({
     language,
@@ -283,9 +288,14 @@ const ABOUT_COPY: Record<Language, {
   }
 };
 
-export default async function AboutPage() {
+export default async function AboutPage({
+  searchParams
+}: {
+  searchParams?: Promise<Record<string, string | string[] | undefined>>;
+}) {
   const cookieStore = await cookies();
-  const language = normalizeLanguage(cookieStore.get(LANGUAGE_COOKIE)?.value);
+  const resolvedSearchParams = await searchParams;
+  const language = resolveLanguage(resolvedSearchParams?.lang, cookieStore.get(LANGUAGE_COOKIE)?.value);
   const copy = ABOUT_COPY[language];
   const productImages: Record<CategoryKey, string | null> = {
     gray: null,

@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import NewsDetailClient from '@/components/NewsDetailClient';
 import { cookies } from 'next/headers';
 import { getNewsById } from '@/lib/news';
-import { LANGUAGE_COOKIE, normalizeLanguage, type Language } from '@/lib/language';
+import { LANGUAGE_COOKIE, resolveLanguage, type Language } from '@/lib/language';
 import { buildMetadata } from '@/lib/seo';
 
 export const dynamic = 'force-dynamic';
@@ -11,6 +11,7 @@ type PageProps = {
   params: Promise<{
     id: string;
   }>;
+  searchParams?: Promise<Record<string, string | string[] | undefined>>;
 };
 
 const normalizeId = (value: string): string | null => {
@@ -57,9 +58,10 @@ const NEWS_META_LABELS: Record<Language, { invalidTitle: string; invalidDescript
   }
 };
 
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+export async function generateMetadata({ params, searchParams }: PageProps): Promise<Metadata> {
   const cookieStore = await cookies();
-  const language = normalizeLanguage(cookieStore.get(LANGUAGE_COOKIE)?.value);
+  const resolvedSearchParams = await searchParams;
+  const language = resolveLanguage(resolvedSearchParams?.lang, cookieStore.get(LANGUAGE_COOKIE)?.value);
   const labels = NEWS_META_LABELS[language];
   const resolvedParams = await params;
   const id = normalizeId(resolvedParams.id);
@@ -101,9 +103,10 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   }
 }
 
-export default async function NewsDetailPage({ params }: PageProps) {
+export default async function NewsDetailPage({ params, searchParams }: PageProps) {
   const cookieStore = await cookies();
-  const language = normalizeLanguage(cookieStore.get(LANGUAGE_COOKIE)?.value);
+  const resolvedSearchParams = await searchParams;
+  const language = resolveLanguage(resolvedSearchParams?.lang, cookieStore.get(LANGUAGE_COOKIE)?.value);
   const labels: Record<Language, { invalidId: string; notFound: string; loadError: string }> = {
     sr: {
       invalidId: 'Neispravan ID vesti.',

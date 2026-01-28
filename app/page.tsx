@@ -8,7 +8,7 @@ import { getNewsList } from '@/lib/news';
 import { getProductsList } from '@/lib/products';
 import type { NewsItem } from '@/lib/news';
 import type { ProductItem } from '@/lib/products';
-import { getLanguageLocale, LANGUAGE_COOKIE, normalizeLanguage, type Language } from '@/lib/language';
+import { getLanguageLocale, LANGUAGE_COOKIE, resolveLanguage, type Language } from '@/lib/language';
 import { buildMetadata } from '@/lib/seo';
 
 const HOME_META: Record<Language, { title: string; description: string; keywords: string[] }> = {
@@ -32,9 +32,14 @@ const HOME_META: Record<Language, { title: string; description: string; keywords
   }
 };
 
-export async function generateMetadata(): Promise<Metadata> {
+export async function generateMetadata({
+  searchParams
+}: {
+  searchParams?: Promise<Record<string, string | string[] | undefined>>;
+}): Promise<Metadata> {
   const cookieStore = await cookies();
-  const language = normalizeLanguage(cookieStore.get(LANGUAGE_COOKIE)?.value);
+  const resolvedSearchParams = await searchParams;
+  const language = resolveLanguage(resolvedSearchParams?.lang, cookieStore.get(LANGUAGE_COOKIE)?.value);
   const meta = HOME_META[language];
   return buildMetadata({
     language,
@@ -459,9 +464,14 @@ const formatDate = (value: string, language: Language): string => {
 const getProductSnippet = (product: ProductItem, fallback: string): string =>
   getSnippet(product.summary || product.description || '', 150, fallback);
 
-export default async function HomePage() {
+export default async function HomePage({
+  searchParams
+}: {
+  searchParams?: Promise<Record<string, string | string[] | undefined>>;
+}) {
   const cookieStore = await cookies();
-  const language = normalizeLanguage(cookieStore.get(LANGUAGE_COOKIE)?.value);
+  const resolvedSearchParams = await searchParams;
+  const language = resolveLanguage(resolvedSearchParams?.lang, cookieStore.get(LANGUAGE_COOKIE)?.value);
   const copy = HOME_COPY[language];
   let products: ProductItem[] = [];
   let news: NewsItem[] = [];

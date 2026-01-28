@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import { cookies } from 'next/headers';
-import { LANGUAGE_COOKIE, normalizeLanguage, type Language } from '@/lib/language';
+import { LANGUAGE_COOKIE, resolveLanguage, type Language } from '@/lib/language';
 import { buildMetadata } from '@/lib/seo';
 
 const CONTACTS_META: Record<Language, { title: string; description: string; keywords: string[] }> = {
@@ -22,9 +22,14 @@ const CONTACTS_META: Record<Language, { title: string; description: string; keyw
   }
 };
 
-export async function generateMetadata(): Promise<Metadata> {
+export async function generateMetadata({
+  searchParams
+}: {
+  searchParams?: Promise<Record<string, string | string[] | undefined>>;
+}): Promise<Metadata> {
   const cookieStore = await cookies();
-  const language = normalizeLanguage(cookieStore.get(LANGUAGE_COOKIE)?.value);
+  const resolvedSearchParams = await searchParams;
+  const language = resolveLanguage(resolvedSearchParams?.lang, cookieStore.get(LANGUAGE_COOKIE)?.value);
   const meta = CONTACTS_META[language];
   return buildMetadata({
     language,
@@ -179,9 +184,14 @@ const CONTACTS_COPY: Record<Language, {
   }
 };
 
-export default async function ContactsPage() {
+export default async function ContactsPage({
+  searchParams
+}: {
+  searchParams?: Promise<Record<string, string | string[] | undefined>>;
+}) {
   const cookieStore = await cookies();
-  const language = normalizeLanguage(cookieStore.get(LANGUAGE_COOKIE)?.value);
+  const resolvedSearchParams = await searchParams;
+  const language = resolveLanguage(resolvedSearchParams?.lang, cookieStore.get(LANGUAGE_COOKIE)?.value);
   const copy = CONTACTS_COPY[language];
 
   return (
@@ -224,7 +234,7 @@ export default async function ContactsPage() {
                   <br />
                   Nabavka / 063 105 7742
                   <br />
-                  Finansije / 063 589 779
+                  Finansije / 063 105 0649
                 </h6>
               </div>
               <p>{copy.phoneBody}</p>
@@ -281,7 +291,12 @@ export default async function ContactsPage() {
         <div className="stg-row">
           <div className="stg-col-4 stg-tp-col-6 stg-m-bottom-gap">
             <div className="bringer-block stg-aspect-square stg-vertical-space-between">
-              <a href="https://www.google.com/maps/search/?api=1&query=43.338027060655605,21.87638235891067" className="bringer-grid-item-link" target="_blank" rel="noreferrer"></a>
+              <a
+                href="https://www.google.com/maps/search/?api=1&query=Kopex%20MIN-LIV%2C%20Bulevar%2012.%20februara%2082%2C%20Ni%C5%A1"
+                className="bringer-grid-item-link"
+                target="_blank"
+                rel="noreferrer"
+              ></a>
               <div>
                 <h5>{copy.addressTitle}<span className="bringer-accent">.</span></h5>
                 <h6>{copy.addressValue}</h6>
@@ -292,7 +307,7 @@ export default async function ContactsPage() {
           <div className="stg-col-8 stg-tp-col-6">
             <iframe
               className="bringer-google-map"
-              src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d1575.621671353834!2d21.87638235891067!3d43.338027060655605!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e1!3m2!1sen!2srs!4v1769506330845!5m2!1sen!2srs"
+              src="https://www.google.com/maps?q=Kopex%20MIN-LIV%20Bulevar%2012.%20februara%2082%2C%20Ni%C5%A1&output=embed"
               referrerPolicy="no-referrer-when-downgrade"
               width={790}
               height={379}

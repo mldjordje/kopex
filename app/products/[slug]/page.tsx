@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { cookies } from 'next/headers';
 import { getProductBySlug } from '@/lib/products';
 import type { ProductItem } from '@/lib/products';
-import { LANGUAGE_COOKIE, normalizeLanguage, type Language } from '@/lib/language';
+import { LANGUAGE_COOKIE, resolveLanguage, type Language } from '@/lib/language';
 import { buildMetadata } from '@/lib/seo';
 
 export const dynamic = 'force-dynamic';
@@ -79,6 +79,7 @@ type PageProps = {
   params: Promise<{
     slug: string;
   }>;
+  searchParams?: Promise<Record<string, string | string[] | undefined>>;
 };
 
 const normalizeSlug = (value: string): string | null => {
@@ -110,9 +111,10 @@ const renderParagraphs = (value: string) =>
     .filter(Boolean)
     .map((block, index) => <p key={`${index}-${block}`}>{block}</p>);
 
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+export async function generateMetadata({ params, searchParams }: PageProps): Promise<Metadata> {
   const cookieStore = await cookies();
-  const language = normalizeLanguage(cookieStore.get(LANGUAGE_COOKIE)?.value);
+  const resolvedSearchParams = await searchParams;
+  const language = resolveLanguage(resolvedSearchParams?.lang, cookieStore.get(LANGUAGE_COOKIE)?.value);
   const labels = PRODUCT_META_LABELS[language];
   const resolvedParams = await params;
   const slug = normalizeSlug(resolvedParams.slug);
@@ -156,9 +158,10 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   }
 }
 
-export default async function ProductDetailPage({ params }: PageProps) {
+export default async function ProductDetailPage({ params, searchParams }: PageProps) {
   const cookieStore = await cookies();
-  const language = normalizeLanguage(cookieStore.get(LANGUAGE_COOKIE)?.value);
+  const resolvedSearchParams = await searchParams;
+  const language = resolveLanguage(resolvedSearchParams?.lang, cookieStore.get(LANGUAGE_COOKIE)?.value);
   const copy = PRODUCT_DETAIL_COPY[language];
   const resolvedParams = await params;
   const slug = normalizeSlug(resolvedParams.slug);

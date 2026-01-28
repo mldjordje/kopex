@@ -2,12 +2,24 @@ export type Language = 'sr' | 'en' | 'de';
 
 export const LANGUAGE_COOKIE = 'kopex_lang';
 
+export type LanguageParam = string | string[] | null | undefined;
+
 export const normalizeLanguage = (value?: string | null): Language => {
   const normalized = value?.toLowerCase();
   if (normalized === 'en' || normalized === 'de' || normalized === 'sr') {
     return normalized;
   }
   return 'sr';
+};
+
+export const resolveLanguage = (param?: LanguageParam, fallback?: string | null): Language => {
+  if (Array.isArray(param)) {
+    return normalizeLanguage(param[0]);
+  }
+  if (typeof param === 'string' && param.trim()) {
+    return normalizeLanguage(param);
+  }
+  return normalizeLanguage(fallback);
 };
 
 export const getLanguageLabel = (language: Language): string => {

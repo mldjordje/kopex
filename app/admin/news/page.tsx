@@ -3,7 +3,7 @@ import { cookies } from 'next/headers';
 import AdminNewsPageClient from '@/components/AdminNewsPageClient';
 import { getNewsList } from '@/lib/news';
 import type { NewsItem } from '@/lib/news';
-import { LANGUAGE_COOKIE, normalizeLanguage, type Language } from '@/lib/language';
+import { LANGUAGE_COOKIE, resolveLanguage, type Language } from '@/lib/language';
 import { buildMetadata } from '@/lib/seo';
 
 const ADMIN_NEWS_META: Record<Language, { title: string; description: string }> = {
@@ -21,9 +21,14 @@ const ADMIN_NEWS_META: Record<Language, { title: string; description: string }> 
   }
 };
 
-export async function generateMetadata(): Promise<Metadata> {
+export async function generateMetadata({
+  searchParams
+}: {
+  searchParams?: Promise<Record<string, string | string[] | undefined>>;
+}): Promise<Metadata> {
   const cookieStore = await cookies();
-  const language = normalizeLanguage(cookieStore.get(LANGUAGE_COOKIE)?.value);
+  const resolvedSearchParams = await searchParams;
+  const language = resolveLanguage(resolvedSearchParams?.lang, cookieStore.get(LANGUAGE_COOKIE)?.value);
   const meta = ADMIN_NEWS_META[language];
   return buildMetadata({
     language,

@@ -10,7 +10,7 @@ const isActivePath = (pathname: string, href: string): boolean => {
   if (href === '/') {
     return pathname === '/';
   }
-  return pathname === href;
+  return pathname === href || pathname.startsWith(`${href}/`);
 };
 
 export default function Header() {
@@ -114,7 +114,7 @@ export default function Header() {
               <li className={isActivePath(pathname, '/') ? 'current-menu-item' : undefined}>
                 <Link href={buildLocalizedHref('/')}>{navLabels[currentLanguage].home}</Link>
               </li>
-              <li>
+              <li className={isActivePath(pathname, '/products') ? 'current-menu-item' : undefined}>
                 <Link href={buildLocalizedHref('/products')}>{navLabels[currentLanguage].products}</Link>
               </li>
               <li className={isActivePath(pathname, '/news') ? 'current-menu-item' : undefined}>

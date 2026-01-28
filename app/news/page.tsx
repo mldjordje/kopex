@@ -3,7 +3,7 @@ import { cookies } from 'next/headers';
 import { getNewsList } from '@/lib/news';
 import type { NewsItem } from '@/lib/news';
 import NewsPageClient from '@/components/NewsPageClient';
-import { LANGUAGE_COOKIE, normalizeLanguage, type Language } from '@/lib/language';
+import { LANGUAGE_COOKIE, resolveLanguage, type Language } from '@/lib/language';
 import { buildMetadata } from '@/lib/seo';
 
 const NEWS_META: Record<Language, { title: string; description: string; keywords: string[] }> = {
@@ -24,9 +24,14 @@ const NEWS_META: Record<Language, { title: string; description: string; keywords
   }
 };
 
-export async function generateMetadata(): Promise<Metadata> {
+export async function generateMetadata({
+  searchParams
+}: {
+  searchParams?: Promise<Record<string, string | string[] | undefined>>;
+}): Promise<Metadata> {
   const cookieStore = await cookies();
-  const language = normalizeLanguage(cookieStore.get(LANGUAGE_COOKIE)?.value);
+  const resolvedSearchParams = await searchParams;
+  const language = resolveLanguage(resolvedSearchParams?.lang, cookieStore.get(LANGUAGE_COOKIE)?.value);
   const meta = NEWS_META[language];
   return buildMetadata({
     language,
@@ -39,9 +44,14 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export const dynamic = 'force-dynamic';
 
-export default async function NewsPage() {
+export default async function NewsPage({
+  searchParams
+}: {
+  searchParams?: Promise<Record<string, string | string[] | undefined>>;
+}) {
   const cookieStore = await cookies();
-  const language = normalizeLanguage(cookieStore.get(LANGUAGE_COOKIE)?.value);
+  const resolvedSearchParams = await searchParams;
+  const language = resolveLanguage(resolvedSearchParams?.lang, cookieStore.get(LANGUAGE_COOKIE)?.value);
   const labels: Record<Language, { errorMessage: string }> = {
     sr: { errorMessage: 'Ne mogu da ucitam vesti. Pokusajte kasnije.' },
     en: { errorMessage: 'Unable to load news. Please try again later.' },
