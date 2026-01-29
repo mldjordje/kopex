@@ -123,7 +123,7 @@ const ABOUT_COPY: Record<Language, {
 }> = {
   sr: {
     title: 'O nama',
-    lead: 'Livnica KOPEX MIN-LIV A.D. Niš sa tradicijom dužom od jednog veka.',
+    lead: 'Tradicija duza od jednog veka',
     historyTitle: 'Istorijat',
     historyItems: [
       { year: '1884', body: 'Osnivanje livnice u sastavu radionica za popravku železničkih vozila.' },
@@ -178,7 +178,7 @@ const ABOUT_COPY: Record<Language, {
   },
   en: {
     title: 'About us',
-    lead: 'KOPEX MIN-LIV A.D. Niš foundry with a tradition longer than a century.',
+    lead: 'Tradition longer than a century',
     historyTitle: 'History',
     historyItems: [
       { year: '1884', body: 'Foundry founded as part of railway vehicle repair workshops.' },
@@ -233,7 +233,7 @@ const ABOUT_COPY: Record<Language, {
   },
   de: {
     title: 'Über uns',
-    lead: 'KOPEX MIN-LIV A.D. Niš Gießerei mit einer Tradition von über einem Jahrhundert.',
+    lead: 'Tradition langer als ein Jahrhundert',
     historyTitle: 'Geschichte',
     historyItems: [
       { year: '1884', body: 'Gründung der Gießerei als Teil von Werkstätten zur Reparatur von Eisenbahnfahrzeugen.' },
@@ -324,6 +324,16 @@ export default async function AboutPage({
       <section className="backlight-bottom">
         <div className="stg-row">
           <div className="stg-col-8 stg-offset-2 align-center stg-tp-col-10 stg-tp-offset-1">
+            <div className="kopex-about-hero-logo">
+              <Image
+                src="/img/kopexlogolatest-removebg-preview.png"
+                alt="KOPEX MIN-LIV"
+                width={360}
+                height={90}
+                sizes="(max-width: 739px) 70vw, 360px"
+                priority
+              />
+            </div>
             <h1 className="bringer-page-title">{copy.title}</h1>
             <p className="bringer-large-text">{copy.lead}</p>
           </div>

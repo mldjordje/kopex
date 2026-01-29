@@ -6093,3 +6093,19 @@ button.pswp__button.bringer-pswp-next::after {
 [data-appear="zoom-out-down-right"] {
     transform: translate(calc(-1 * var(--stea-move)), calc(-1 * var(--stea-move))) scale(var(--stea-zoom-out));
 }
+
+.kopex-team-card .kopex-team-photo {
+    margin-bottom: 16px;
+}
+
+.kopex-about-hero-logo {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 18px;
+}
+
+.kopex-about-hero-logo img {
+    width: min(360px, 70vw);
+    height: auto;
+}

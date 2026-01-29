@@ -46,14 +46,14 @@ const CARD_SIZES = '(max-width: 739px) 100vw, (max-width: 1200px) 50vw, 33vw';
 const MANAGEMENT_TEAM: Record<Language, Array<{ name: string; role: string; image: string }>> = {
   sr: [
     {
-      name: 'Dragoljub Maksimovic, dipl. Inz. metalurgije',
+      name: 'Dragoljub Maksimovic, dipl. inz. metalurgije',
       role: 'Direktor i vlasnik',
       image: '/img/team/team01-thmb.jpg'
     },
     {
-      name: 'Milos Radivojevic, dipl. Inz. masinstva',
+      name: 'Milos Radivojevic, dipl. inz. masinstva',
       role: 'Tehnicki direktor',
-      image: '/img/team/team02-thmb.jpg'
+      image: '/img/milos.jpg'
     },
     {
       name: 'Dragan Drenic, dipl. ekon.',
@@ -61,21 +61,21 @@ const MANAGEMENT_TEAM: Record<Language, Array<{ name: string; role: string; imag
       image: '/img/dragandrenic.jpg'
     },
     {
-      name: 'Marina Radenovic',
+      name: 'Marina Radenkovic',
       role: 'Rukovodilac odeljenja cistionice i masinske obrade',
       image: '/img/team/team03-thmb.jpg'
     }
   ],
   en: [
     {
-      name: 'Dragoljub Maksimovic, dipl. Inz. metalurgije',
+      name: 'Dragoljub Maksimovic, dipl. inz. metalurgije',
       role: 'Owner and Director',
       image: '/img/team/team01-thmb.jpg'
     },
     {
-      name: 'Milos Radivojevic, dipl. Inz. masinstva',
+      name: 'Milos Radivojevic, dipl. inz. masinstva',
       role: 'Technical Director',
-      image: '/img/team/team02-thmb.jpg'
+      image: '/img/milos.jpg'
     },
     {
       name: 'Dragan Drenic, dipl. ekon.',
@@ -83,21 +83,21 @@ const MANAGEMENT_TEAM: Record<Language, Array<{ name: string; role: string; imag
       image: '/img/dragandrenic.jpg'
     },
     {
-      name: 'Marina Radenovic',
+      name: 'Marina Radenkovic',
       role: 'Head of Cleaning and Machining Department',
       image: '/img/team/team03-thmb.jpg'
     }
   ],
   de: [
     {
-      name: 'Dragoljub Maksimovic, dipl. Inz. metalurgije',
+      name: 'Dragoljub Maksimovic, dipl. inz. metalurgije',
       role: 'Inhaber und Direktor',
       image: '/img/team/team01-thmb.jpg'
     },
     {
-      name: 'Milos Radivojevic, dipl. Inz. masinstva',
+      name: 'Milos Radivojevic, dipl. inz. masinstva',
       role: 'Technischer Direktor',
-      image: '/img/team/team02-thmb.jpg'
+      image: '/img/milos.jpg'
     },
     {
       name: 'Dragan Drenic, dipl. ekon.',
@@ -105,7 +105,7 @@ const MANAGEMENT_TEAM: Record<Language, Array<{ name: string; role: string; imag
       image: '/img/dragandrenic.jpg'
     },
     {
-      name: 'Marina Radenovic',
+      name: 'Marina Radenkovic',
       role: 'Leiterin der Putzerei und mechanischen Bearbeitung',
       image: '/img/team/team03-thmb.jpg'
     }
@@ -188,14 +188,16 @@ export default async function ManagementPage({
         <div className="stg-row">
           {team.map((member) => (
             <div className="stg-col-4 stg-tp-col-6 stg-m-bottom-gap" key={member.name}>
-              <div className="bringer-block align-center">
-                <Image
-                  src={member.image}
-                  alt={member.name}
-                  width={720}
-                  height={720}
-                  sizes={CARD_SIZES}
-                />
+              <div className="bringer-block align-center kopex-team-card">
+                <div className="kopex-team-photo">
+                  <Image
+                    src={member.image}
+                    alt={member.name}
+                    width={720}
+                    height={720}
+                    sizes={CARD_SIZES}
+                  />
+                </div>
                 <h5>{member.name}</h5>
                 <p>{member.role}</p>
               </div>

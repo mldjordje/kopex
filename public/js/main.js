@@ -1217,12 +1217,12 @@ jQuery(function ($) {
 
             // Unload Header
             if ( core.$dom.header.hasClass('in-view') && core.$dom.header.is('[data-unload]') ) {
-                unload_delay = 150;
+                unload_delay = 100;
                 core.$dom.header.addClass('is-unloading');
             }
             // Unload Footer
             if ( core.$dom.footer.hasClass('in-view') && core.$dom.footer.is('[data-unload]') ) {
-                unload_delay = 150;
+                unload_delay = 100;
                 core.$dom.footer.addClass('is-unloading');
             }
             // Unload Content;
@@ -1232,7 +1232,7 @@ jQuery(function ($) {
             if ( new_url.length ) {
                 setTimeout(function() {
                     window.location = new_url;
-                }, 500, new_url);
+                }, 200, new_url);
             }
         }
 
