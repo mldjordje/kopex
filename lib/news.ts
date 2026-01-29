@@ -1,5 +1,5 @@
 import type { ResultSetHeader, RowDataPacket } from 'mysql2/promise';
-import { getDb } from './db';
+import { queryDb } from './db';
 
 export type NewsItem = {
   id: string;
@@ -52,7 +52,7 @@ const toIsoDate = (value: Date | string): string => {
 const normalizeId = (value: number | string): string => String(value).trim();
 
 export const getNewsList = async (): Promise<NewsItem[]> => {
-  const [rows] = await getDb().query<NewsRow[]>(
+  const rows = await queryDb<NewsRow[]>(
     'SELECT id, title, body, images, created_at FROM news ORDER BY created_at DESC, id DESC'
   );
 
@@ -66,7 +66,7 @@ export const getNewsList = async (): Promise<NewsItem[]> => {
 };
 
 export const getNewsById = async (id: string): Promise<NewsItem | null> => {
-  const [rows] = await getDb().query<NewsRow[]>(
+  const rows = await queryDb<NewsRow[]>(
     'SELECT id, title, body, images, created_at FROM news WHERE id = ? LIMIT 1',
     [id]
   );
@@ -95,7 +95,7 @@ export const createNewsEntry = async ({
   images: string[];
 }): Promise<string> => {
   const payload = images.length ? JSON.stringify(images) : null;
-  const [result] = await getDb().query<ResultSetHeader>(
+  const result = await queryDb<ResultSetHeader>(
     'INSERT INTO news (title, body, images) VALUES (?, ?, ?)',
     [title, body, payload]
   );
@@ -115,19 +115,19 @@ export const updateNewsEntry = async ({
 }): Promise<void> => {
   if (images !== undefined) {
     const payload = images.length ? JSON.stringify(images) : null;
-    await getDb().query<ResultSetHeader>(
+    await queryDb<ResultSetHeader>(
       'UPDATE news SET title = ?, body = ?, images = ? WHERE id = ?',
       [title, body, payload, id]
     );
     return;
   }
 
-  await getDb().query<ResultSetHeader>(
+  await queryDb<ResultSetHeader>(
     'UPDATE news SET title = ?, body = ? WHERE id = ?',
     [title, body, id]
   );
 };
 
 export const deleteNewsEntry = async (id: string): Promise<void> => {
-  await getDb().query<ResultSetHeader>('DELETE FROM news WHERE id = ?', [id]);
+  await queryDb<ResultSetHeader>('DELETE FROM news WHERE id = ?', [id]);
 };

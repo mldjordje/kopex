@@ -1,5 +1,5 @@
 import type { ResultSetHeader, RowDataPacket } from 'mysql2/promise';
-import { getDb } from './db';
+import { queryDb } from './db';
 
 export type ProductDocument = {
   name: string;
@@ -160,7 +160,7 @@ const ensureUniqueSlug = async (slug: string, excludeId?: number): Promise<strin
     params.push(excludeId);
   }
 
-  const [rows] = await getDb().query<RowDataPacket[]>(query, params);
+  const rows = await queryDb<RowDataPacket[]>(query, params);
   const existing = new Set(rows.map((row) => String((row as { slug?: unknown }).slug || '')));
 
   if (!existing.has(base)) {
@@ -197,7 +197,7 @@ export const getProductsList = async ({
   includeInactive = false
 }: { includeInactive?: boolean } = {}): Promise<ProductItem[]> => {
   const whereClause = includeInactive ? '' : 'WHERE is_active = 1';
-  const [rows] = await getDb().query<ProductRow[]>(
+  const rows = await queryDb<ProductRow[]>(
     `SELECT id, name, slug, summary, description, category, hero_image, gallery_images, documents, seo_title, seo_description, is_active, sort_order, created_at, updated_at
      FROM products
      ${whereClause}
@@ -208,7 +208,7 @@ export const getProductsList = async ({
 };
 
 export const getProductById = async (id: number): Promise<ProductItem | null> => {
-  const [rows] = await getDb().query<ProductRow[]>(
+  const rows = await queryDb<ProductRow[]>(
     `SELECT id, name, slug, summary, description, category, hero_image, gallery_images, documents, seo_title, seo_description, is_active, sort_order, created_at, updated_at
      FROM products
      WHERE id = ?
@@ -225,7 +225,7 @@ export const getProductById = async (id: number): Promise<ProductItem | null> =>
 };
 
 export const getProductBySlug = async (slug: string): Promise<ProductItem | null> => {
-  const [rows] = await getDb().query<ProductRow[]>(
+  const rows = await queryDb<ProductRow[]>(
     `SELECT id, name, slug, summary, description, category, hero_image, gallery_images, documents, seo_title, seo_description, is_active, sort_order, created_at, updated_at
      FROM products
      WHERE slug = ?
@@ -272,7 +272,7 @@ export const createProductEntry = async ({
   const galleryPayload = gallery && gallery.length ? JSON.stringify(gallery) : null;
   const documentsPayload = documents && documents.length ? JSON.stringify(documents) : null;
 
-  const [result] = await getDb().query<ResultSetHeader>(
+  const result = await queryDb<ResultSetHeader>(
     `INSERT INTO products (name, slug, summary, description, category, hero_image, gallery_images, documents, seo_title, seo_description, is_active, sort_order)
      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
     [
@@ -327,7 +327,7 @@ export const updateProductEntry = async ({
   const galleryPayload = gallery && gallery.length ? JSON.stringify(gallery) : null;
   const documentsPayload = documents && documents.length ? JSON.stringify(documents) : null;
 
-  await getDb().query<ResultSetHeader>(
+  await queryDb<ResultSetHeader>(
     `UPDATE products
      SET name = ?, slug = ?, summary = ?, description = ?, category = ?, hero_image = ?, gallery_images = ?, documents = ?, seo_title = ?, seo_description = ?, is_active = ?, sort_order = ?
      WHERE id = ?`,
@@ -352,5 +352,5 @@ export const updateProductEntry = async ({
 };
 
 export const deleteProductEntry = async (id: number): Promise<void> => {
-  await getDb().query<ResultSetHeader>('DELETE FROM products WHERE id = ?', [id]);
+  await queryDb<ResultSetHeader>('DELETE FROM products WHERE id = ?', [id]);
 };

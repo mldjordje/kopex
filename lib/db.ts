@@ -16,6 +16,7 @@ const createPool = () =>
     password: requireEnv('DB_PASSWORD'),
     database: requireEnv('DB_NAME'),
     charset: 'utf8mb4',
+    connectTimeout: 10000,
     connectionLimit: 10,
     waitForConnections: true,
     queueLimit: 0,
@@ -33,10 +34,63 @@ export const getDb = () => {
   }
 
   const pool = createPool();
-
-  if (process.env.NODE_ENV !== 'production') {
-    globalForDb.__kopexDbPool = pool;
-  }
+  globalForDb.__kopexDbPool = pool;
 
   return pool;
+};
+
+const transientErrorCodes = new Set([
+  'PROTOCOL_CONNECTION_LOST',
+  'ECONNRESET',
+  'ECONNREFUSED',
+  'ETIMEDOUT',
+  'EPIPE',
+  'ER_CON_COUNT_ERROR',
+  'PROTOCOL_ENQUEUE_AFTER_FATAL_ERROR',
+  'PROTOCOL_ENQUEUE_AFTER_QUIT'
+]);
+
+const isTransientError = (error: unknown): boolean => {
+  if (!error || typeof error !== 'object') {
+    return false;
+  }
+  const code = (error as { code?: string }).code;
+  return Boolean(code && transientErrorCodes.has(code));
+};
+
+const resetPool = async () => {
+  if (!globalForDb.__kopexDbPool) {
+    return;
+  }
+  try {
+    await globalForDb.__kopexDbPool.end();
+  } catch {
+    // Best-effort cleanup for broken connections.
+  } finally {
+    globalForDb.__kopexDbPool = undefined;
+  }
+};
+
+const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
+export const queryDb = async <T>(
+  sql: string,
+  params?: unknown[],
+  { retries = 2 }: { retries?: number } = {}
+): Promise<T> => {
+  let attempt = 0;
+
+  while (true) {
+    try {
+      const [rows] = await getDb().query<T>(sql, params);
+      return rows;
+    } catch (error) {
+      attempt += 1;
+      if (!isTransientError(error) || attempt > retries) {
+        throw error;
+      }
+      await resetPool();
+      await sleep(150 * attempt);
+    }
+  }
 };
