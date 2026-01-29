@@ -24,6 +24,35 @@ export type ProductItem = {
   updatedAt: string;
 };
 
+const PRODUCTS_CACHE_TTL_MS = 5 * 60 * 1000;
+type ProductCacheEntry = { items: ProductItem[]; cachedAt: number };
+const productCache: { active?: ProductCacheEntry; all?: ProductCacheEntry } = {};
+
+const getCachedProducts = (includeInactive: boolean): ProductItem[] | null => {
+  const entry = includeInactive ? productCache.all : productCache.active;
+  if (!entry) {
+    return null;
+  }
+  if (Date.now() - entry.cachedAt > PRODUCTS_CACHE_TTL_MS) {
+    return null;
+  }
+  return entry.items;
+};
+
+const setCachedProducts = (includeInactive: boolean, items: ProductItem[]) => {
+  const entry = { items, cachedAt: Date.now() };
+  if (includeInactive) {
+    productCache.all = entry;
+  } else {
+    productCache.active = entry;
+  }
+};
+
+const clearProductCache = () => {
+  productCache.active = undefined;
+  productCache.all = undefined;
+};
+
 type ProductRow = RowDataPacket & {
   id: number;
   name: string;
@@ -197,14 +226,26 @@ export const getProductsList = async ({
   includeInactive = false
 }: { includeInactive?: boolean } = {}): Promise<ProductItem[]> => {
   const whereClause = includeInactive ? '' : 'WHERE is_active = 1';
-  const rows = await queryDb<ProductRow[]>(
-    `SELECT id, name, slug, summary, description, category, hero_image, gallery_images, documents, seo_title, seo_description, is_active, sort_order, created_at, updated_at
-     FROM products
-     ${whereClause}
-     ORDER BY sort_order ASC, created_at DESC, id DESC`
-  );
-
-  return rows.map(mapRow);
+  try {
+    const rows = await queryDb<ProductRow[]>(
+      `SELECT id, name, slug, summary, description, category, hero_image, gallery_images, documents, seo_title, seo_description, is_active, sort_order, created_at, updated_at
+       FROM products
+       ${whereClause}
+       ORDER BY sort_order ASC, created_at DESC, id DESC`,
+      undefined,
+      { retries: 4 }
+    );
+    const items = rows.map(mapRow);
+    setCachedProducts(includeInactive, items);
+    return items;
+  } catch (error) {
+    const cached = getCachedProducts(includeInactive);
+    if (cached) {
+      console.warn('Products list fallback: serving cached data', error);
+      return cached;
+    }
+    throw error;
+  }
 };
 
 export const getProductById = async (id: number): Promise<ProductItem | null> => {
@@ -291,6 +332,7 @@ export const createProductEntry = async ({
     ]
   );
 
+  clearProductCache();
   return { id: result.insertId, slug: resolvedSlug };
 };
 
@@ -348,9 +390,11 @@ export const updateProductEntry = async ({
     ]
   );
 
+  clearProductCache();
   return resolvedSlug;
 };
 
 export const deleteProductEntry = async (id: number): Promise<void> => {
   await queryDb<ResultSetHeader>('DELETE FROM products WHERE id = ?', [id]);
+  clearProductCache();
 };
