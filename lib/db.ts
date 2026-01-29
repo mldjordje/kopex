@@ -1,4 +1,5 @@
 import mysql from 'mysql2/promise';
+import type { QueryResult } from 'mysql2/promise';
 
 const requireEnv = (key: string): string => {
   const value = process.env[key];
@@ -73,7 +74,7 @@ const resetPool = async () => {
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
-export const queryDb = async <T>(
+export const queryDb = async <T extends QueryResult>(
   sql: string,
   params?: unknown[],
   { retries = 2 }: { retries?: number } = {}
