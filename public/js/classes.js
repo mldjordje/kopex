@@ -279,13 +279,14 @@ class Bringer_Mobile_Menu {
             this.setAttribute('href', 'javascript:void(0)');
         });
         this.$menu.find('li.menu-item-has-children > a').each(function() {
+            if (!this.dataset.originalHref) {
+                this.dataset.originalHref = this.getAttribute('href') || '';
+            }
+            this.setAttribute('href', 'javascript:void(0)');
             this.addEventListener('click', (e) => {
                 const $link = jQuery(this);
                 const $submenu = $link.parent('li').children('ul');
                 if ($submenu.length === 0) {
-                    return;
-                }
-                if ($submenu.is(':visible')) {
                     return;
                 }
                 e.preventDefault();
