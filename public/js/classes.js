@@ -277,10 +277,20 @@ class Bringer_Mobile_Menu {
         this.$overlay = jQuery('<div class="bringer-mobile-menu-overlay"/>').appendTo(this.$body);
         this.$menu.find('a[href="#"]').each(function() {
             this.setAttribute('href', 'javascript:void(0)');
+        });
+        this.$menu.find('li.menu-item-has-children > a').each(function() {
             this.addEventListener('click', (e) => {
+                const $link = jQuery(this);
+                const $submenu = $link.parent('li').children('ul');
+                if ($submenu.length === 0) {
+                    return;
+                }
+                if ($submenu.is(':visible')) {
+                    return;
+                }
                 e.preventDefault();
                 this.classList.toggle('is-active');
-                jQuery(this).parent('li').children('ul').slideToggle(300);
+                $submenu.slideToggle(300);
             });
         });
 
