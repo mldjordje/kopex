@@ -27,6 +27,7 @@ export default function Footer() {
     products: string;
     news: string;
     management: string;
+    gallery: string;
     clients: string;
     address: string;
     phone: string;
@@ -39,10 +40,11 @@ export default function Footer() {
       contact: 'Kontakt',
       quickLinks: 'Brzi linkovi',
       about: 'O nama',
-      services: 'Opremljenost',
+      services: 'Usluge',
       products: 'Proizvodi',
       news: 'Vesti / Karijera',
       management: 'Rukovodstvo firme',
+      gallery: 'Galerija',
       clients: 'Kupci',
       address: 'Bulevar 12. februara 82, Ni\u0161',
       phone: 'Telefon: Komercijala / 063 465 494, 063 1059 426, 063 105 7902; Nabavka / 063 105 7742; Finansije / 063 105 0649',
@@ -55,10 +57,11 @@ export default function Footer() {
       contact: 'Contact',
       quickLinks: 'Quick links',
       about: 'About us',
-      services: 'Equipment',
+      services: 'Services',
       products: 'Products',
       news: 'News / Careers',
       management: 'Management',
+      gallery: 'Gallery',
       clients: 'Clients',
       address: 'Bulevar 12. februara 82, Ni\u0161',
       phone: 'Phone: Commercial / 063 465 494, 063 1059 426, 063 105 7902; Procurement / 063 105 7742; Finance / 063 105 0649',
@@ -71,10 +74,11 @@ export default function Footer() {
       contact: 'Kontakt',
       quickLinks: 'Schnellzugriff',
       about: '\u00dcber uns',
-      services: 'Ausstattung',
+      services: 'Leistungen',
       products: 'Produkte',
       news: 'News / Karriere',
       management: 'Gesch\u00e4ftsleitung',
+      gallery: 'Galerie',
       clients: 'Kunden',
       address: 'Bulevar 12. februara 82, Ni\u0161',
       phone: 'Telefon: Kommerziell / 063 465 494, 063 1059 426, 063 105 7902; Einkauf / 063 105 7742; Finanzen / 063 105 0649',
@@ -133,6 +137,7 @@ export default function Footer() {
                     <li><Link href={buildLocalizedHref('/products')}>{labels[currentLanguage].products}</Link></li>
                     <li><Link href={buildLocalizedHref('/news')}>{labels[currentLanguage].news}</Link></li>
                     <li><Link href={buildLocalizedHref('/management')}>{labels[currentLanguage].management}</Link></li>
+                    <li><Link href={buildLocalizedHref('/gallery')}>{labels[currentLanguage].gallery}</Link></li>
                     <li><Link href={buildLocalizedHref('/#kupci')}>{labels[currentLanguage].clients}</Link></li>
                     <li><Link href={buildLocalizedHref('/contacts')}>{labels[currentLanguage].contact}</Link></li>
                   </ul>

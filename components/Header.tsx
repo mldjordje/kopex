@@ -27,6 +27,10 @@ export default function Header() {
     about: string;
     management: string;
     services: string;
+    servicesOverview: string;
+    servicesProgram: string;
+    servicesProcess: string;
+    gallery: string;
     clients: string;
     certificates: string;
     contact: string;
@@ -39,7 +43,11 @@ export default function Header() {
       news: 'Vesti / Karijera',
       about: 'O nama',
       management: 'Rukovodstvo firme',
-      services: 'Opremljenost',
+      services: 'Usluge',
+      servicesOverview: 'Pregled opreme',
+      servicesProgram: 'Proizvodni program',
+      servicesProcess: 'Tehnološki proces rada',
+      gallery: 'Galerija',
       clients: 'Kupci',
       certificates: 'Sertifikati',
       contact: 'Kontakt',
@@ -52,7 +60,11 @@ export default function Header() {
       news: 'News / Careers',
       about: 'About us',
       management: 'Management',
-      services: 'Equipment',
+      services: 'Services',
+      servicesOverview: 'Equipment overview',
+      servicesProgram: 'Production program',
+      servicesProcess: 'Technological process',
+      gallery: 'Gallery',
       clients: 'Clients',
       certificates: 'Certificates',
       contact: 'Contact',
@@ -65,7 +77,11 @@ export default function Header() {
       news: 'News / Karriere',
       about: '\u00dcber uns',
       management: 'Gesch\u00e4ftsleitung',
-      services: 'Ausstattung',
+      services: 'Leistungen',
+      servicesOverview: 'Ausstattungs\u00fcbersicht',
+      servicesProgram: 'Produktionsprogramm',
+      servicesProcess: 'Technologischer Prozess',
+      gallery: 'Galerie',
       clients: 'Kunden',
       certificates: 'Zertifikate',
       contact: 'Kontakt',
@@ -100,6 +116,12 @@ export default function Header() {
     header.classList.add('in-view');
   }, [pathname]);
 
+  const servicesActive = isActivePath(pathname, '/services');
+  const servicesClassName = [
+    'menu-item-has-children',
+    servicesActive ? (pathname === '/services' ? 'current-menu-item' : 'current-menu-parent') : ''
+  ].filter(Boolean).join(' ');
+
   return (
     <header id="bringer-header" className="is-frosted is-sticky" data-appear="fade-down" data-unload="fade-up">
       <div className="bringer-header-inner">
@@ -126,8 +148,28 @@ export default function Header() {
               <li className={isActivePath(pathname, '/management') ? 'current-menu-item' : undefined}>
                 <Link href={buildLocalizedHref('/management')}>{navLabels[currentLanguage].management}</Link>
               </li>
-              <li className={isActivePath(pathname, '/services') ? 'current-menu-item' : undefined}>
+              <li className={servicesClassName}>
                 <Link href={buildLocalizedHref('/services')}>{navLabels[currentLanguage].services}</Link>
+                <ul className="sub-menu">
+                  <li className={isActivePath(pathname, '/services/pregled-opreme') ? 'current-menu-item' : undefined}>
+                    <Link href={buildLocalizedHref('/services/pregled-opreme')}>
+                      {navLabels[currentLanguage].servicesOverview}
+                    </Link>
+                  </li>
+                  <li className={isActivePath(pathname, '/services/proizvodni-program') ? 'current-menu-item' : undefined}>
+                    <Link href={buildLocalizedHref('/services/proizvodni-program')}>
+                      {navLabels[currentLanguage].servicesProgram}
+                    </Link>
+                  </li>
+                  <li className={isActivePath(pathname, '/services/tehnoloski-proces-rada') ? 'current-menu-item' : undefined}>
+                    <Link href={buildLocalizedHref('/services/tehnoloski-proces-rada')}>
+                      {navLabels[currentLanguage].servicesProcess}
+                    </Link>
+                  </li>
+                </ul>
+              </li>
+              <li className={isActivePath(pathname, '/gallery') ? 'current-menu-item' : undefined}>
+                <Link href={buildLocalizedHref('/gallery')}>{navLabels[currentLanguage].gallery}</Link>
               </li>
               <li>
                 <Link href={buildLocalizedHref('/#kupci')}>{navLabels[currentLanguage].clients}</Link>
