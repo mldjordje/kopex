@@ -76,6 +76,9 @@ const HOME_COPY: Record<Language, {
   newsTitle: string;
   newsLead: string;
   newsCta: string;
+  valuesEyebrow: string;
+  valuesTitle: string;
+  valuesItems: [string, string, string];
   servicesEyebrow: string;
   servicesTitle: string;
   servicesLead: string;
@@ -167,6 +170,13 @@ const HOME_COPY: Record<Language, {
     newsTitle: 'Najnovije informacije i oglasi za posao iz Kopex MIN-LIV.',
     newsLead: 'Pratite najnovije objave, projekte i oglase za zapošljavanje iz naše livnice.',
     newsCta: 'Sve vesti / karijera',
+    valuesEyebrow: 'Vrednosti',
+    valuesTitle: 'Naše vrednosti u tri stuba.',
+    valuesItems: [
+      'Stabilnost i poštovanje klijenata',
+      'Iskrenost, posvećenost i zanatstvo',
+      'Posvećenost visokim kvalitetima'
+    ],
     servicesEyebrow: 'Usluge',
     servicesTitle: 'Kompletan proizvodni ciklus na jednom mestu.',
     servicesLead: 'Od modelovanja i livenja do završne obrade, dokumentacije i isporuke.',
@@ -262,6 +272,13 @@ const HOME_COPY: Record<Language, {
     newsTitle: 'Latest news and job openings from Kopex MIN-LIV.',
     newsLead: 'Follow the latest updates, projects, and hiring announcements from our foundry.',
     newsCta: 'All news / careers',
+    valuesEyebrow: 'Values',
+    valuesTitle: 'Our values in three pillars.',
+    valuesItems: [
+      'Stability and client respect',
+      'Integrity, dedication, and craftsmanship',
+      'Commitment to high quality'
+    ],
     servicesEyebrow: 'Services',
     servicesTitle: 'A complete production cycle in one place.',
     servicesLead: 'From pattern making and casting to finishing, documentation, and delivery.',
@@ -357,6 +374,13 @@ const HOME_COPY: Record<Language, {
     newsTitle: 'Aktuelle Nachrichten und Stellenangebote von Kopex MIN-LIV.',
     newsLead: 'Folgen Sie den neuesten Meldungen, Projekten und Einstellungsanzeigen unserer Gießerei.',
     newsCta: 'Alle News / Karriere',
+    valuesEyebrow: 'Werte',
+    valuesTitle: 'Unsere Werte in drei Grundpfeilern.',
+    valuesItems: [
+      'Stabilität und Respekt gegenüber Kunden',
+      'Ehrlichkeit, Hingabe und Handwerk',
+      'Engagement für höchste Qualität'
+    ],
     servicesEyebrow: 'Leistungen',
     servicesTitle: 'Kompletter Produktionszyklus an einem Ort.',
     servicesLead: 'Von Modellbau und Gießen bis zur Endbearbeitung, Dokumentation und Lieferung.',
@@ -658,6 +682,22 @@ export default async function HomePage({
         </div>
       </section>
 
+      <section className="kopex-section kopex-section--values">
+        <div className="stg-container">
+          <div className="kopex-section__header">
+            <span className="kopex-eyebrow">{copy.valuesEyebrow}</span>
+            <h2>{copy.valuesTitle}</h2>
+          </div>
+          <div className="kopex-feature-grid">
+            {copy.valuesItems.map((item) => (
+              <div className="kopex-feature-card" key={item}>
+                <h3>{item}</h3>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       <section className="kopex-section kopex-section--services">
         <div className="stg-container">
           <div className="kopex-section__header">
@@ -717,41 +757,41 @@ export default async function HomePage({
             </p>
           </div>
           <div className="kopex-split">
-            <div className="kopex-media-grid">
-              <div className="kopex-media-grid__item kopex-media-grid__item--large">
+            <div className="kopex-equipment-media">
+              <div className="kopex-equipment-media__item kopex-equipment-media__item--tall">
                 <Image
-                  src="/img/kopex/production-01.jpg"
+                  src="/galerija/-28.jpeg"
                   alt={copy.equipmentImageAlt1}
-                  width={640}
-                  height={520}
+                  width={900}
+                  height={1200}
                   sizes={MEDIA_LARGE_SIZES}
                 />
               </div>
-              <div className="kopex-media-grid__item kopex-media-grid__item--tall">
+              <div className="kopex-equipment-media__item">
                 <Image
-                  src="/img/kopex/production-02.jpg"
+                  src="/galerija/-30.jpeg"
                   alt={copy.equipmentImageAlt2}
-                  width={520}
-                  height={820}
+                  width={900}
+                  height={700}
                   sizes={MEDIA_SMALL_SIZES}
                 />
               </div>
-              <div className="kopex-media-grid__item kopex-media-grid__item--wide">
+              <div className="kopex-equipment-media__item">
                 <Image
-                  src="/img/kopex/production-03.jpg"
+                  src="/galerija/-45.jpeg"
                   alt={copy.equipmentImageAlt3}
-                  width={740}
-                  height={520}
-                  sizes={MEDIA_LARGE_SIZES}
+                  width={900}
+                  height={700}
+                  sizes={MEDIA_SMALL_SIZES}
                 />
               </div>
-              <div className="kopex-media-grid__item">
+              <div className="kopex-equipment-media__item kopex-equipment-media__item--wide">
                 <Image
-                  src="/img/kopex/production-04.jpg"
+                  src="/galerija/-44.jpeg"
                   alt={copy.equipmentImageAlt4}
-                  width={520}
-                  height={520}
-                  sizes={MEDIA_SMALL_SIZES}
+                  width={1200}
+                  height={700}
+                  sizes={MEDIA_LARGE_SIZES}
                 />
               </div>
             </div>
@@ -796,7 +836,16 @@ export default async function HomePage({
           <div className="kopex-split__media">
             <div className="kopex-media-frame">
               <Image
-                src="/img/kopex/slides/page-05.jpg"
+                src="/galerija/-53.jpeg"
+                alt={copy.qualityImageAlt}
+                width={960}
+                height={720}
+                sizes={HALF_SIZES}
+              />
+            </div>
+            <div className="kopex-media-frame kopex-media-frame--offset">
+              <Image
+                src="/galerija/-54.jpg"
                 alt={copy.qualityImageAlt}
                 width={960}
                 height={720}

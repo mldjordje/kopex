@@ -36,8 +36,8 @@ export default function HeroVideo() {
         : '';
   const poster =
     deviceTarget === 'mobile'
-      ? '/img/kopex/production-02.jpg'
-      : '/img/kopex/facility-front.jpg';
+      ? '/img/1.jpg'
+      : '/img/1.jpg';
 
   return (
     <video

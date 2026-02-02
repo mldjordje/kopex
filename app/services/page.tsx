@@ -244,10 +244,10 @@ export default async function ServicesPage({
         </div>
       </section>
 
-      <section className="divider-bottom">
+      <section className="divider-bottom kopex-services-overview">
         <div className="stg-row stg-large-gap stg-valign-middle">
           <div className="stg-col-6 stg-tp-col-12">
-            <ul className="bringer-detailed-list">
+            <ul className="bringer-detailed-list bringer-detailed-list--mobile-details">
               {copy.equipmentItems.map((item) => (
                 <li key={item.title}>
                   <div className="bringer-detailed-list-title">
@@ -263,7 +263,7 @@ export default async function ServicesPage({
           <div className="stg-col-6 stg-tp-col-12">
             <div className="bringer-parallax-media">
               <Image
-                src="/img/kopex/production-03.jpg"
+                src="/galerija/-41.jpeg"
                 alt={copy.equipmentImageAlt}
                 width={960}
                 height={720}
@@ -312,7 +312,7 @@ export default async function ServicesPage({
           <div className="stg-col-6 stg-tp-bottom-gap-l">
             <div className="bringer-parallax-media">
               <Image
-                src="/img/kopex/production-04.jpg"
+                src="/galerija/-42.jpeg"
                 alt={copy.labImageAlt}
                 width={960}
                 height={720}
