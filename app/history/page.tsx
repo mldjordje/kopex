@@ -1,5 +1,4 @@
 import type { Metadata } from 'next';
-import Image from 'next/image';
 import path from 'path';
 import { readdir } from 'fs/promises';
 import { cookies } from 'next/headers';
@@ -81,8 +80,6 @@ const HISTORY_COPY: Record<Language, HistoryCopy> = {
   de: HISTORY_COPY_SR
 };
 
-const HISTORY_SIZES = '(max-width: 739px) 100vw, (max-width: 1200px) 50vw, 33vw';
-
 const getHistoryImages = async (): Promise<string[]> => {
   try {
     const historyDir = path.join(process.cwd(), 'public', 'istorija');
@@ -132,10 +129,10 @@ export default async function HistoryPage({
       </section>
 
       <section className="divider-top">
-        <div className="kopex-media-grid">
+        <div className="kopex-history-grid">
           {historyImages.map((src, index) => (
-            <div className={index % 3 === 0 ? 'kopex-media-grid__item kopex-media-grid__item--wide' : 'kopex-media-grid__item'} key={src}>
-              <Image src={src} alt={`Istorija ${index + 1}`} width={960} height={720} sizes={HISTORY_SIZES} />
+            <div className="kopex-history-item" key={src}>
+              <img src={src} alt={`Istorija ${index + 1}`} />
             </div>
           ))}
         </div>

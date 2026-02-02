@@ -61,21 +61,6 @@ const GALLERY_COPY: Record<Language, { title: string; lead: string }> = {
 
 const CARD_SIZES = '(max-width: 739px) 100vw, (max-width: 1200px) 50vw, 33vw';
 
-const resolveGridClass = (index: number): string => {
-  const base = 'kopex-media-grid__item';
-  const mod = index % 10;
-  if (mod === 0) {
-    return `${base} ${base}--large`;
-  }
-  if (mod === 3) {
-    return `${base} ${base}--tall`;
-  }
-  if (mod === 6) {
-    return `${base} ${base}--wide`;
-  }
-  return base;
-};
-
 const getGalleryImages = async (): Promise<string[]> => {
   try {
     const galleryDir = path.join(process.cwd(), 'public', 'galerija');
@@ -113,10 +98,17 @@ export default async function GalleryPage({
       </section>
 
       <section className="divider-bottom">
-        <div className="kopex-media-grid">
+        <div className="kopex-gallery-grid">
           {galleryImages.map((src, index) => (
-            <div className={resolveGridClass(index)} key={src}>
-              <Image src={src} alt={`Galerija ${index + 1}`} width={960} height={720} sizes={CARD_SIZES} />
+            <div className="kopex-gallery-item" key={src}>
+              <Image
+                src={src}
+                alt={`Galerija ${index + 1}`}
+                width={1200}
+                height={900}
+                sizes={CARD_SIZES}
+                style={{ width: '100%', height: 'auto' }}
+              />
             </div>
           ))}
         </div>
