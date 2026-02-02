@@ -31,6 +31,8 @@ export default function Header() {
     servicesProgram: string;
     servicesProcess: string;
     gallery: string;
+    pages: string;
+    history: string;
     clients: string;
     certificates: string;
     contact: string;
@@ -48,6 +50,8 @@ export default function Header() {
       servicesProgram: 'Proizvodni program',
       servicesProcess: 'Tehnološki proces rada',
       gallery: 'Galerija',
+      pages: 'Stranice',
+      history: 'Istorija',
       clients: 'Kupci',
       certificates: 'Sertifikati',
       contact: 'Kontakt',
@@ -65,6 +69,8 @@ export default function Header() {
       servicesProgram: 'Production program',
       servicesProcess: 'Technological process',
       gallery: 'Gallery',
+      pages: 'Pages',
+      history: 'History',
       clients: 'Clients',
       certificates: 'Certificates',
       contact: 'Contact',
@@ -82,6 +88,8 @@ export default function Header() {
       servicesProgram: 'Produktionsprogramm',
       servicesProcess: 'Technologischer Prozess',
       gallery: 'Galerie',
+      pages: 'Seiten',
+      history: 'Geschichte',
       clients: 'Kunden',
       certificates: 'Zertifikate',
       contact: 'Kontakt',
@@ -121,6 +129,11 @@ export default function Header() {
     'menu-item-has-children',
     servicesActive ? (pathname === '/services' ? 'current-menu-item' : 'current-menu-parent') : ''
   ].filter(Boolean).join(' ');
+  const pagesActive = isActivePath(pathname, '/management') || isActivePath(pathname, '/history');
+  const pagesClassName = [
+    'menu-item-has-children',
+    pagesActive ? (pathname === '/management' || pathname === '/history' ? 'current-menu-parent' : '') : ''
+  ].filter(Boolean).join(' ');
 
   return (
     <header id="bringer-header" className="is-frosted is-sticky" data-appear="fade-down" data-unload="fade-up">
@@ -145,9 +158,6 @@ export default function Header() {
               <li className={isActivePath(pathname, '/about-us') ? 'current-menu-item' : undefined}>
                 <Link href={buildLocalizedHref('/about-us')}>{navLabels[currentLanguage].about}</Link>
               </li>
-              <li className={isActivePath(pathname, '/management') ? 'current-menu-item' : undefined}>
-                <Link href={buildLocalizedHref('/management')}>{navLabels[currentLanguage].management}</Link>
-              </li>
               <li className={servicesClassName}>
                 <Link href={buildLocalizedHref('/services')}>{navLabels[currentLanguage].services}</Link>
                 <ul className="sub-menu">
@@ -171,11 +181,22 @@ export default function Header() {
               <li className={isActivePath(pathname, '/gallery') ? 'current-menu-item' : undefined}>
                 <Link href={buildLocalizedHref('/gallery')}>{navLabels[currentLanguage].gallery}</Link>
               </li>
-              <li>
-                <Link href={buildLocalizedHref('/#kupci')}>{navLabels[currentLanguage].clients}</Link>
-              </li>
-              <li>
-                <Link href={buildLocalizedHref('/#sertifikati')}>{navLabels[currentLanguage].certificates}</Link>
+              <li className={pagesClassName}>
+                <Link href="#">{navLabels[currentLanguage].pages}</Link>
+                <ul className="sub-menu">
+                  <li className={isActivePath(pathname, '/management') ? 'current-menu-item' : undefined}>
+                    <Link href={buildLocalizedHref('/management')}>{navLabels[currentLanguage].management}</Link>
+                  </li>
+                  <li className={isActivePath(pathname, '/history') ? 'current-menu-item' : undefined}>
+                    <Link href={buildLocalizedHref('/history')}>{navLabels[currentLanguage].history}</Link>
+                  </li>
+                  <li>
+                    <Link href={buildLocalizedHref('/#kupci')}>{navLabels[currentLanguage].clients}</Link>
+                  </li>
+                  <li>
+                    <Link href={buildLocalizedHref('/#sertifikati')}>{navLabels[currentLanguage].certificates}</Link>
+                  </li>
+                </ul>
               </li>
               <li className={isActivePath(pathname, '/contacts') ? 'current-menu-item' : undefined}>
                 <Link href={buildLocalizedHref('/contacts')}>{navLabels[currentLanguage].contact}</Link>

@@ -647,17 +647,8 @@ export default async function HomePage({
           <div className="kopex-split__media">
             <div className="kopex-media-frame">
               <Image
-                src="/img/kopex/facility-front.jpg"
+                src="/img/1.jpg"
                 alt={copy.storyImageAlt1}
-                width={960}
-                height={720}
-                sizes={HALF_SIZES}
-              />
-            </div>
-            <div className="kopex-media-frame kopex-media-frame--offset">
-              <Image
-                src="/img/kopex/facility-yard.jpg"
-                alt={copy.storyImageAlt2}
                 width={960}
                 height={720}
                 sizes={HALF_SIZES}

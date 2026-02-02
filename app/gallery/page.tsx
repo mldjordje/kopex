@@ -1,5 +1,7 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
+import path from 'path';
+import { readdir } from 'fs/promises';
 import { cookies } from 'next/headers';
 import { LANGUAGE_COOKIE, resolveLanguage, type Language } from '@/lib/language';
 import { buildMetadata } from '@/lib/seo';
@@ -40,6 +42,8 @@ export async function generateMetadata({
   });
 }
 
+export const dynamic = 'force-dynamic';
+
 const GALLERY_COPY: Record<Language, { title: string; lead: string }> = {
   sr: {
     title: 'Galerija',
@@ -54,39 +58,6 @@ const GALLERY_COPY: Record<Language, { title: string; lead: string }> = {
     lead: 'Fotos aus Produktion, Werkstätten und Anlagen von KOPEX MIN-LIV.'
   }
 };
-
-const GALLERY_IMAGES = [
-  '/galerija/1.jpg',
-  '/galerija/-2.jpg',
-  '/galerija/-3.jpg',
-  '/galerija/-4.jpg',
-  '/galerija/-11.jpeg',
-  '/galerija/-12.jpeg',
-  '/galerija/-13.jpeg',
-  '/galerija/-14.jpeg',
-  '/galerija/-15.jpeg',
-  '/galerija/-16.jpeg',
-  '/galerija/-17.jpeg',
-  '/galerija/-18.jpeg',
-  '/galerija/-19.jpeg',
-  '/galerija/-20.jpeg',
-  '/galerija/-21.jpeg',
-  '/galerija/-22.jpeg',
-  '/galerija/-23.jpeg',
-  '/galerija/-24.jpeg',
-  '/galerija/-25.jpeg',
-  '/galerija/-26.jpeg',
-  '/galerija/-27.jpeg',
-  '/galerija/-28.jpeg',
-  '/galerija/-29.jpeg',
-  '/galerija/-30.jpeg',
-  '/galerija/-32.jpeg',
-  '/galerija/-34.jpeg',
-  '/galerija/-35.jpeg',
-  '/galerija/-36.jpeg',
-  '/galerija/-37.jpeg',
-  '/galerija/-39.jpeg'
-];
 
 const CARD_SIZES = '(max-width: 739px) 100vw, (max-width: 1200px) 50vw, 33vw';
 
@@ -105,6 +76,20 @@ const resolveGridClass = (index: number): string => {
   return base;
 };
 
+const getGalleryImages = async (): Promise<string[]> => {
+  try {
+    const galleryDir = path.join(process.cwd(), 'public', 'galerija');
+    const files = await readdir(galleryDir);
+    return files
+      .filter((file) => /\.(jpe?g|png|webp|gif|bmp|svg)$/i.test(file))
+      .sort((a, b) => a.localeCompare(b, undefined, { numeric: true, sensitivity: 'base' }))
+      .map((file) => `/galerija/${file}`);
+  } catch (error) {
+    console.error('Gallery images error:', error);
+    return [];
+  }
+};
+
 export default async function GalleryPage({
   searchParams
 }: {
@@ -114,6 +99,7 @@ export default async function GalleryPage({
   const resolvedSearchParams = await searchParams;
   const language = resolveLanguage(resolvedSearchParams?.lang, cookieStore.get(LANGUAGE_COOKIE)?.value);
   const copy = GALLERY_COPY[language];
+  const galleryImages = await getGalleryImages();
 
   return (
     <div className="stg-container">
@@ -128,7 +114,7 @@ export default async function GalleryPage({
 
       <section className="divider-bottom">
         <div className="kopex-media-grid">
-          {GALLERY_IMAGES.map((src, index) => (
+          {galleryImages.map((src, index) => (
             <div className={resolveGridClass(index)} key={src}>
               <Image src={src} alt={`Galerija ${index + 1}`} width={960} height={720} sizes={CARD_SIZES} />
             </div>
