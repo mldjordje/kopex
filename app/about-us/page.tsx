@@ -56,7 +56,7 @@ type CategoryKey = 'gray' | 'ductile' | 'steel';
 const CATEGORY_KEYS: CategoryKey[] = ['gray', 'ductile', 'steel'];
 
 const CATEGORY_MATCHERS: Record<CategoryKey, RegExp[]> = {
-  gray: [/sivi/gi, /sivo/gi, /gray/gi, /grau/gi, /grauguss/gi],
+  gray: [/siv/gi, /sivi/gi, /sivo/gi, /gray/gi, /grau/gi, /grauguss/gi],
   ductile: [/nodular/gi, /nodij/gi, /ductile/gi, /spharo/gi, /sphaero/gi],
   steel: [/celic/gi, /c(el|e)ic/gi, /steel/gi, /stahl/gi, /legir/gi, /alloy/gi, /niskoleg/gi, /mangan/gi]
 };
@@ -334,7 +334,6 @@ export default async function AboutPage({
                 priority
               />
             </div>
-            <h1 className="bringer-page-title">{copy.title}</h1>
             <p className="bringer-large-text">{copy.lead}</p>
           </div>
         </div>
@@ -376,7 +375,7 @@ export default async function AboutPage({
           <div className="stg-col-6 stg-tp-col-12">
             <div className="bringer-parallax-media">
               <Image
-                src="/img/kopex/production-01.jpg"
+                src="/img/new2.avif"
                 alt={copy.capacitiesImageAlt}
                 width={960}
                 height={720}
@@ -406,7 +405,7 @@ export default async function AboutPage({
           <div className="stg-col-6 stg-tp-bottom-gap-l">
             <div className="bringer-parallax-media">
               <Image
-                src="/img/kopex/production-02.jpg"
+                src="/img/new1.avif"
                 alt={copy.labImageAlt}
                 width={960}
                 height={720}

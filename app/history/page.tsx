@@ -68,7 +68,6 @@ const HISTORY_COPY_SR: HistoryCopy = {
     'Livenje gvožđa',
     'Livenje čelika',
     'Livenje lakih metala',
-    'Livenje ostalih obojenih metala',
     'Proizvodnja alata',
     'Proizvodnja ostalih standardnih metalnih proizvoda'
   ]

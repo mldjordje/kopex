@@ -9,8 +9,7 @@ import { buildMetadata } from '@/lib/seo';
 
 export const dynamic = 'force-dynamic';
 
-const HERO_SIZES = '(max-width: 739px) 100vw, 50vw';
-const GALLERY_SIZES = '(max-width: 739px) 50vw, 16vw';
+const DETAIL_SIZES = '(max-width: 739px) 100vw, (max-width: 1200px) 50vw, 33vw';
 
 const PRODUCT_DETAIL_COPY: Record<Language, {
   eyebrow: string;
@@ -111,6 +110,40 @@ const renderParagraphs = (value: string) =>
     .filter(Boolean)
     .map((block, index) => <p key={`${index}-${block}`}>{block}</p>);
 
+const normalizeImageKey = (value: string): string => {
+  const trimmed = value.trim();
+  if (!trimmed) {
+    return '';
+  }
+  const withoutQuery = trimmed.split(/[?#]/)[0];
+  const parts = withoutQuery.split('/');
+  const filename = parts[parts.length - 1] || withoutQuery;
+  return filename.toLowerCase();
+};
+
+const getUniqueImages = (values: Array<string | null | undefined>): string[] => {
+  const seen = new Set<string>();
+  const result: string[] = [];
+
+  values.forEach((value) => {
+    if (!value) {
+      return;
+    }
+    const trimmed = value.trim();
+    if (!trimmed) {
+      return;
+    }
+    const key = normalizeImageKey(trimmed) || trimmed;
+    if (seen.has(key)) {
+      return;
+    }
+    seen.add(key);
+    result.push(trimmed);
+  });
+
+  return result;
+};
+
 export async function generateMetadata({ params, searchParams }: PageProps): Promise<Metadata> {
   const cookieStore = await cookies();
   const resolvedSearchParams = await searchParams;
@@ -191,10 +224,7 @@ export default async function ProductDetailPage({ params, searchParams }: PagePr
       );
     }
 
-    const hero = product.heroImage || product.gallery[0] || '';
-    const gallery = hero
-      ? product.gallery.filter((image) => image !== hero)
-      : product.gallery;
+    const images = getUniqueImages([product.heroImage, ...product.gallery]);
 
     return (
       <div className="kopex-landing">
@@ -210,26 +240,22 @@ export default async function ProductDetailPage({ params, searchParams }: PagePr
 
             <div className="kopex-product-detail">
               <div className="kopex-product-detail__media">
-                {hero ? (
-                  <Image src={hero} alt={product.name} width={1080} height={720} sizes={HERO_SIZES} />
-                ) : (
-                  <div className="kopex-product-card__placeholder">{copy.noImage}</div>
-                )}
-
-                {gallery.length ? (
+                {images.length ? (
                   <div className="kopex-product-detail__gallery">
-                    {gallery.map((image, index) => (
+                    {images.map((image, index) => (
                       <Image
                         key={`${product.id}-gallery-${index}`}
                         src={image}
-                        alt={`${product.name} ${index + 2}`}
-                        width={320}
-                        height={240}
-                        sizes={GALLERY_SIZES}
+                        alt={`${product.name} ${index + 1}`}
+                        width={960}
+                        height={720}
+                        sizes={DETAIL_SIZES}
                       />
                     ))}
                   </div>
-                ) : null}
+                ) : (
+                  <div className="kopex-product-card__placeholder">{copy.noImage}</div>
+                )}
               </div>
 
               <div className="kopex-product-detail__content">

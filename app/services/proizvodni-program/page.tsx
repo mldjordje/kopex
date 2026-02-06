@@ -48,8 +48,6 @@ type ProgramCopy = {
   secondaryTitle: string;
   labTitle: string;
   labItems: string[];
-  productionTitle: string;
-  productionItems: string[];
   ctaTitle: string;
   ctaLead: string;
   ctaButton: string;
@@ -71,14 +69,6 @@ const PROGRAM_COPY_SR: ProgramCopy = {
   secondaryTitle: 'Sekundarni proizvodni program',
   labTitle: 'Usluge metalurške laboratorije (kontrola kvaliteta)',
   labItems: [
-    'Mehanička ispitivanja',
-    'Ispitivanje hemijskog sastava (kvantometar)',
-    'Metalografska kontrola',
-    'IBR (ultra-zvuk, penetranti, magnetni fluks)',
-    'Izdavanje uverenja o kvalitetu ispitivanog materijala'
-  ],
-  productionTitle: 'Proizvodne usluge',
-  productionItems: [
     'Mehanička ispitivanja',
     'Ispitivanje hemijskog sastava (kvantometar)',
     'Metalografska kontrola',
@@ -135,13 +125,7 @@ export default async function ProductionProgramPage({
                 <li key={item}>{item}</li>
               ))}
             </ul>
-            <h4>{copy.productionTitle}</h4>
-            <ul className="kopex-quality-list">
-              {copy.productionItems.map((item) => (
-                <li key={item}>{item}</li>
-              ))}
-            </ul>
-          </div>
+</div>
         </div>
       </section>
 

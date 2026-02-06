@@ -46,6 +46,7 @@ export async function generateMetadata({
 export const dynamic = 'force-dynamic';
 
 const CARD_SIZES = '(max-width: 739px) 100vw, (max-width: 1024px) 50vw, 33vw';
+const STRIP_SIZES = '(max-width: 739px) 100vw, (max-width: 1200px) 33vw, 360px';
 const PRODUCTS_COPY: Record<Language, {
   eyebrow: string;
   title: string;
@@ -108,11 +109,11 @@ const CATEGORY_CONTENT: Record<Language, Record<CategoryKey, { title: string; he
   sr: {
     gray: {
       title: 'Sivi liv',
-      hero: { src: '/img/products/hero-gray.png', alt: 'Sivi liv - hero fotografija' }
+      hero: { src: '/img/kopex/slides/page-06.jpg', alt: 'Sivi liv - hero fotografija' }
     },
     ductile: {
       title: 'Nodularni liv',
-      hero: { src: '/img/products/hero-ductile.png', alt: 'Nodularni liv - hero fotografija' }
+      hero: { src: '/galerija/46v.jpeg', alt: 'Nodularni liv - hero fotografija' }
     },
     steel: {
       title: 'Čelični liv',
@@ -122,11 +123,11 @@ const CATEGORY_CONTENT: Record<Language, Record<CategoryKey, { title: string; he
   en: {
     gray: {
       title: 'Gray iron',
-      hero: { src: '/img/products/hero-gray.png', alt: 'Gray iron hero image' }
+      hero: { src: '/img/kopex/slides/page-06.jpg', alt: 'Gray iron hero image' }
     },
     ductile: {
       title: 'Ductile iron',
-      hero: { src: '/img/products/hero-ductile.png', alt: 'Ductile iron hero image' }
+      hero: { src: '/galerija/46v.jpeg', alt: 'Ductile iron hero image' }
     },
     steel: {
       title: 'Steel castings',
@@ -136,11 +137,11 @@ const CATEGORY_CONTENT: Record<Language, Record<CategoryKey, { title: string; he
   de: {
     gray: {
       title: 'Grauguss',
-      hero: { src: '/img/products/hero-gray.png', alt: 'Grauguss Hero-Bild' }
+      hero: { src: '/img/kopex/slides/page-06.jpg', alt: 'Grauguss Hero-Bild' }
     },
     ductile: {
       title: 'Sphäroguss',
-      hero: { src: '/img/products/hero-ductile.png', alt: 'Sphäroguss Hero-Bild' }
+      hero: { src: '/galerija/46v.jpeg', alt: 'Sphäroguss Hero-Bild' }
     },
     steel: {
       title: 'Stahlguss',
@@ -155,30 +156,36 @@ const CATEGORY_GALLERY: Record<Language, Record<CategoryKey, CategoryGalleryItem
   sr: {
     gray: [
       {
-        src: '/img/kopex/slides/page-06.jpg',
-        alt: 'Sivi liv - reprezentativni odlivak',
-        title: 'Sivi liv',
-        body: 'Reprezentativni odlivak iz proizvodnje sivog liva.'
+        src: '/galerija/40v.jpeg',
+        alt: 'Kućište - odlivak iz proizvodnje',
+        title: 'Kućište',
+        body: 'Reprezentativno kućište iz proizvodnje sivog liva.'
       },
       {
-        src: '/img/kopex/slides/page-09.jpg',
-        alt: 'Sivi liv - odlivak iz proizvodnje',
-        title: 'Sivi liv',
-        body: 'Primer odlivka sa sivim livom za industrijsku primenu.'
+        src: '/galerija/41v.jpeg',
+        alt: 'Kućište - proizvod iz sivog liva',
+        title: 'Kućište',
+        body: 'Primer kućišta od sivog liva za industrijsku primenu.'
+      },
+      {
+        src: 'https://upload.kopexmin.rs/uploads/products/images/0155d0be8ae21699d937e1e72f5d207f.jpg',
+        alt: 'Kolektor - odlivak iz sivog liva',
+        title: 'Kolektor',
+        body: 'Kolektor od sivog liva.'
       }
     ],
     ductile: [
       {
-        src: '/img/kopex/slides/page-07.jpg',
-        alt: 'Nodularni liv - reprezentativni odlivak',
-        title: 'Nodularni liv',
-        body: 'Reprezentativni odlivak od nodularnog liva.'
+        src: '/img/products/hero-ductile.png',
+        alt: 'Radno kolo - odlivak iz nodularnog liva',
+        title: 'Radno kolo',
+        body: 'Reprezentativno radno kolo od nodularnog liva.'
       },
       {
-        src: '/img/kopex/slides/page-10.jpg',
-        alt: 'Nodularni liv - odlivak iz proizvodnje',
-        title: 'Nodularni liv',
-        body: 'Primer odlivka za zahtevne mehanicke uslove rada.'
+        src: '/galerija/44v.jpeg',
+        alt: 'Radno kolo - primer odlivka',
+        title: 'Radno kolo',
+        body: 'Primer radnog kola iz proizvodnje nodularnog liva.'
       }
     ],
     steel: [
@@ -199,30 +206,36 @@ const CATEGORY_GALLERY: Record<Language, Record<CategoryKey, CategoryGalleryItem
   en: {
     gray: [
       {
-        src: '/img/kopex/slides/page-06.jpg',
-        alt: 'Gray iron representative casting',
-        title: 'Gray iron',
-        body: 'Representative casting from gray iron production.'
+        src: '/galerija/40v.jpeg',
+        alt: 'Housing - gray iron casting',
+        title: 'Housing',
+        body: 'Representative housing from gray iron production.'
       },
       {
-        src: '/img/kopex/slides/page-09.jpg',
-        alt: 'Gray iron casting from production',
-        title: 'Gray iron',
-        body: 'Example casting for industrial applications.'
+        src: '/galerija/41v.jpeg',
+        alt: 'Housing - gray iron product',
+        title: 'Housing',
+        body: 'Example housing casting for industrial applications.'
+      },
+      {
+        src: 'https://upload.kopexmin.rs/uploads/products/images/0155d0be8ae21699d937e1e72f5d207f.jpg',
+        alt: 'Collector - gray iron casting',
+        title: 'Collector',
+        body: 'Collector casting from gray iron.'
       }
     ],
     ductile: [
       {
-        src: '/img/kopex/slides/page-07.jpg',
-        alt: 'Ductile iron representative casting',
-        title: 'Ductile iron',
-        body: 'Representative ductile iron casting.'
+        src: '/img/products/hero-ductile.png',
+        alt: 'Impeller - ductile iron casting',
+        title: 'Impeller',
+        body: 'Representative ductile iron impeller.'
       },
       {
-        src: '/img/kopex/slides/page-10.jpg',
-        alt: 'Ductile iron casting from production',
-        title: 'Ductile iron',
-        body: 'Example casting for demanding mechanical conditions.'
+        src: '/galerija/44v.jpeg',
+        alt: 'Impeller - casting from production',
+        title: 'Impeller',
+        body: 'Example impeller casting for demanding conditions.'
       }
     ],
     steel: [
@@ -243,30 +256,36 @@ const CATEGORY_GALLERY: Record<Language, Record<CategoryKey, CategoryGalleryItem
   de: {
     gray: [
       {
-        src: '/img/kopex/slides/page-06.jpg',
-        alt: 'Grauguss reprasentatives Gussteil',
-        title: 'Grauguss',
-        body: 'Reprasentatives Gussteil aus der Graugussproduktion.'
+        src: '/galerija/40v.jpeg',
+        alt: 'Gehäuse - Grauguss Gussteil',
+        title: 'Gehäuse',
+        body: 'Repräsentatives Gehäuse aus Grauguss.'
       },
       {
-        src: '/img/kopex/slides/page-09.jpg',
-        alt: 'Grauguss Gussteil aus der Produktion',
-        title: 'Grauguss',
-        body: 'Beispielgussteil fur industrielle Anwendungen.'
+        src: '/galerija/41v.jpeg',
+        alt: 'Gehäuse - Gussteil aus Grauguss',
+        title: 'Gehäuse',
+        body: 'Beispielgussteil für industrielle Anwendungen.'
+      },
+      {
+        src: 'https://upload.kopexmin.rs/uploads/products/images/0155d0be8ae21699d937e1e72f5d207f.jpg',
+        alt: 'Kollektor - Grauguss Gussteil',
+        title: 'Kollektor',
+        body: 'Kollektor aus Grauguss.'
       }
     ],
     ductile: [
       {
-        src: '/img/kopex/slides/page-07.jpg',
-        alt: 'Spharoguss reprasentatives Gussteil',
-        title: 'Spharoguss',
-        body: 'Reprasentatives Gussteil aus Spharoguss.'
+        src: '/img/products/hero-ductile.png',
+        alt: 'Laufrad - Sphäroguss Gussteil',
+        title: 'Laufrad',
+        body: 'Repräsentatives Laufrad aus Sphäroguss.'
       },
       {
-        src: '/img/kopex/slides/page-10.jpg',
-        alt: 'Spharoguss Gussteil aus der Produktion',
-        title: 'Spharoguss',
-        body: 'Beispielgussteil fur anspruchsvolle mechanische Anforderungen.'
+        src: '/galerija/44v.jpeg',
+        alt: 'Laufrad - Gussteil aus der Produktion',
+        title: 'Laufrad',
+        body: 'Beispielgussteil für anspruchsvolle Bedingungen.'
       }
     ],
     steel: [
@@ -286,8 +305,26 @@ const CATEGORY_GALLERY: Record<Language, Record<CategoryKey, CategoryGalleryItem
   }
 };
 
+const GRAY_STRIP_IMAGES: Record<Language, Array<{ src: string; alt: string }>> = {
+  sr: [
+    { src: '/galerija/30v.jpg', alt: 'Kućište - proizvod iz sivog liva' },
+    { src: '/galerija/31v.jpg', alt: 'Kućište - detalj odlivka' },
+    { src: '/galerija/40v.jpeg', alt: 'Kućište - odlivak iz proizvodnje' }
+  ],
+  en: [
+    { src: '/galerija/30v.jpg', alt: 'Housing - gray iron product' },
+    { src: '/galerija/31v.jpg', alt: 'Housing - casting detail' },
+    { src: '/galerija/40v.jpeg', alt: 'Housing - casting from production' }
+  ],
+  de: [
+    { src: '/galerija/30v.jpg', alt: 'Gehäuse - Graugussprodukt' },
+    { src: '/galerija/31v.jpg', alt: 'Gehäuse - Gussteil Detail' },
+    { src: '/galerija/40v.jpeg', alt: 'Gehäuse - Gussteil aus der Produktion' }
+  ]
+};
+
 const CATEGORY_MATCHERS: Record<CategoryKey, RegExp[]> = {
-  gray: [/sivi/gi, /sivo/gi, /gray/gi, /grau/gi, /grauguss/gi],
+  gray: [/siv/gi, /sivi/gi, /sivo/gi, /gray/gi, /grau/gi, /grauguss/gi],
   ductile: [/nodular/gi, /nodij/gi, /ductile/gi, /spharo/gi, /sphaero/gi],
   steel: [/celic/gi, /c(el|e)ic/gi, /steel/gi, /stahl/gi, /legir/gi, /alloy/gi, /niskoleg/gi, /mangan/gi]
 };
@@ -419,6 +456,20 @@ export default async function ProductsPage({
                   />
                 </div>
                 <h2 className="kopex-product-category__title">{category.title}</h2>
+                {category.key === 'gray' ? (
+                  <div className="kopex-product-category__strip" aria-label={`${category.title} galerija`}>
+                    {GRAY_STRIP_IMAGES[language].map((item) => (
+                      <Image
+                        key={item.src}
+                        src={item.src}
+                        alt={item.alt}
+                        width={900}
+                        height={650}
+                        sizes={STRIP_SIZES}
+                      />
+                    ))}
+                  </div>
+                ) : null}
                 {category.items.length ? (
                   <div className="kopex-product-grid">
                     {category.items.map((product) => {

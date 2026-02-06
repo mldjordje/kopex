@@ -513,7 +513,12 @@ export default async function HomePage({
   }
 
   const latestNews = news.slice(0, 3);
-  const featuredProducts = products.slice(0, 6);
+  const prioritizedSlugs = ['kuciste', 'radno-kolo'];
+  const prioritizedProducts = prioritizedSlugs
+    .map((slug) => products.find((product) => product.slug === slug))
+    .filter((product): product is ProductItem => Boolean(product));
+  const remainingProducts = products.filter((product) => !prioritizedSlugs.includes(product.slug));
+  const featuredProducts = [...prioritizedProducts, ...remainingProducts].slice(0, 6);
 
   return (
     <div className="kopex-landing">

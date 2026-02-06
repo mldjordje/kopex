@@ -58,8 +58,6 @@ type ProcessCopy = {
   section42MixItems: string[];
   section43Title: string;
   section43Paragraphs: string[];
-  section43ProcessTitle: string;
-  section43ProcessItems: string[];
   section44Title: string;
   section44Paragraphs: string[];
   section45Title: string;
@@ -130,13 +128,7 @@ const PROCESS_COPY_SR: ProcessCopy = {
     'Modeli se izrađuju u, za to namenjenim prostorijama. Oni mogu biti od drveta, metala, raznih smola, plastike i dr.',
     'Za izradu modela od drveta koriste se stolarske mašine različite namene, i to: kružne i trakaste testere, glodalice, ravnalice, rendisaljke, stabilne i ručne bušilice za drvo i dr.',
     'Izrada modela od metala obavlja se na bravarskim mašinama (univerzalni strug, glodalice, testere, stabilne i prenosne bušilice i dr).',
-    'Izrada kalupa se vrši ručnim i mašinskim putem od pripremljenog sintetičkog peska i samoizvršavajućih kalupskih mešavina na bazi furanskih smola i silikatnih veziva.'
-  ],
-  section43ProcessTitle: 'Postupci izrade kalupa',
-  section43ProcessItems: [
-    'Izrada sitnih jezgara na bazi silikatnih veziva (vodeno staklo – suvi kvarcni pesak).',
-    'Izrada jezgara na bazi furanskih smola: kvarcni pesak 97 %, smole 2 % i 1 % orto-fosforne kiseline.',
-    'Postupak na bazi silikata i fero-hromne prašine (suvi kvarcni pesak, furanske smole i ortofosforna kiselina, vodeno staklo–sigel, grafit, fero-hromna prašina–šljaka, voda i etil alkohol).'
+    'Izrada kalupa se vr?i ru?nim i ma?inskim putem od pripremljenog kvarcnog peska i samovezuju?ih kalupskih me?avina na bazi alphacet smola.'
   ],
   section44Title: '4.4. Topljenje metala',
   section44Paragraphs: [
@@ -286,13 +278,7 @@ export default async function TechnologicalProcessPage({
         {copy.section43Paragraphs.map((paragraph) => (
           <p key={paragraph}>{paragraph}</p>
         ))}
-        <h4>{copy.section43ProcessTitle}</h4>
-        <ul className="kopex-quality-list">
-          {copy.section43ProcessItems.map((item) => (
-            <li key={item}>{item}</li>
-          ))}
-        </ul>
-        <div className="bringer-parallax-media stg-bottom-gap-l">
+<div className="bringer-parallax-media stg-bottom-gap-l">
           <Image
             src="/procesrada/3.bmp"
             alt="Izrada modela i kalupa"
