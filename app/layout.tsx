@@ -58,6 +58,7 @@ export default async function RootLayout({
   return (
     <html lang={language}>
       <head>
+        <meta charSet="utf-8" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
@@ -76,7 +77,7 @@ export default async function RootLayout({
         />
         <link
           rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;700&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap"
+          href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;700&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap&amp;subset=latin,latin-ext"
         />
         <link rel="stylesheet" href="/css/config.css" />
         <link rel="stylesheet" href="/css/libs.css" />

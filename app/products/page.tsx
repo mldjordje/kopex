@@ -446,15 +446,6 @@ export default async function ProductsPage({
             </nav>
             {categories.map((category) => (
               <div className="kopex-product-category" id={category.id} key={category.id}>
-                <div className="kopex-product-category__hero">
-                  <Image
-                    src={category.hero.src}
-                    alt={category.hero.alt}
-                    width={1200}
-                    height={720}
-                    sizes="(max-width: 739px) 100vw, (max-width: 1200px) 80vw, 900px"
-                  />
-                </div>
                 <h2 className="kopex-product-category__title">{category.title}</h2>
                 {category.key === 'gray' ? (
                   <div className="kopex-product-category__strip" aria-label={`${category.title} galerija`}>
