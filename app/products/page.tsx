@@ -156,9 +156,9 @@ const CATEGORY_GALLERY: Record<Language, Record<CategoryKey, CategoryGalleryItem
     gray: [
       {
         src: '/galerija/41v.jpeg',
-        alt: 'Kuciste - odlivak pored kojeg stoji covek',
-        title: 'Kuciste',
-        body: 'Kuciste iz sivog liva (isti odlivak kao na fotografiji sa covekom).'
+        alt: 'Kućište - odlivak pored kojeg stoji čovek',
+        title: 'Kućište',
+        body: 'Kućište iz sivog liva (isti odlivak kao na fotografiji sa čovekom).'
       },
       {
         src: '/galerija/-50.jpeg',
@@ -168,9 +168,9 @@ const CATEGORY_GALLERY: Record<Language, Record<CategoryKey, CategoryGalleryItem
       },
       {
         src: '/galerija/30v.jpg',
-        alt: 'Kuciste - proizvod iz sivog liva',
-        title: 'Kuciste',
-        body: 'Primer kucista od sivog liva za industrijsku primenu.'
+        alt: 'Kućište - proizvod iz sivog liva',
+        title: 'Kućište',
+        body: 'Primer kućišta od sivog liva za industrijsku primenu.'
       }
     ],
     ductile: [
@@ -190,15 +190,15 @@ const CATEGORY_GALLERY: Record<Language, Record<CategoryKey, CategoryGalleryItem
     steel: [
       {
         src: '/img/kopex/slides/page-08.jpg',
-        alt: 'Celicni liv - reprezentativni odlivak',
-        title: 'Celicni liv',
-        body: 'Reprezentativni odlivak od celicnog liva.'
+        alt: 'Čelični liv - reprezentativni odlivak',
+        title: 'Čelični liv',
+        body: 'Reprezentativni odlivak od čeličnog liva.'
       },
       {
         src: '/img/kopex/slides/page-11.jpg',
-        alt: 'Celicni liv - odlivak iz proizvodnje',
-        title: 'Celicni liv',
-        body: 'Primer odlivka za visoka opterecenja i temperaturu.'
+        alt: 'Čelični liv - odlivak iz proizvodnje',
+        title: 'Čelični liv',
+        body: 'Primer odlivka za visoka opterećenja i temperaturu.'
       }
     ]
   },

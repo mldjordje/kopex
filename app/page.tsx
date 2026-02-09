@@ -13,10 +13,10 @@ import { buildMetadata } from '@/lib/seo';
 
 const HOME_META: Record<Language, { title: string; description: string; keywords: string[] }> = {
   sr: {
-    title: 'Livnica Srbija | KOPEX MIN-LIV industrijska livnica gvozdja i celika Nis',
+    title: 'Livnica Srbija | KOPEX MIN-LIV industrijska livnica gvožđa i čelika Niš',
     description:
-      'KOPEX MIN-LIV je industrijska livnica u Srbiji (Nis) za sivi, nodularni i celicni liv, uz masinsku obradu, termicku obradu i kontrolu kvaliteta.',
-    keywords: ['livnica srbija', 'livnica u srbiji', 'livnica', 'odlivci', 'gvozdje', 'celik', 'Nis', 'industrija', 'Kopex MIN-LIV']
+      'KOPEX MIN-LIV je industrijska livnica u Srbiji (Niš) za sivi, nodularni i čelični liv, uz mašinsku obradu, termičku obradu i kontrolu kvaliteta.',
+    keywords: ['livnica srbija', 'livnica u srbiji', 'livnica', 'odlivci', 'gvožđe', 'čelik', 'Niš', 'industrija', 'Kopex MIN-LIV']
   },
   en: {
     title: 'Serbia Foundry | KOPEX MIN-LIV industrial iron and steel foundry in Nis',
