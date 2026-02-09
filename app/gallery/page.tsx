@@ -103,16 +103,105 @@ export default async function GalleryPage({
   const copy = GALLERY_COPY[language];
   const sectionLabels = GALLERY_SECTIONS[language];
   const galleryFiles = await getGalleryFiles();
-  const excludedFiles = new Set(['-53.jpeg', '-54.jpg', '-55.jpg']);
-  const factoryFiles = new Set(['-12.jpeg', '-13.jpeg', '-14.jpeg', '-15.jpeg', '-29.jpeg', '-3.jpg', '21.jpg']);
-  const productionFiles = new Set(['-4.jpg', '-28.jpeg', '-30.jpeg', '-32.jpeg', '-34.jpeg']);
+  const excludedFiles = new Set([
+    '-53.jpeg',
+    '-54.jpg',
+    '-55.jpg',
+    '34v (1).jpg',
+    '45v (1).jpeg',
+    '48v (1).jpeg'
+  ]);
 
-  const normalizedFiles = galleryFiles.filter((file) => !excludedFiles.has(file));
-  const factoryImages = normalizedFiles.filter((file) => factoryFiles.has(file));
-  const productionImages = normalizedFiles.filter((file) => productionFiles.has(file));
-  const productImages = normalizedFiles.filter(
-    (file) => !factoryFiles.has(file) && !productionFiles.has(file)
-  );
+  const factoryOrder = [
+    '-11.jpeg',
+    '-12.jpeg',
+    '-13.jpeg',
+    '-14.jpeg',
+    '-15.jpeg',
+    '-16.jpeg',
+    '-17.jpeg',
+    '-18.jpeg',
+    '-19.jpeg',
+    '-21.jpeg',
+    '-22.jpeg',
+    '-23.jpeg',
+    '-24.jpeg',
+    '-25.jpeg',
+    '-26.jpeg',
+    '-27.jpeg',
+    '-65.jpeg',
+    '-66.jpeg',
+    '-67.jpeg',
+    '-68.jpeg',
+    '-69.jpeg',
+    '21.jpg'
+  ];
+
+  const productionOrder = [
+    '-2.jpg',
+    '-3.jpg',
+    '-4.jpg',
+    '-20.jpeg',
+    '-28.jpeg',
+    '-29.jpeg',
+    '-30.jpeg',
+    '-32.jpeg',
+    '-34.jpeg',
+    '-35.jpeg',
+    '-36.jpeg',
+    '-37.jpeg',
+    '-39.jpeg',
+    '-40.jpeg',
+    '-41.jpeg',
+    '-42.jpeg',
+    '-43.jpeg',
+    '-44.jpeg',
+    '-45.jpeg',
+    '-46.jpeg',
+    '-47.jpeg',
+    '-56.jpeg',
+    '-59.jpeg',
+    '-61.jpeg',
+    '-62.jpeg',
+    '-63.jpeg',
+    '-64.jpeg'
+  ];
+
+  const productsOrder = [
+    '1.jpg',
+    '30v.jpg',
+    '31v.jpg',
+    '32v.jpg',
+    '33v.jpg',
+    '34v.jpg',
+    '36v.jpg',
+    '37v.jpg',
+    '38v.jpg',
+    '39v.jpg',
+    '40v.jpeg',
+    '41v.jpeg',
+    '42v.jpeg',
+    '43v.jpeg',
+    '44v.jpeg',
+    '45v.jpeg',
+    '46v.jpeg',
+    '48v.jpeg',
+    '50v.jpeg',
+    '-50.jpeg',
+    '-51.jpeg'
+  ];
+
+  const availableFiles = new Set(galleryFiles.filter((file) => !excludedFiles.has(file)));
+  const pickOrderedFiles = (files: string[]) => files.filter((file) => availableFiles.has(file));
+
+  const factoryImages = pickOrderedFiles(factoryOrder);
+  const productImages = pickOrderedFiles(productsOrder);
+  const productionBase = pickOrderedFiles(productionOrder);
+  const assigned = new Set([...factoryImages, ...productImages, ...productionBase]);
+  const productionImages = [
+    ...productionBase,
+    ...Array.from(availableFiles).filter((file) => !assigned.has(file))
+  ];
 
   const toSrc = (file: string) => `/galerija/${file}`;
 

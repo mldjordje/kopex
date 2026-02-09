@@ -46,7 +46,6 @@ export async function generateMetadata({
 export const dynamic = 'force-dynamic';
 
 const CARD_SIZES = '(max-width: 739px) 100vw, (max-width: 1024px) 50vw, 33vw';
-const STRIP_SIZES = '(max-width: 739px) 100vw, (max-width: 1200px) 33vw, 360px';
 const PRODUCTS_COPY: Record<Language, {
   eyebrow: string;
   title: string;
@@ -156,22 +155,22 @@ const CATEGORY_GALLERY: Record<Language, Record<CategoryKey, CategoryGalleryItem
   sr: {
     gray: [
       {
-        src: '/galerija/40v.jpeg',
-        alt: 'Kućište - odlivak iz proizvodnje',
-        title: 'Kućište',
-        body: 'Reprezentativno kućište iz proizvodnje sivog liva.'
-      },
-      {
         src: '/galerija/41v.jpeg',
-        alt: 'Kućište - proizvod iz sivog liva',
-        title: 'Kućište',
-        body: 'Primer kućišta od sivog liva za industrijsku primenu.'
+        alt: 'Kuciste - odlivak pored kojeg stoji covek',
+        title: 'Kuciste',
+        body: 'Kuciste iz sivog liva (isti odlivak kao na fotografiji sa covekom).'
       },
       {
-        src: 'https://upload.kopexmin.rs/uploads/products/images/0155d0be8ae21699d937e1e72f5d207f.jpg',
-        alt: 'Kolektor - odlivak iz sivog liva',
+        src: '/galerija/-50.jpeg',
+        alt: 'Kolektor - korito iz sivog liva',
         title: 'Kolektor',
-        body: 'Kolektor od sivog liva.'
+        body: 'Kolektor (korito) iz sivog liva.'
+      },
+      {
+        src: '/galerija/30v.jpg',
+        alt: 'Kuciste - proizvod iz sivog liva',
+        title: 'Kuciste',
+        body: 'Primer kucista od sivog liva za industrijsku primenu.'
       }
     ],
     ductile: [
@@ -206,22 +205,22 @@ const CATEGORY_GALLERY: Record<Language, Record<CategoryKey, CategoryGalleryItem
   en: {
     gray: [
       {
-        src: '/galerija/40v.jpeg',
-        alt: 'Housing - gray iron casting',
+        src: '/galerija/41v.jpeg',
+        alt: 'Housing casting with operator next to it',
         title: 'Housing',
-        body: 'Representative housing from gray iron production.'
+        body: 'Gray iron housing (same casting shown on the image with the operator).'
       },
       {
-        src: '/galerija/41v.jpeg',
+        src: '/galerija/-50.jpeg',
+        alt: 'Collector trough - gray iron casting',
+        title: 'Collector',
+        body: 'Collector trough made from gray iron.'
+      },
+      {
+        src: '/galerija/30v.jpg',
         alt: 'Housing - gray iron product',
         title: 'Housing',
         body: 'Example housing casting for industrial applications.'
-      },
-      {
-        src: 'https://upload.kopexmin.rs/uploads/products/images/0155d0be8ae21699d937e1e72f5d207f.jpg',
-        alt: 'Collector - gray iron casting',
-        title: 'Collector',
-        body: 'Collector casting from gray iron.'
       }
     ],
     ductile: [
@@ -256,22 +255,22 @@ const CATEGORY_GALLERY: Record<Language, Record<CategoryKey, CategoryGalleryItem
   de: {
     gray: [
       {
-        src: '/galerija/40v.jpeg',
-        alt: 'Gehäuse - Grauguss Gussteil',
-        title: 'Gehäuse',
-        body: 'Repräsentatives Gehäuse aus Grauguss.'
-      },
-      {
         src: '/galerija/41v.jpeg',
-        alt: 'Gehäuse - Gussteil aus Grauguss',
-        title: 'Gehäuse',
-        body: 'Beispielgussteil für industrielle Anwendungen.'
+        alt: 'Gehause - Grauguss mit Mitarbeiter',
+        title: 'Gehause',
+        body: 'Grauguss-Gehause (gleiches Gussteil wie auf dem Foto mit dem Mitarbeiter).'
       },
       {
-        src: 'https://upload.kopexmin.rs/uploads/products/images/0155d0be8ae21699d937e1e72f5d207f.jpg',
-        alt: 'Kollektor - Grauguss Gussteil',
+        src: '/galerija/-50.jpeg',
+        alt: 'Kollektor-Rinne aus Grauguss',
         title: 'Kollektor',
-        body: 'Kollektor aus Grauguss.'
+        body: 'Kollektor-Rinne aus Grauguss.'
+      },
+      {
+        src: '/galerija/30v.jpg',
+        alt: 'Gehause - Graugussprodukt',
+        title: 'Gehause',
+        body: 'Beispielgussteil fur industrielle Anwendungen.'
       }
     ],
     ductile: [
@@ -303,24 +302,6 @@ const CATEGORY_GALLERY: Record<Language, Record<CategoryKey, CategoryGalleryItem
       }
     ]
   }
-};
-
-const GRAY_STRIP_IMAGES: Record<Language, Array<{ src: string; alt: string }>> = {
-  sr: [
-    { src: '/galerija/30v.jpg', alt: 'Kućište - proizvod iz sivog liva' },
-    { src: '/galerija/31v.jpg', alt: 'Kućište - detalj odlivka' },
-    { src: '/galerija/40v.jpeg', alt: 'Kućište - odlivak iz proizvodnje' }
-  ],
-  en: [
-    { src: '/galerija/30v.jpg', alt: 'Housing - gray iron product' },
-    { src: '/galerija/31v.jpg', alt: 'Housing - casting detail' },
-    { src: '/galerija/40v.jpeg', alt: 'Housing - casting from production' }
-  ],
-  de: [
-    { src: '/galerija/30v.jpg', alt: 'Gehäuse - Graugussprodukt' },
-    { src: '/galerija/31v.jpg', alt: 'Gehäuse - Gussteil Detail' },
-    { src: '/galerija/40v.jpeg', alt: 'Gehäuse - Gussteil aus der Produktion' }
-  ]
 };
 
 const CATEGORY_MATCHERS: Record<CategoryKey, RegExp[]> = {
@@ -447,20 +428,6 @@ export default async function ProductsPage({
             {categories.map((category) => (
               <div className="kopex-product-category" id={category.id} key={category.id}>
                 <h2 className="kopex-product-category__title">{category.title}</h2>
-                {category.key === 'gray' ? (
-                  <div className="kopex-product-category__strip" aria-label={`${category.title} galerija`}>
-                    {GRAY_STRIP_IMAGES[language].map((item) => (
-                      <Image
-                        key={item.src}
-                        src={item.src}
-                        alt={item.alt}
-                        width={900}
-                        height={650}
-                        sizes={STRIP_SIZES}
-                      />
-                    ))}
-                  </div>
-                ) : null}
                 {category.items.length ? (
                   <div className="kopex-product-grid">
                     {category.items.map((product) => {

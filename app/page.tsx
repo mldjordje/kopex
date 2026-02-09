@@ -13,16 +13,16 @@ import { buildMetadata } from '@/lib/seo';
 
 const HOME_META: Record<Language, { title: string; description: string; keywords: string[] }> = {
   sr: {
-    title: 'KOPEX MIN-LIV | Industrijska livnica gvozdja i celika Nis',
+    title: 'Livnica Srbija | KOPEX MIN-LIV industrijska livnica gvozdja i celika Nis',
     description:
-      'Industrijska livnica u Nisu za sivi, nodularni i celicni liv, uz masinsku obradu, termicku obradu i kontrolu kvaliteta.',
-    keywords: ['livnica', 'odlivci', 'gvozdje', 'celik', 'Nis', 'industrija', 'Kopex MIN-LIV']
+      'KOPEX MIN-LIV je industrijska livnica u Srbiji (Nis) za sivi, nodularni i celicni liv, uz masinsku obradu, termicku obradu i kontrolu kvaliteta.',
+    keywords: ['livnica srbija', 'livnica u srbiji', 'livnica', 'odlivci', 'gvozdje', 'celik', 'Nis', 'industrija', 'Kopex MIN-LIV']
   },
   en: {
-    title: 'KOPEX MIN-LIV | Industrial iron and steel foundry in Nis',
+    title: 'Serbia Foundry | KOPEX MIN-LIV industrial iron and steel foundry in Nis',
     description:
       'Industrial foundry in Nis for gray iron, ductile iron, and steel castings, with machining, heat treatment, and full quality control.',
-    keywords: ['foundry', 'castings', 'iron', 'steel', 'Nis', 'industrial', 'KOPEX MIN-LIV']
+    keywords: ['serbia foundry', 'foundry in serbia', 'foundry', 'castings', 'iron', 'steel', 'Nis', 'industrial', 'KOPEX MIN-LIV']
   },
   de: {
     title: 'KOPEX MIN-LIV | Industriegisserei fur Eisen- und Stahlguss in Nis',
@@ -153,7 +153,7 @@ const HOME_COPY: Record<Language, {
     heroEyebrow: 'Niš • Industrijska livnica • Od 1884',
     heroTitle: 'Industrijska livnica gvožđa i čelika za odlivke koji traju.',
     heroLead:
-      'Od prototipa do serijske proizvodnje: sivi liv, nodularni liv i čelični liv, uz mašinsku obradu, termičku obradu i potpunu kontrolu kvaliteta u sertifikovanoj laboratoriji.',
+      'Od prototipa do serijske proizvodnje: sivi liv, nodularni liv i čelični liv, uz mašinsku obradu, termičku obradu i potpunu kontrolu kvaliteta u sertifikovanoj laboratoriji. KOPEX MIN-LIV je livnica Srbija sa tradicijom od 1884.',
     heroCtaPrimary: 'Pošaljite upit',
     heroCtaSecondary: 'Pogledajte kapacitete',
     heroTrust:

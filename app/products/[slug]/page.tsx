@@ -9,7 +9,7 @@ import { buildMetadata } from '@/lib/seo';
 
 export const dynamic = 'force-dynamic';
 
-const DETAIL_SIZES = '(max-width: 739px) 100vw, (max-width: 1200px) 50vw, 33vw';
+const DETAIL_SIZES = '(max-width: 739px) 100vw, (max-width: 1200px) 80vw, 980px';
 
 const PRODUCT_DETAIL_COPY: Record<Language, {
   eyebrow: string;
@@ -225,6 +225,7 @@ export default async function ProductDetailPage({ params, searchParams }: PagePr
     }
 
     const images = getUniqueImages([product.heroImage, ...product.gallery]);
+    const primaryImage = images[0] || '';
 
     return (
       <div className="kopex-landing">
@@ -240,18 +241,16 @@ export default async function ProductDetailPage({ params, searchParams }: PagePr
 
             <div className="kopex-product-detail">
               <div className="kopex-product-detail__media">
-                {images.length ? (
+                {primaryImage ? (
                   <div className="kopex-product-detail__gallery">
-                    {images.map((image, index) => (
-                      <Image
-                        key={`${product.id}-gallery-${index}`}
-                        src={image}
-                        alt={`${product.name} ${index + 1}`}
-                        width={960}
-                        height={720}
-                        sizes={DETAIL_SIZES}
-                      />
-                    ))}
+                    <Image
+                      className="kopex-product-detail__main-image"
+                      src={primaryImage}
+                      alt={product.name}
+                      width={1400}
+                      height={980}
+                      sizes={DETAIL_SIZES}
+                    />
                   </div>
                 ) : (
                   <div className="kopex-product-card__placeholder">{copy.noImage}</div>

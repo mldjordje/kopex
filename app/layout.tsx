@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     default: SITE_NAME,
     template: `%s | ${SITE_NAME}`
   },
-  description: 'Industrijska livnica u Ni\u0161u za livenje metala i proizvodnju metalnih odlivaka.',
+  description: 'Kopex MIN-LIV je industrijska livnica u Srbiji (Nis) za livenje metala i proizvodnju metalnih odlivaka.',
   icons: {
     icon: SEO_IMAGE,
     shortcut: SEO_IMAGE,
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: SITE_NAME,
-    description: 'Industrijska livnica u Ni\u0161u za livenje metala i proizvodnju metalnih odlivaka.',
+    description: 'Kopex MIN-LIV je industrijska livnica u Srbiji (Nis) za livenje metala i proizvodnju metalnih odlivaka.',
     siteName: SITE_NAME,
     type: 'website',
     images: [
@@ -37,7 +37,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary',
     title: SITE_NAME,
-    description: 'Industrijska livnica u Ni\u0161u za livenje metala i proizvodnju metalnih odlivaka.',
+    description: 'Kopex MIN-LIV je industrijska livnica u Srbiji (Nis) za livenje metala i proizvodnju metalnih odlivaka.',
     images: [SEO_IMAGE]
   }
 };

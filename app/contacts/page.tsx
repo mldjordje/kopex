@@ -40,7 +40,9 @@ export async function generateMetadata({
   });
 }
 
-const FULL_SIZES = '(max-width: 739px) 100vw, 80vw';
+const FULL_SIZES = '(max-width: 739px) 92vw, 520px';
+const MAP_QUERY = 'Kopex MIN-LIV, iza Tempo centra, Crveni Krst, Nis';
+const MAP_QUERY_ENCODED = encodeURIComponent(MAP_QUERY);
 
 const CONTACTS_COPY: Record<Language, {
   title: string;
@@ -203,12 +205,12 @@ export default async function ContactsPage({
             <p className="bringer-large-text">{copy.lead}</p>
           </div>
         </div>
-        <div className="bringer-parallax-media" data-parallax-speed="20">
+        <div className="bringer-parallax-media kopex-contact-photo" data-parallax-speed="20">
           <Image
             src="/img/kopex/facility-front.jpg"
             alt="Kontakt"
-            width={1920}
-            height={960}
+            width={420}
+            height={250}
             sizes={FULL_SIZES}
           />
         </div>
@@ -292,7 +294,7 @@ export default async function ContactsPage({
           <div className="stg-col-4 stg-tp-col-6 stg-m-bottom-gap">
             <div className="bringer-block stg-aspect-square stg-vertical-space-between">
               <a
-                href="https://www.google.com/maps/search/?api=1&query=Kopex%20MIN-LIV%2C%20Bulevar%2012.%20februara%2082%2C%20Ni%C5%A1"
+                href={`https://www.google.com/maps/search/?api=1&query=${MAP_QUERY_ENCODED}`}
                 className="bringer-grid-item-link"
                 target="_blank"
                 rel="noreferrer"
@@ -307,7 +309,7 @@ export default async function ContactsPage({
           <div className="stg-col-8 stg-tp-col-6">
             <iframe
               className="bringer-google-map"
-              src="https://www.google.com/maps?q=Kopex%20MIN-LIV%20Bulevar%2012.%20februara%2082%2C%20Ni%C5%A1&output=embed"
+              src={`https://www.google.com/maps?q=${MAP_QUERY_ENCODED}&output=embed`}
               referrerPolicy="no-referrer-when-downgrade"
               width={790}
               height={379}
