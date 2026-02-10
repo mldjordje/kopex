@@ -43,7 +43,7 @@ export async function generateMetadata({
 
 const CARD_SIZES = '(max-width: 739px) 100vw, (max-width: 1200px) 50vw, 33vw';
 
-const MANAGEMENT_TEAM: Record<Language, Array<{ name: string; role: string; image: string }>> = {
+const MANAGEMENT_TEAM: Record<Language, Array<{ name: string; role: string; image: string; imagePosition?: string }>> = {
   sr: [
     {
       name: 'Dragoljub Maksimovic, dipl. inz. metalurgije',
@@ -58,7 +58,8 @@ const MANAGEMENT_TEAM: Record<Language, Array<{ name: string; role: string; imag
     {
       name: 'Dragan Drenic, dipl. ekon.',
       role: 'Komercijalni direktor',
-      image: '/img/dragandrenic.jpg'
+      image: '/img/dragandrenic.jpg',
+      imagePosition: 'center 20%'
     },
     {
       name: 'Marina Radenkovic',
@@ -80,7 +81,8 @@ const MANAGEMENT_TEAM: Record<Language, Array<{ name: string; role: string; imag
     {
       name: 'Dragan Drenic, dipl. ekon.',
       role: 'Commercial Director',
-      image: '/img/dragandrenic.jpg'
+      image: '/img/dragandrenic.jpg',
+      imagePosition: 'center 20%'
     },
     {
       name: 'Marina Radenkovic',
@@ -102,7 +104,8 @@ const MANAGEMENT_TEAM: Record<Language, Array<{ name: string; role: string; imag
     {
       name: 'Dragan Drenic, dipl. ekon.',
       role: 'Kaufmaennischer Direktor',
-      image: '/img/dragandrenic.jpg'
+      image: '/img/dragandrenic.jpg',
+      imagePosition: 'center 20%'
     },
     {
       name: 'Marina Radenkovic',
@@ -196,6 +199,7 @@ export default async function ManagementPage({
                     width={720}
                     height={720}
                     sizes={CARD_SIZES}
+                    style={member.imagePosition ? { objectPosition: member.imagePosition } : undefined}
                   />
                 </div>
                 <h5>{member.name}</h5>

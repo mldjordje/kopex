@@ -59,24 +59,6 @@ const GALLERY_COPY: Record<Language, { title: string; lead: string }> = {
   }
 };
 
-const GALLERY_SECTIONS: Record<Language, { factory: string; production: string; products: string }> = {
-  sr: {
-    factory: 'Slike fabrike i dvorišta',
-    production: 'Slike proizvodnje',
-    products: 'Slike proizvoda'
-  },
-  en: {
-    factory: 'Factory and yard',
-    production: 'Production',
-    products: 'Products'
-  },
-  de: {
-    factory: 'Fabrik und Hof',
-    production: 'Produktion',
-    products: 'Produkte'
-  }
-};
-
 const CARD_SIZES = '(max-width: 739px) 100vw, (max-width: 1200px) 50vw, 33vw';
 
 const getGalleryFiles = async (): Promise<string[]> => {
@@ -101,7 +83,6 @@ export default async function GalleryPage({
   const resolvedSearchParams = await searchParams;
   const language = resolveLanguage(resolvedSearchParams?.lang, cookieStore.get(LANGUAGE_COOKIE)?.value);
   const copy = GALLERY_COPY[language];
-  const sectionLabels = GALLERY_SECTIONS[language];
   const galleryFiles = await getGalleryFiles();
   const excludedFiles = new Set([
     '-53.jpeg',
@@ -129,6 +110,11 @@ export default async function GalleryPage({
     '-25.jpeg',
     '-26.jpeg',
     '-27.jpeg',
+    '-59.jpeg',
+    '-61.jpeg',
+    '-62.jpeg',
+    '-63.jpeg',
+    '-64.jpeg',
     '-65.jpeg',
     '-66.jpeg',
     '-67.jpeg',
@@ -159,12 +145,7 @@ export default async function GalleryPage({
     '-45.jpeg',
     '-46.jpeg',
     '-47.jpeg',
-    '-56.jpeg',
-    '-59.jpeg',
-    '-61.jpeg',
-    '-62.jpeg',
-    '-63.jpeg',
-    '-64.jpeg'
+    '-56.jpeg'
   ];
 
   const productsOrder = [
@@ -195,11 +176,13 @@ export default async function GalleryPage({
   const pickOrderedFiles = (files: string[]) => files.filter((file) => availableFiles.has(file));
 
   const factoryImages = pickOrderedFiles(factoryOrder);
+  const productionImages = pickOrderedFiles(productionOrder);
   const productImages = pickOrderedFiles(productsOrder);
-  const productionBase = pickOrderedFiles(productionOrder);
-  const assigned = new Set([...factoryImages, ...productImages, ...productionBase]);
-  const productionImages = [
-    ...productionBase,
+  const assigned = new Set([...factoryImages, ...productionImages, ...productImages]);
+  const orderedImages = [
+    ...factoryImages,
+    ...productionImages,
+    ...productImages,
     ...Array.from(availableFiles).filter((file) => !assigned.has(file))
   ];
 
@@ -217,45 +200,12 @@ export default async function GalleryPage({
       </section>
 
       <section className="divider-bottom">
-        <h2>{sectionLabels.factory}</h2>
         <div className="kopex-gallery-grid">
-          {factoryImages.map((file, index) => (
-            <div className="kopex-gallery-item" key={`factory-${file}`}>
+          {orderedImages.map((file, index) => (
+            <div className="kopex-gallery-item" key={`gallery-${file}`}>
               <Image
                 src={toSrc(file)}
-                alt={`${sectionLabels.factory} ${index + 1}`}
-                width={1200}
-                height={900}
-                sizes={CARD_SIZES}
-                style={{ width: '100%', height: 'auto' }}
-              />
-            </div>
-          ))}
-        </div>
-
-        <h2>{sectionLabels.production}</h2>
-        <div className="kopex-gallery-grid">
-          {productionImages.map((file, index) => (
-            <div className="kopex-gallery-item" key={`production-${file}`}>
-              <Image
-                src={toSrc(file)}
-                alt={`${sectionLabels.production} ${index + 1}`}
-                width={1200}
-                height={900}
-                sizes={CARD_SIZES}
-                style={{ width: '100%', height: 'auto' }}
-              />
-            </div>
-          ))}
-        </div>
-
-        <h2>{sectionLabels.products}</h2>
-        <div className="kopex-gallery-grid">
-          {productImages.map((file, index) => (
-            <div className="kopex-gallery-item" key={`products-${file}`}>
-              <Image
-                src={toSrc(file)}
-                alt={`${sectionLabels.products} ${index + 1}`}
+                alt={`${copy.title} ${index + 1}`}
                 width={1200}
                 height={900}
                 sizes={CARD_SIZES}

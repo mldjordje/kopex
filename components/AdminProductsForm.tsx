@@ -7,7 +7,11 @@ import {
   Box,
   Button,
   Checkbox,
+  FormControl,
   FormControlLabel,
+  InputLabel,
+  MenuItem,
+  Select,
   Stack,
   TextField,
   Typography
@@ -24,6 +28,7 @@ export default function AdminProductsForm({ adminPassword }: { adminPassword?: s
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isActive, setIsActive] = useState(true);
   const [sortOrder, setSortOrder] = useState(0);
+  const [landingFeaturedRank, setLandingFeaturedRank] = useState('');
   const hasAdminPassword = Boolean(adminPassword && adminPassword.trim());
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -36,6 +41,7 @@ export default function AdminProductsForm({ adminPassword }: { adminPassword?: s
 
     formData.set('isActive', isActive ? '1' : '0');
     formData.set('sortOrder', String(sortOrder));
+    formData.set('landingFeaturedRank', landingFeaturedRank.trim());
 
     if (hasAdminPassword) {
       formData.set('adminPassword', adminPassword!.trim());
@@ -62,6 +68,7 @@ export default function AdminProductsForm({ adminPassword }: { adminPassword?: s
       form.reset();
       setIsActive(true);
       setSortOrder(0);
+      setLandingFeaturedRank('');
       setStatus({ type: 'success', message: 'Proizvod je sacuvan.' });
       router.refresh();
     } catch (error) {
@@ -200,6 +207,27 @@ export default function AdminProductsForm({ adminPassword }: { adminPassword?: s
             inputProps={{ step: 1 }}
           />
         </Stack>
+
+        <FormControl fullWidth>
+          <InputLabel id="product-featured-rank-label">Istaknuto na landing strani</InputLabel>
+          <Select
+            labelId="product-featured-rank-label"
+            id="product-featured-rank"
+            label="Istaknuto na landing strani"
+            value={landingFeaturedRank}
+            onChange={(event) => {
+              setLandingFeaturedRank(String(event.target.value));
+            }}
+          >
+            <MenuItem value="">Nije istaknuto</MenuItem>
+            <MenuItem value="1">Istaknuto #1</MenuItem>
+            <MenuItem value="2">Istaknuto #2</MenuItem>
+            <MenuItem value="3">Istaknuto #3</MenuItem>
+            <MenuItem value="4">Istaknuto #4</MenuItem>
+            <MenuItem value="5">Istaknuto #5</MenuItem>
+            <MenuItem value="6">Istaknuto #6</MenuItem>
+          </Select>
+        </FormControl>
 
         {!hasAdminPassword ? (
           <TextField

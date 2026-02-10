@@ -4,11 +4,16 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import {
   Alert,
+  Box,
   Button,
   Checkbox,
   Chip,
+  FormControl,
   FormControlLabel,
+  InputLabel,
+  MenuItem,
   Paper,
+  Select,
   Stack,
   TextField,
   Typography
@@ -32,6 +37,7 @@ type DraftState = Record<
     seoDescription: string;
     isActive: boolean;
     sortOrder: number;
+    landingFeaturedRank: number | null;
   }
 >;
 
@@ -82,7 +88,8 @@ export default function AdminProductsList({
         seoTitle: item.seoTitle || '',
         seoDescription: item.seoDescription || '',
         isActive: item.isActive,
-        sortOrder: item.sortOrder
+        sortOrder: item.sortOrder,
+        landingFeaturedRank: item.landingFeaturedRank
       };
       nextFlags[item.id] = { hero: false, gallery: false, documents: false };
     });
@@ -130,7 +137,8 @@ export default function AdminProductsList({
           seoTitle: original.seoTitle || '',
           seoDescription: original.seoDescription || '',
           isActive: original.isActive,
-          sortOrder: original.sortOrder
+          sortOrder: original.sortOrder,
+          landingFeaturedRank: original.landingFeaturedRank
         }
       }));
       setClearFlags((current) => ({
@@ -161,6 +169,10 @@ export default function AdminProductsList({
     formData.append('seoDescription', draft.seoDescription.trim());
     formData.append('isActive', draft.isActive ? '1' : '0');
     formData.append('sortOrder', String(draft.sortOrder));
+    formData.append(
+      'landingFeaturedRank',
+      draft.landingFeaturedRank === null ? '' : String(draft.landingFeaturedRank)
+    );
     formData.append('adminPassword', effectivePassword);
 
     const flags = clearFlags[id];
@@ -306,9 +318,13 @@ export default function AdminProductsList({
           seoTitle: item.seoTitle || '',
           seoDescription: item.seoDescription || '',
           isActive: item.isActive,
-          sortOrder: item.sortOrder
+          sortOrder: item.sortOrder,
+          landingFeaturedRank: item.landingFeaturedRank
         };
         const flags = clearFlags[item.id] || { hero: false, gallery: false, documents: false };
+        const imagePreview = [item.heroImage, ...item.gallery].filter(
+          (entry): entry is string => typeof entry === 'string' && entry.trim().length > 0
+        );
 
         return (
           <Paper key={item.id} variant="outlined" sx={{ p: 2 }}>
@@ -378,9 +394,51 @@ export default function AdminProductsList({
                 <Chip size="small" variant="outlined" label={`Hero: ${item.heroImage ? 'da' : 'ne'}`} />
                 <Chip size="small" variant="outlined" label={`Galerija: ${item.gallery.length}`} />
                 <Chip size="small" variant="outlined" label={`Dokumenti: ${item.documents.length}`} />
+                <Chip
+                  size="small"
+                  variant="outlined"
+                  label={
+                    draft.landingFeaturedRank
+                      ? `Landing: #${draft.landingFeaturedRank}`
+                      : 'Landing: nije istaknuto'
+                  }
+                />
                 {item.category ? (
                   <Chip size="small" variant="outlined" label={`Kategorija: ${item.category}`} />
                 ) : null}
+              </Stack>
+
+              <Stack spacing={1}>
+                <Typography variant="subtitle2">Slike proizvoda</Typography>
+                {imagePreview.length ? (
+                  <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
+                    {imagePreview.slice(0, 5).map((src, index) => (
+                      <Box
+                        key={`${item.id}-preview-${src}-${index}`}
+                        sx={{
+                          width: 88,
+                          height: 88,
+                          borderRadius: 1,
+                          overflow: 'hidden',
+                          border: '1px solid',
+                          borderColor: 'divider',
+                          bgcolor: 'background.default'
+                        }}
+                      >
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                          src={src}
+                          alt={`${item.name} slika ${index + 1}`}
+                          style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+                        />
+                      </Box>
+                    ))}
+                  </Stack>
+                ) : (
+                  <Typography variant="body2" color="text.secondary">
+                    Nema dodatih slika za ovaj proizvod.
+                  </Typography>
+                )}
               </Stack>
 
               {isEditing ? (
@@ -462,6 +520,34 @@ export default function AdminProductsList({
                       inputProps={{ step: 1 }}
                     />
                   </Stack>
+
+                  <FormControl fullWidth>
+                    <InputLabel id={`landing-featured-rank-label-${item.id}`}>
+                      Istaknuto na landing strani
+                    </InputLabel>
+                    <Select
+                      labelId={`landing-featured-rank-label-${item.id}`}
+                      id={`landing-featured-rank-${item.id}`}
+                      label="Istaknuto na landing strani"
+                      value={draft.landingFeaturedRank === null ? '' : String(draft.landingFeaturedRank)}
+                      onChange={(event) => {
+                        const value = String(event.target.value);
+                        updateDraft(
+                          item.id,
+                          'landingFeaturedRank',
+                          value === '' ? null : Number(value)
+                        );
+                      }}
+                    >
+                      <MenuItem value="">Nije istaknuto</MenuItem>
+                      <MenuItem value="1">Istaknuto #1</MenuItem>
+                      <MenuItem value="2">Istaknuto #2</MenuItem>
+                      <MenuItem value="3">Istaknuto #3</MenuItem>
+                      <MenuItem value="4">Istaknuto #4</MenuItem>
+                      <MenuItem value="5">Istaknuto #5</MenuItem>
+                      <MenuItem value="6">Istaknuto #6</MenuItem>
+                    </Select>
+                  </FormControl>
 
                   <Stack spacing={1}>
                     <Typography variant="subtitle2">Nova hero slika (opciono)</Typography>

@@ -20,6 +20,7 @@ export type ProductItem = {
   seoDescription: string | null;
   isActive: boolean;
   sortOrder: number;
+  landingFeaturedRank: number | null;
   createdAt: string;
   updatedAt: string;
 };
@@ -53,6 +54,55 @@ const clearProductCache = () => {
   productCache.all = undefined;
 };
 
+type FeaturedRankMode = 'present' | 'absent';
+let featuredRankModePromise: Promise<FeaturedRankMode> | null = null;
+
+const getFeaturedRankMode = async (): Promise<FeaturedRankMode> => {
+  if (featuredRankModePromise) {
+    return featuredRankModePromise;
+  }
+
+  featuredRankModePromise = (async () => {
+    try {
+      const rows = await queryDb<RowDataPacket[]>(
+        `SELECT 1
+         FROM information_schema.COLUMNS
+         WHERE TABLE_SCHEMA = DATABASE()
+           AND TABLE_NAME = 'products'
+           AND COLUMN_NAME = 'landing_featured_rank'
+         LIMIT 1`
+      );
+
+      if (rows.length) {
+        return 'present';
+      }
+
+      try {
+        await queryDb<ResultSetHeader>(
+          `ALTER TABLE products
+           ADD COLUMN landing_featured_rank TINYINT UNSIGNED NULL DEFAULT NULL
+           AFTER sort_order`
+        );
+        return 'present';
+      } catch (error) {
+        console.warn(
+          'Products schema: landing_featured_rank is unavailable (continuing without featured rank support)',
+          error
+        );
+        return 'absent';
+      }
+    } catch (error) {
+      console.warn(
+        'Products schema check failed (continuing without featured rank support)',
+        error
+      );
+      return 'absent';
+    }
+  })();
+
+  return featuredRankModePromise;
+};
+
 type ProductRow = RowDataPacket & {
   id: number;
   name: string;
@@ -67,6 +117,7 @@ type ProductRow = RowDataPacket & {
   seo_description: string | null;
   is_active: number | boolean;
   sort_order: number;
+  landing_featured_rank: number | null;
   created_at: Date | string;
   updated_at: Date | string;
 };
@@ -159,6 +210,18 @@ const toIsoDate = (value: Date | string): string => {
   return new Date(value).toISOString();
 };
 
+const normalizeFeaturedRank = (value: unknown): number | null => {
+  const parsed = Number(value);
+  if (!Number.isFinite(parsed)) {
+    return null;
+  }
+  const normalized = Math.trunc(parsed);
+  if (normalized < 1 || normalized > 6) {
+    return null;
+  }
+  return normalized;
+};
+
 const transliterationMap: Record<string, string> = {
   '\u010d': 'c',
   '\u0107': 'c',
@@ -218,6 +281,7 @@ const mapRow = (row: ProductRow): ProductItem => ({
   seoDescription: row.seo_description ?? null,
   isActive: Boolean(row.is_active),
   sortOrder: Number(row.sort_order || 0),
+  landingFeaturedRank: normalizeFeaturedRank(row.landing_featured_rank),
   createdAt: toIsoDate(row.created_at),
   updatedAt: toIsoDate(row.updated_at)
 });
@@ -225,10 +289,15 @@ const mapRow = (row: ProductRow): ProductItem => ({
 export const getProductsList = async ({
   includeInactive = false
 }: { includeInactive?: boolean } = {}): Promise<ProductItem[]> => {
+  const featuredRankMode = await getFeaturedRankMode();
+  const featuredRankSelect =
+    featuredRankMode === 'present'
+      ? 'landing_featured_rank'
+      : 'NULL AS landing_featured_rank';
   const whereClause = includeInactive ? '' : 'WHERE is_active = 1';
   try {
     const rows = await queryDb<ProductRow[]>(
-      `SELECT id, name, slug, summary, description, category, hero_image, gallery_images, documents, seo_title, seo_description, is_active, sort_order, created_at, updated_at
+      `SELECT id, name, slug, summary, description, category, hero_image, gallery_images, documents, seo_title, seo_description, is_active, sort_order, ${featuredRankSelect}, created_at, updated_at
        FROM products
        ${whereClause}
        ORDER BY sort_order ASC, created_at DESC, id DESC`,
@@ -249,8 +318,13 @@ export const getProductsList = async ({
 };
 
 export const getProductById = async (id: number): Promise<ProductItem | null> => {
+  const featuredRankMode = await getFeaturedRankMode();
+  const featuredRankSelect =
+    featuredRankMode === 'present'
+      ? 'landing_featured_rank'
+      : 'NULL AS landing_featured_rank';
   const rows = await queryDb<ProductRow[]>(
-    `SELECT id, name, slug, summary, description, category, hero_image, gallery_images, documents, seo_title, seo_description, is_active, sort_order, created_at, updated_at
+    `SELECT id, name, slug, summary, description, category, hero_image, gallery_images, documents, seo_title, seo_description, is_active, sort_order, ${featuredRankSelect}, created_at, updated_at
      FROM products
      WHERE id = ?
      LIMIT 1`,
@@ -266,8 +340,13 @@ export const getProductById = async (id: number): Promise<ProductItem | null> =>
 };
 
 export const getProductBySlug = async (slug: string): Promise<ProductItem | null> => {
+  const featuredRankMode = await getFeaturedRankMode();
+  const featuredRankSelect =
+    featuredRankMode === 'present'
+      ? 'landing_featured_rank'
+      : 'NULL AS landing_featured_rank';
   const rows = await queryDb<ProductRow[]>(
-    `SELECT id, name, slug, summary, description, category, hero_image, gallery_images, documents, seo_title, seo_description, is_active, sort_order, created_at, updated_at
+    `SELECT id, name, slug, summary, description, category, hero_image, gallery_images, documents, seo_title, seo_description, is_active, sort_order, ${featuredRankSelect}, created_at, updated_at
      FROM products
      WHERE slug = ?
      LIMIT 1`,
@@ -294,7 +373,8 @@ export const createProductEntry = async ({
   seoTitle,
   seoDescription,
   isActive,
-  sortOrder
+  sortOrder,
+  landingFeaturedRank
 }: {
   name: string;
   slug?: string;
@@ -308,29 +388,38 @@ export const createProductEntry = async ({
   seoDescription?: string | null;
   isActive?: boolean;
   sortOrder?: number;
+  landingFeaturedRank?: number | null;
 }): Promise<{ id: number; slug: string }> => {
+  const featuredRankMode = await getFeaturedRankMode();
   const resolvedSlug = await ensureUniqueSlug(slug?.trim() || name);
   const galleryPayload = gallery && gallery.length ? JSON.stringify(gallery) : null;
   const documentsPayload = documents && documents.length ? JSON.stringify(documents) : null;
+  const featuredRank = normalizeFeaturedRank(landingFeaturedRank);
+  const params: Array<string | number | null> = [
+    name,
+    resolvedSlug,
+    summary || null,
+    description || null,
+    category || null,
+    heroImage || null,
+    galleryPayload,
+    documentsPayload,
+    seoTitle || null,
+    seoDescription || null,
+    isActive === false ? 0 : 1,
+    Number.isFinite(sortOrder) ? Number(sortOrder) : 0
+  ];
 
-  const result = await queryDb<ResultSetHeader>(
-    `INSERT INTO products (name, slug, summary, description, category, hero_image, gallery_images, documents, seo_title, seo_description, is_active, sort_order)
-     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-    [
-      name,
-      resolvedSlug,
-      summary || null,
-      description || null,
-      category || null,
-      heroImage || null,
-      galleryPayload,
-      documentsPayload,
-      seoTitle || null,
-      seoDescription || null,
-      isActive === false ? 0 : 1,
-      Number.isFinite(sortOrder) ? Number(sortOrder) : 0
-    ]
-  );
+  let query = `INSERT INTO products (name, slug, summary, description, category, hero_image, gallery_images, documents, seo_title, seo_description, is_active, sort_order)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+
+  if (featuredRankMode === 'present') {
+    query = `INSERT INTO products (name, slug, summary, description, category, hero_image, gallery_images, documents, seo_title, seo_description, is_active, sort_order, landing_featured_rank)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+    params.push(featuredRank);
+  }
+
+  const result = await queryDb<ResultSetHeader>(query, params);
 
   clearProductCache();
   return { id: result.insertId, slug: resolvedSlug };
@@ -349,7 +438,8 @@ export const updateProductEntry = async ({
   seoTitle,
   seoDescription,
   isActive,
-  sortOrder
+  sortOrder,
+  landingFeaturedRank
 }: {
   id: number;
   name: string;
@@ -364,31 +454,41 @@ export const updateProductEntry = async ({
   seoDescription?: string | null;
   isActive?: boolean;
   sortOrder?: number;
+  landingFeaturedRank?: number | null;
 }): Promise<string> => {
+  const featuredRankMode = await getFeaturedRankMode();
   const resolvedSlug = await ensureUniqueSlug(slug?.trim() || name, id);
   const galleryPayload = gallery && gallery.length ? JSON.stringify(gallery) : null;
   const documentsPayload = documents && documents.length ? JSON.stringify(documents) : null;
+  const featuredRank = normalizeFeaturedRank(landingFeaturedRank);
+  const params: Array<string | number | null> = [
+    name,
+    resolvedSlug,
+    summary || null,
+    description || null,
+    category || null,
+    heroImage || null,
+    galleryPayload,
+    documentsPayload,
+    seoTitle || null,
+    seoDescription || null,
+    isActive === false ? 0 : 1,
+    Number.isFinite(sortOrder) ? Number(sortOrder) : 0
+  ];
 
-  await queryDb<ResultSetHeader>(
-    `UPDATE products
-     SET name = ?, slug = ?, summary = ?, description = ?, category = ?, hero_image = ?, gallery_images = ?, documents = ?, seo_title = ?, seo_description = ?, is_active = ?, sort_order = ?
-     WHERE id = ?`,
-    [
-      name,
-      resolvedSlug,
-      summary || null,
-      description || null,
-      category || null,
-      heroImage || null,
-      galleryPayload,
-      documentsPayload,
-      seoTitle || null,
-      seoDescription || null,
-      isActive === false ? 0 : 1,
-      Number.isFinite(sortOrder) ? Number(sortOrder) : 0,
-      id
-    ]
-  );
+  let query = `UPDATE products
+    SET name = ?, slug = ?, summary = ?, description = ?, category = ?, hero_image = ?, gallery_images = ?, documents = ?, seo_title = ?, seo_description = ?, is_active = ?, sort_order = ?
+    WHERE id = ?`;
+
+  if (featuredRankMode === 'present') {
+    query = `UPDATE products
+      SET name = ?, slug = ?, summary = ?, description = ?, category = ?, hero_image = ?, gallery_images = ?, documents = ?, seo_title = ?, seo_description = ?, is_active = ?, sort_order = ?, landing_featured_rank = ?
+      WHERE id = ?`;
+    params.push(featuredRank);
+  }
+
+  params.push(id);
+  await queryDb<ResultSetHeader>(query, params);
 
   clearProductCache();
   return resolvedSlug;

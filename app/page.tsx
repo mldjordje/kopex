@@ -513,12 +513,36 @@ export default async function HomePage({
   }
 
   const latestNews = news.slice(0, 3);
-  const prioritizedSlugs = ['kuciste', 'radno-kolo'];
-  const prioritizedProducts = prioritizedSlugs
-    .map((slug) => products.find((product) => product.slug === slug))
+  const rankedCandidates = products
+    .filter((product) => typeof product.landingFeaturedRank === 'number')
+    .sort((a, b) => {
+      const aRank = a.landingFeaturedRank || 0;
+      const bRank = b.landingFeaturedRank || 0;
+      if (aRank !== bRank) {
+        return aRank - bRank;
+      }
+      if (a.sortOrder !== b.sortOrder) {
+        return a.sortOrder - b.sortOrder;
+      }
+      return b.id - a.id;
+    });
+
+  const selectedByRank = new Map<number, ProductItem>();
+  rankedCandidates.forEach((product) => {
+    const rank = product.landingFeaturedRank;
+    if (!rank || selectedByRank.has(rank)) {
+      return;
+    }
+    selectedByRank.set(rank, product);
+  });
+
+  const explicitFeatured = [1, 2, 3, 4, 5, 6]
+    .map((rank) => selectedByRank.get(rank))
     .filter((product): product is ProductItem => Boolean(product));
-  const remainingProducts = products.filter((product) => !prioritizedSlugs.includes(product.slug));
-  const featuredProducts = [...prioritizedProducts, ...remainingProducts].slice(0, 6);
+
+  const explicitFeaturedIds = new Set(explicitFeatured.map((product) => product.id));
+  const remainingProducts = products.filter((product) => !explicitFeaturedIds.has(product.id));
+  const featuredProducts = [...explicitFeatured, ...remainingProducts].slice(0, 6);
 
   return (
     <div className="kopex-landing">

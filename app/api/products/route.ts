@@ -250,6 +250,21 @@ const parseNumber = (value: FormDataEntryValue | null, fallback = 0): number => 
   return Number.isFinite(parsed) ? parsed : fallback;
 };
 
+const parseFeaturedRank = (value: FormDataEntryValue | null): number | null => {
+  if (value === null || typeof value !== 'string') {
+    return null;
+  }
+  const parsed = Number(value);
+  if (!Number.isFinite(parsed)) {
+    return null;
+  }
+  const normalized = Math.trunc(parsed);
+  if (normalized < 1 || normalized > 6) {
+    return null;
+  }
+  return normalized;
+};
+
 export async function GET() {
   try {
     const items = await getProductsList();
@@ -275,6 +290,7 @@ export async function POST(request: Request) {
     const seoDescription = String(formData.get('seoDescription') || '').trim();
     const isActive = parseBool(formData.get('isActive'), true);
     const sortOrder = parseNumber(formData.get('sortOrder'), 0);
+    const landingFeaturedRank = parseFeaturedRank(formData.get('landingFeaturedRank'));
     const adminPassword = String(formData.get('adminPassword') || '');
 
     if (!isAuthorized(adminPassword)) {
@@ -315,7 +331,8 @@ export async function POST(request: Request) {
       seoTitle: seoTitle || null,
       seoDescription: seoDescription || null,
       isActive,
-      sortOrder
+      sortOrder,
+      landingFeaturedRank
     });
 
     return NextResponse.json({

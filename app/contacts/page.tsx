@@ -41,8 +41,9 @@ export async function generateMetadata({
 }
 
 const FULL_SIZES = '(max-width: 739px) 92vw, 520px';
-const MAP_QUERY = 'Kopex MIN-LIV, iza Tempo centra, Crveni Krst, Nis';
+const MAP_QUERY = 'Kopex MIN, Bulevar 12. februara, Nis 18000';
 const MAP_QUERY_ENCODED = encodeURIComponent(MAP_QUERY);
+const MAP_EMBED_URL = 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2901.8712722581317!2d21.87462145!3d43.337882699999994!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4755b717fb152f47%3A0xfb48ec15f0fdaa00!2sKopex%20MIN%2C%20Bulevar%2012.%20februara%2C%20Ni%C5%A1%2018000!5e0!3m2!1sen!2srs!4v1770720685397!5m2!1sen!2srs';
 
 const CONTACTS_COPY: Record<Language, {
   title: string;
@@ -207,7 +208,7 @@ export default async function ContactsPage({
         </div>
         <div className="bringer-parallax-media kopex-contact-photo" data-parallax-speed="20">
           <Image
-            src="/img/kopex/facility-front.jpg"
+            src="/img/1.jpg"
             alt="Kontakt"
             width={420}
             height={250}
@@ -309,7 +310,7 @@ export default async function ContactsPage({
           <div className="stg-col-8 stg-tp-col-6">
             <iframe
               className="bringer-google-map"
-              src={`https://www.google.com/maps?q=${MAP_QUERY_ENCODED}&output=embed`}
+              src={MAP_EMBED_URL}
               referrerPolicy="no-referrer-when-downgrade"
               width={790}
               height={379}

@@ -96,6 +96,21 @@ const parseNumber = (value: FormDataEntryValue | null, fallback = 0): number => 
   return Number.isFinite(parsed) ? parsed : fallback;
 };
 
+const parseFeaturedRank = (value: FormDataEntryValue | null): number | null => {
+  if (value === null || typeof value !== 'string') {
+    return null;
+  }
+  const parsed = Number(value);
+  if (!Number.isFinite(parsed)) {
+    return null;
+  }
+  const normalized = Math.trunc(parsed);
+  if (normalized < 1 || normalized > 6) {
+    return null;
+  }
+  return normalized;
+};
+
 const parseStringArray = (value: FormDataEntryValue | null): string[] => {
   if (!value || typeof value !== 'string') {
     return [];
@@ -327,6 +342,7 @@ export async function PATCH(request: NextRequest, { params }: RouteParams) {
     const clearDocuments = String(formData.get('clearDocuments') || '') === '1';
     const isActive = parseBool(formData.get('isActive'), true);
     const sortOrder = parseNumber(formData.get('sortOrder'), 0);
+    const landingFeaturedRank = parseFeaturedRank(formData.get('landingFeaturedRank'));
     const adminPassword = String(formData.get('adminPassword') || '');
 
     if (!isAuthorized(adminPassword)) {
@@ -391,7 +407,8 @@ export async function PATCH(request: NextRequest, { params }: RouteParams) {
       seoTitle: seoTitle || null,
       seoDescription: seoDescription || null,
       isActive,
-      sortOrder
+      sortOrder,
+      landingFeaturedRank
     });
 
     return NextResponse.json({
