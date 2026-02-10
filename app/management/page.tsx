@@ -59,7 +59,7 @@ const MANAGEMENT_TEAM: Record<Language, Array<{ name: string; role: string; imag
       name: 'Dragan Drenic, dipl. ekon.',
       role: 'Komercijalni direktor',
       image: '/img/dragandrenic.jpg',
-      imagePosition: 'center 20%'
+      imagePosition: 'center top'
     },
     {
       name: 'Marina Radenkovic',
@@ -82,7 +82,7 @@ const MANAGEMENT_TEAM: Record<Language, Array<{ name: string; role: string; imag
       name: 'Dragan Drenic, dipl. ekon.',
       role: 'Commercial Director',
       image: '/img/dragandrenic.jpg',
-      imagePosition: 'center 20%'
+      imagePosition: 'center top'
     },
     {
       name: 'Marina Radenkovic',
@@ -105,7 +105,7 @@ const MANAGEMENT_TEAM: Record<Language, Array<{ name: string; role: string; imag
       name: 'Dragan Drenic, dipl. ekon.',
       role: 'Kaufmaennischer Direktor',
       image: '/img/dragandrenic.jpg',
-      imagePosition: 'center 20%'
+      imagePosition: 'center top'
     },
     {
       name: 'Marina Radenkovic',
