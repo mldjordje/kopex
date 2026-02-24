@@ -81,7 +81,7 @@ const SERVICES_COPY: Record<Language, {
       },
       {
         title: 'Termička obrada',
-        body: 'Peći 6 t i 10 t (2100x1400x3500) i bazeni za gašenje/kaljenje 4000x3000x4000.'
+        body: 'Peći 6 t (2200x1800x3000) i 10 t (2100x1400x3500) i bazeni za gašenje/kaljenje 4000x3000x4000.'
       },
       {
         title: 'Mašinska obrada',
@@ -135,7 +135,7 @@ const SERVICES_COPY: Record<Language, {
       },
       {
         title: 'Heat treatment',
-        body: 'Furnaces 6 t and 10 t (2100x1400x3500) and quench tanks 4000x3000x4000.'
+        body: 'Furnaces 6 t (2200x1800x3000) and 10 t (2100x1400x3500) and quench tanks 4000x3000x4000.'
       },
       {
         title: 'Machining',
@@ -189,7 +189,7 @@ const SERVICES_COPY: Record<Language, {
       },
       {
         title: 'Wärmebehandlung',
-        body: 'Öfen 6 t und 10 t (2100x1400x3500) und Abschreckbecken 4000x3000x4000.'
+        body: 'Öfen 6 t (2200x1800x3000) und 10 t (2100x1400x3500) und Abschreckbecken 4000x3000x4000.'
       },
       {
         title: 'Mechanische Bearbeitung',

@@ -67,7 +67,7 @@ const EQUIPMENT_COPY_SR: EquipmentCopy = {
     'Postrojenje za regeneraciju peska',
     'Vibracioni stolovi',
     'Peskirnice (metalnom sačmom), dimenzija 2200x1900x2500 mm, kapaciteta 15 tona',
-    'Peći za termičku obradu kapaciteta 6 tona i 10 tona (2100x1400x3500 mm)',
+    'Peći za termičku obradu kapaciteta 6 tona (2200x1800x3000) i 10 tona (2100x1400x3500 mm)',
     'Bazeni za gašenje i kaljenje dimenzija 4000x3000x4000 mm',
     'Projektovani kapacitet 3000 tona liva godišnje',
     'Kaluparnica',

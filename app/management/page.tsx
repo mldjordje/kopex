@@ -42,89 +42,113 @@ export async function generateMetadata({
 }
 
 const CARD_SIZES = '(max-width: 739px) 100vw, (max-width: 1200px) 50vw, 33vw';
+const DIRECTOR_SIZES = '(max-width: 739px) 80vw, (max-width: 1200px) 40vw, 25vw';
 
-const MANAGEMENT_TEAM: Record<Language, Array<{ name: string; role: string; image: string; imagePosition?: string }>> = {
+type TeamMember = {
+  name: string;
+  profession: string;
+  role: string;
+  image: string;
+  imagePosition?: string;
+};
+
+const MANAGEMENT_TEAM: Record<Language, TeamMember[]> = {
   sr: [
     {
-      name: 'Dragoljub Maksimovic, dipl. inz. metalurgije',
+      name: 'Dragoljub Maksimovic',
+      profession: 'Dipl. inž. metalurgije',
       role: 'Direktor i vlasnik',
       image: '/img/team/team01-thmb.jpg'
     },
     {
-      name: 'Milos Radivojevic, dipl. inz. masinstva',
-      role: 'Tehnicki direktor',
+      name: 'Milos Radivojevic',
+      profession: 'Dipl. inž. mašinstva',
+      role: 'Tehnički direktor',
       image: '/img/milos.jpg'
     },
     {
-      name: 'Dragan Drenic, dipl. ekon.',
+      name: 'Dragan Drenic',
+      profession: 'Dipl. ekon.',
       role: 'Komercijalni direktor',
       image: '/img/dragandrenic.jpg',
       imagePosition: 'center top'
     },
     {
       name: 'Vladimir Stojkovic',
-      role: 'Dipl. pravnik - Direktor kadrovske i pravne sluzbe',
+      profession: 'Dipl. pravnik',
+      role: 'Direktor kadrovske i pravne službe',
       image: '/img/team/team03-thmb.jpg'
     },
     {
       name: 'Marina Radenkovic',
-      role: 'Masinski tehnicar - Rukovodilac odeljenja cistionice i masinske obrade',
+      profession: 'Mašinski tehničar',
+      role: 'Rukovodilac odeljenja čistionice i mašinske obrade',
       image: '/img/team/team03-thmb.jpg'
     }
   ],
   en: [
     {
-      name: 'Dragoljub Maksimovic, dipl. inz. metalurgije',
+      name: 'Dragoljub Maksimovic',
+      profession: 'Dipl. met. eng.',
       role: 'Owner and Director',
       image: '/img/team/team01-thmb.jpg'
     },
     {
-      name: 'Milos Radivojevic, dipl. inz. masinstva',
+      name: 'Milos Radivojevic',
+      profession: 'Dipl. mech. eng.',
       role: 'Technical Director',
       image: '/img/milos.jpg'
     },
     {
-      name: 'Dragan Drenic, dipl. ekon.',
+      name: 'Dragan Drenic',
+      profession: 'B.Sc. Econ.',
       role: 'Commercial Director',
       image: '/img/dragandrenic.jpg',
       imagePosition: 'center top'
     },
     {
       name: 'Vladimir Stojkovic',
-      role: 'LL.B. - Director of HR and Legal Services',
+      profession: 'LL.B.',
+      role: 'Director of HR and Legal Services',
       image: '/img/team/team03-thmb.jpg'
     },
     {
       name: 'Marina Radenkovic',
-      role: 'Mechanical Technician - Head of Cleaning and Machining Department',
+      profession: 'Mechanical Technician',
+      role: 'Head of Cleaning and Machining Department',
       image: '/img/team/team03-thmb.jpg'
     }
   ],
   de: [
     {
-      name: 'Dragoljub Maksimovic, dipl. inz. metalurgije',
+      name: 'Dragoljub Maksimovic',
+      profession: 'Dipl.-Ing. Metallurgie',
       role: 'Inhaber und Direktor',
       image: '/img/team/team01-thmb.jpg'
     },
     {
-      name: 'Milos Radivojevic, dipl. inz. masinstva',
+      name: 'Milos Radivojevic',
+      profession: 'Dipl.-Ing. Maschinenbau',
       role: 'Technischer Direktor',
       image: '/img/milos.jpg'
     },
     {
-      name: 'Dragan Drenic, dipl. ekon.',
-      role: 'Kaufmaennischer Direktor',
+      name: 'Dragan Drenic',
+      profession: 'Dipl.-Kfm.',
+      role: 'Kaufmännischer Direktor',
       image: '/img/dragandrenic.jpg',
       imagePosition: 'center top'
     },
     {
       name: 'Vladimir Stojkovic',
-      role: 'Dipl. Jurist - Leiter Personal- und Rechtsdienst',
+      profession: 'Dipl. Jurist',
+      role: 'Leiter Personal- und Rechtsdienst',
       image: '/img/team/team03-thmb.jpg'
     },
     {
       name: 'Marina Radenkovic',
-      role: 'Maschinentechnikerin - Leiterin der Putzerei und mechanischen Bearbeitung',
+      profession: 'Maschinentechnikerin',
+      role: 'Leiterin der Putzerei und mechanischen Bearbeitung',
       image: '/img/team/team03-thmb.jpg'
     }
   ]
@@ -203,9 +227,32 @@ export default async function ManagementPage({
             </div>
           </div>
         </div>
+
+        {/* Director — centered, larger photo, above the rest */}
+        <div className="stg-row" style={{ justifyContent: 'center', marginBottom: '2.5rem' }}>
+          <div className="stg-col-4 stg-tp-col-6 stg-m-col-12">
+            <div className="bringer-block align-center kopex-team-card">
+              <div className="kopex-team-photo" style={{ width: '100%', maxWidth: '320px', margin: '0 auto 1.25rem' }}>
+                <Image
+                  src={team[0].image}
+                  alt={team[0].name}
+                  width={960}
+                  height={960}
+                  sizes={DIRECTOR_SIZES}
+                  style={team[0].imagePosition ? { objectPosition: team[0].imagePosition } : undefined}
+                />
+              </div>
+              <h4 style={{ marginBottom: '0.25rem' }}>{team[0].name}</h4>
+              <p style={{ margin: '0 0 0.15rem', opacity: 0.7 }}>{team[0].profession}</p>
+              <p style={{ margin: 0 }}>{team[0].role}</p>
+            </div>
+          </div>
+        </div>
+
+        {/* Rest of the team */}
         <div className="stg-row">
-          {team.map((member) => (
-            <div className="stg-col-4 stg-tp-col-6 stg-m-bottom-gap" key={member.name}>
+          {team.slice(1).map((member) => (
+            <div className="stg-col-3 stg-tp-col-6 stg-m-bottom-gap" key={member.name}>
               <div className="bringer-block align-center kopex-team-card">
                 <div className="kopex-team-photo">
                   <Image
@@ -217,8 +264,9 @@ export default async function ManagementPage({
                     style={member.imagePosition ? { objectPosition: member.imagePosition } : undefined}
                   />
                 </div>
-                <h5>{member.name}</h5>
-                <p>{member.role}</p>
+                <h5 style={{ marginBottom: '0.25rem' }}>{member.name}</h5>
+                <p style={{ margin: '0 0 0.15rem', opacity: 0.7 }}>{member.profession}</p>
+                <p style={{ margin: 0 }}>{member.role}</p>
               </div>
             </div>
           ))}
