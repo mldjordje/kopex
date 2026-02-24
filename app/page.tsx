@@ -153,7 +153,7 @@ const HOME_COPY: Record<Language, {
     heroEyebrow: 'Niš • Industrijska livnica • Od 1884',
     heroTitle: 'Industrijska livnica gvožđa i čelika za odlivke koji traju.',
     heroLead:
-      'Od prototipa do serijske proizvodnje: sivi liv, nodularni liv i čelični liv, uz mašinsku obradu, termičku obradu i potpunu kontrolu kvaliteta u sertifikovanoj laboratoriji. KOPEX MIN-LIV je livnica Srbija sa tradicijom od 1884.',
+      'Od prototipa do serijske proizvodnje: sivi liv, nodularni liv i čelični liv, uz mašinsku obradu, termičku obradu i potpunu kontrolu kvaliteta u sertifikovanoj laboratoriji. KOPEX MIN-LIV je livnica u Srbiji sa tradicijom od 1884god.',
     heroCtaPrimary: 'Pošaljite upit',
     heroCtaSecondary: 'Pogledajte kapacitete',
     heroTrust:
@@ -167,7 +167,7 @@ const HOME_COPY: Record<Language, {
     productsSliderNext: 'Sledeći proizvodi',
     productsSliderLabel: 'Izdvojeni proizvodi',
     newsEyebrow: 'Vesti / Karijera',
-    newsTitle: 'Najnovije informacije i oglasi za posao iz Kopex MIN-LIV.',
+    newsTitle: 'Najnovije informacije i oglasi za posao u Kopex MIN-LIV.',
     newsLead: 'Pratite najnovije objave, projekte i oglase za zapošljavanje iz naše livnice.',
     newsCta: 'Sve vesti / karijera',
     valuesEyebrow: 'Vrednosti',
@@ -175,11 +175,11 @@ const HOME_COPY: Record<Language, {
     valuesItems: [
       'Stabilnost i poštovanje klijenata',
       'Iskrenost, posvećenost i zanatstvo',
-      'Posvećenost visokim kvalitetima'
+      'Održavanje visokog kvaliteta proizvoda i poštovanje rokova proizvodnje'
     ],
     servicesEyebrow: 'Usluge',
     servicesTitle: 'Kompletan proizvodni ciklus na jednom mestu.',
-    servicesLead: 'Od modelovanja i livenja do završne obrade, dokumentacije i isporuke.',
+    servicesLead: 'Od izrade modela i livenja do završne obrade, kontrole i isporuke.',
     service01Title: 'Kalupovanje i livenje',
     service01Body:
       'Izrada odlivaka po crtežima i standardima kupca, uz FLEKSIBILNOST MALOSERIJSKE I POJEDINAČNE PROIZVODNJE.',
@@ -194,7 +194,7 @@ const HOME_COPY: Record<Language, {
     service05Title: 'Kontrola kvaliteta',
     service05Body:
       'Sertifikovana laboratorija za hemijska i mehanička ispitivanja odlivaka sa kvantometrom, Sarpijevim klatnom i kidalicom, uključujući ispitivanja magnetnim fluksom i ultrazvukom.',
-    heroStats: ['godina tradicije', 'projektovani kapacitet mesečno', 'kapacitet liva po peći'],
+    heroStats: ['godina tradicije', 'projektovani godišnji kapacitet', 'kapacitet liva po peći'],
     productNoImage: 'Bez slike',
     productView: 'Pogledaj proizvod',
     productEmpty: 'Trenutno nema proizvoda.',
@@ -203,14 +203,14 @@ const HOME_COPY: Record<Language, {
     newsEmpty: 'Trenutno nema vesti.',
     storyEyebrow: 'O nama',
     storyTitle: 'Livnica koja spaja tradiciju sa modernom proizvodnjom.',
-    storyLead: 'Kopex MIN-LIV A.D. u Nišu je industrijska livnica gvožđa i čelika koja obuhvata razvoj, proizvodnju i kontrolu kvaliteta metalnih odlivaka.',
-    storyBody: 'Privatizovana je 2010. godine i posluje u privatnom vlasništvu od 2020. godine, sa fokusom na pouzdane rokove isporuke i stabilan kvalitet.',
-    storyHighlights: ['početak proizvodnje', 'trenutni kapacitet mesečno', 'projektovani kapacitet'],
+    storyLead: 'Kopex MIN-LIV D.O.O. u Nišu je industrijska livnica gvožđa i čelika koja obuhvata razvoj, proizvodnju i kontrolu kvaliteta metalnih odlivaka.',
+    storyBody: 'Privatizovana je 2010. godine, a u individualnom vlasništvu od 2020. godine, sa fokusom na pouzdane rokove isporuke i stabilan kvalitet proizvoda.',
+    storyHighlights: ['početak proizvodnje', 'projektovani godišnji kapacitet', 'projektovani godišnji kapacitet'],
     storyLink: 'Više o nama',
     storyImageAlt1: 'Kopex MIN-LIV pogon',
     storyImageAlt2: 'Kompleks livnice',
     equipmentEyebrow: 'Opremljenost',
-    equipmentTitle: 'Kapacitet i oprema za zahtevne industrijske serije.',
+    equipmentTitle: 'Kapacitet i oprema za zahtevne i velike odlivke.',
     equipmentLead: 'Savremena oprema i procesi omogućavaju stabilan kvalitet i pouzdane rokove isporuke.',
     equipmentImageAlt1: 'Livnička proizvodnja',
     equipmentImageAlt2: 'Proces livenja',
@@ -221,7 +221,7 @@ const HOME_COPY: Record<Language, {
     equipmentCard2Title: 'Priprema peska',
     equipmentCard2Body: 'Alfaset postupak i regeneracija peska.',
     equipmentCard3Title: 'Termička obrada',
-    equipmentCard3Body: 'Peći 10 t (2100x1400x3500) i bazeni za gašenje/kaljenje 4000x3000x4000.',
+    equipmentCard3Body: 'Peći od 6 tona i 10 tona (2100x1400x3500) i bazeni za gašenje/kaljenje 4000x3000x4000.',
     equipmentCard4Title: 'Kontrola kvaliteta',
     equipmentCard4Body: 'Instrumenti za hemijska i mehanička ispitivanja, ultrazvuk i magnetni fluks.',
     equipmentLink: 'Detalji opremljenosti',
@@ -277,11 +277,11 @@ const HOME_COPY: Record<Language, {
     valuesItems: [
       'Stability and client respect',
       'Integrity, dedication, and craftsmanship',
-      'Commitment to high quality'
+      'Maintaining high product quality and respecting production deadlines'
     ],
     servicesEyebrow: 'Services',
     servicesTitle: 'A complete production cycle in one place.',
-    servicesLead: 'From pattern making and casting to finishing, documentation, and delivery.',
+    servicesLead: 'From pattern making and casting to finishing, quality control, and delivery.',
     service01Title: 'Molding and casting',
     service01Body:
       'Casting production according to customer drawings and standards, with FLEXIBILITY FOR SMALL-SERIES AND SINGLE-PIECE PRODUCTION.',
@@ -296,7 +296,7 @@ const HOME_COPY: Record<Language, {
     service05Title: 'Quality control',
     service05Body:
       'Certified laboratory for chemical and mechanical testing of castings with spectrometer, Charpy pendulum, and tensile tester, including magnetic flux and ultrasonic testing.',
-    heroStats: ['years of tradition', 'planned monthly capacity', 'melt capacity per furnace'],
+    heroStats: ['years of tradition', 'planned annual capacity', 'melt capacity per furnace'],
     productNoImage: 'No image',
     productView: 'View product',
     productEmpty: 'No products available right now.',
@@ -305,14 +305,14 @@ const HOME_COPY: Record<Language, {
     newsEmpty: 'No news available right now.',
     storyEyebrow: 'About us',
     storyTitle: 'A foundry that connects tradition with modern production.',
-    storyLead: 'Kopex MIN-LIV A.D. in Niš is an industrial iron and steel foundry covering development, production, and quality control of metal castings.',
+    storyLead: 'Kopex MIN-LIV D.O.O. in Niš is an industrial iron and steel foundry covering development, production, and quality control of metal castings.',
     storyBody: 'Privatized in 2010 and operating in private ownership since 2020, with a focus on reliable delivery times and stable quality.',
-    storyHighlights: ['start of production', 'current monthly capacity', 'planned capacity'],
+    storyHighlights: ['start of production', 'planned annual capacity', 'planned annual capacity'],
     storyLink: 'More about us',
     storyImageAlt1: 'Kopex MIN-LIV facility',
     storyImageAlt2: 'Foundry complex',
     equipmentEyebrow: 'Equipment',
-    equipmentTitle: 'Capacity and equipment for demanding industrial series.',
+    equipmentTitle: 'Capacity and equipment for demanding and large castings.',
     equipmentLead: 'Modern equipment and processes ensure stable quality and reliable delivery timelines.',
     equipmentImageAlt1: 'Foundry production',
     equipmentImageAlt2: 'Casting process',
@@ -323,7 +323,7 @@ const HOME_COPY: Record<Language, {
     equipmentCard2Title: 'Sand preparation',
     equipmentCard2Body: 'Alfaset process and sand reclamation.',
     equipmentCard3Title: 'Heat treatment',
-    equipmentCard3Body: 'Furnaces 10 t (2100x1400x3500) and quench tanks 4000x3000x4000.',
+    equipmentCard3Body: 'Furnaces 6 t and 10 t (2100x1400x3500) and quench tanks 4000x3000x4000.',
     equipmentCard4Title: 'Quality control',
     equipmentCard4Body: 'Instruments for chemical and mechanical testing, ultrasound, and magnetic flux.',
     equipmentLink: 'Equipment details',
@@ -379,11 +379,11 @@ const HOME_COPY: Record<Language, {
     valuesItems: [
       'Stabilität und Respekt gegenüber Kunden',
       'Ehrlichkeit, Hingabe und Handwerk',
-      'Engagement für höchste Qualität'
+      'Aufrechterhaltung hoher Produktqualität und Einhaltung von Produktionsterminen'
     ],
     servicesEyebrow: 'Leistungen',
     servicesTitle: 'Kompletter Produktionszyklus an einem Ort.',
-    servicesLead: 'Von Modellbau und Gießen bis zur Endbearbeitung, Dokumentation und Lieferung.',
+    servicesLead: 'Von Modellbau und Gießen bis zur Endbearbeitung, Qualitätskontrolle und Lieferung.',
     service01Title: 'Formenbau und Gießen',
     service01Body:
       'Herstellung von Gussteilen nach Kundenzeichnungen und Standards, mit FLEXIBILITÄT FÜR KLEINSERIEN UND EINZELFERTIGUNG.',
@@ -399,7 +399,7 @@ const HOME_COPY: Record<Language, {
     service05Title: 'Qualitätskontrolle',
     service05Body:
       'Zertifiziertes Labor für chemische und mechanische Prüfungen mit Spektrometer, Charpy-Pendel und Zugprüfmaschine einschließlich Magnetfluss- und Ultraschallprüfungen.',
-    heroStats: ['Jahre Tradition', 'geplante Monatskapazität', 'Schmelzkapazität pro Ofen'],
+    heroStats: ['Jahre Tradition', 'geplante Jahreskapazität', 'Schmelzkapazität pro Ofen'],
     productNoImage: 'Kein Bild',
     productView: 'Produkt ansehen',
     productEmpty: 'Derzeit sind keine Produkte verfügbar.',
@@ -408,14 +408,14 @@ const HOME_COPY: Record<Language, {
     newsEmpty: 'Derzeit gibt es keine News.',
     storyEyebrow: 'Über uns',
     storyTitle: 'Eine Gießerei, die Tradition mit moderner Produktion verbindet.',
-    storyLead: 'Kopex MIN-LIV A.D. in Niš ist eine industrielle Eisen- und Stahlgießerei mit Entwicklung, Produktion und Qualitätskontrolle von Metallgussteilen.',
+    storyLead: 'Kopex MIN-LIV D.O.O. in Niš ist eine industrielle Eisen- und Stahlgießerei mit Entwicklung, Produktion und Qualitätskontrolle von Metallgussteilen.',
     storyBody: '2010 privatisiert und seit 2020 in privatem Besitz, mit Fokus auf zuverlässige Liefertermine und stabile Qualität.',
-    storyHighlights: ['Produktionsbeginn', 'aktuelle Monatskapazität', 'geplante Kapazität'],
+    storyHighlights: ['Produktionsbeginn', 'geplante Jahreskapazität', 'geplante Jahreskapazität'],
     storyLink: 'Mehr über uns',
     storyImageAlt1: 'Kopex MIN-LIV Werk',
     storyImageAlt2: 'Gießereikomplex',
     equipmentEyebrow: 'Ausstattung',
-    equipmentTitle: 'Kapazität und Ausstattung für anspruchsvolle Industriefertigung.',
+    equipmentTitle: 'Kapazität und Ausstattung für anspruchsvolle und große Gussteile.',
     equipmentLead: 'Moderne Anlagen und Prozesse sichern stabile Qualität und zuverlässige Liefertermine.',
     equipmentImageAlt1: 'Gießereiproduktion',
     equipmentImageAlt2: 'Gießprozess',
@@ -426,7 +426,7 @@ const HOME_COPY: Record<Language, {
     equipmentCard2Title: 'Sandaufbereitung',
     equipmentCard2Body: 'Alfaset-Verfahren sowie Sandregeneration.',
     equipmentCard3Title: 'Wärmebehandlung',
-    equipmentCard3Body: 'Ofen 10 t (2100x1400x3500) und Abschreckbecken 4000x3000x4000.',
+    equipmentCard3Body: 'Öfen 6 t und 10 t (2100x1400x3500) und Abschreckbecken 4000x3000x4000.',
     equipmentCard4Title: 'Qualitätskontrolle',
     equipmentCard4Body: 'Instrumente für chemische und mechanische Prüfungen, Ultraschall und Magnetfluss.',
     equipmentLink: 'Ausstattung im Detail',
@@ -568,7 +568,7 @@ export default async function HomePage({
               <span className="kopex-stat__label">{copy.heroStats[0]}</span>
             </div>
             <div className="kopex-stat">
-              <span className="kopex-stat__value">1000 t</span>
+              <span className="kopex-stat__value">3000 t</span>
               <span className="kopex-stat__label">{copy.heroStats[1]}</span>
             </div>
             <div className="kopex-stat">
@@ -687,11 +687,7 @@ export default async function HomePage({
                 <span className="kopex-highlight__label">{copy.storyHighlights[0]}</span>
               </div>
               <div className="kopex-highlight">
-                <span className="kopex-highlight__value">100 t</span>
-                <span className="kopex-highlight__label">{copy.storyHighlights[1]}</span>
-              </div>
-              <div className="kopex-highlight">
-                <span className="kopex-highlight__value">1000 t</span>
+                <span className="kopex-highlight__value">3000 t</span>
                 <span className="kopex-highlight__label">{copy.storyHighlights[2]}</span>
               </div>
             </div>

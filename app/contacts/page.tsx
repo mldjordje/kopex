@@ -79,9 +79,9 @@ const CONTACTS_COPY: Record<Language, {
 }> = {
   sr: {
     title: 'Kontakt',
-    lead: 'Kopex Min A.D. Niš je tu da odgovori na sva vaša pitanja i pruži podršku u vezi sa našim uslugama i proizvodima.',
+    lead: 'Kopex MIN-LIV D.O.O. Niš je tu da odgovori na sva vaša pitanja i pruži podršku u vezi sa našim uslugama i proizvodima.',
     connectTitle: 'Povežite se sa nama',
-    connectLead: 'Evo kako možete stupiti u kontakt sa timom Kopex Min.',
+    connectLead: 'Evo kako možete stupiti u kontakt sa timom KOPEX MIN LIV.',
     phoneTitle: 'Telefon',
     phoneBody: 'Pozovite nas direktno i razgovarajte sa našim timom stručnjaka.',
     emailTitle: 'Email',
@@ -115,9 +115,9 @@ const CONTACTS_COPY: Record<Language, {
   },
   en: {
     title: 'Contact',
-    lead: 'Kopex Min A.D. Niš is here to answer all your questions and support you regarding our services and products.',
+    lead: 'Kopex MIN-LIV D.O.O. Niš is here to answer all your questions and support you regarding our services and products.',
     connectTitle: 'Get in touch',
-    connectLead: 'Here is how you can reach the Kopex Min team.',
+    connectLead: 'Here is how you can reach the KOPEX MIN LIV team.',
     phoneTitle: 'Phone',
     phoneBody: 'Call us directly and talk to our expert team.',
     emailTitle: 'Email',
@@ -151,9 +151,9 @@ const CONTACTS_COPY: Record<Language, {
   },
   de: {
     title: 'Kontakt',
-    lead: 'Kopex Min A.D. Niš beantwortet gerne Ihre Fragen und unterstützt Sie zu unseren Leistungen und Produkten.',
+    lead: 'Kopex MIN-LIV D.O.O. Niš beantwortet gerne Ihre Fragen und unterstützt Sie zu unseren Leistungen und Produkten.',
     connectTitle: 'Kontaktieren Sie uns',
-    connectLead: 'So erreichen Sie das Kopex Min Team.',
+    connectLead: 'So erreichen Sie das KOPEX MIN LIV Team.',
     phoneTitle: 'Telefon',
     phoneBody: 'Rufen Sie uns direkt an und sprechen Sie mit unserem Expertenteam.',
     emailTitle: 'E-Mail',

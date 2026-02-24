@@ -62,8 +62,13 @@ const MANAGEMENT_TEAM: Record<Language, Array<{ name: string; role: string; imag
       imagePosition: 'center top'
     },
     {
+      name: 'Vladimir Stojkovic',
+      role: 'Dipl. pravnik - Direktor kadrovske i pravne sluzbe',
+      image: '/img/team/team03-thmb.jpg'
+    },
+    {
       name: 'Marina Radenkovic',
-      role: 'Rukovodilac odeljenja cistionice i masinske obrade',
+      role: 'Masinski tehnicar - Rukovodilac odeljenja cistionice i masinske obrade',
       image: '/img/team/team03-thmb.jpg'
     }
   ],
@@ -85,8 +90,13 @@ const MANAGEMENT_TEAM: Record<Language, Array<{ name: string; role: string; imag
       imagePosition: 'center top'
     },
     {
+      name: 'Vladimir Stojkovic',
+      role: 'LL.B. - Director of HR and Legal Services',
+      image: '/img/team/team03-thmb.jpg'
+    },
+    {
       name: 'Marina Radenkovic',
-      role: 'Head of Cleaning and Machining Department',
+      role: 'Mechanical Technician - Head of Cleaning and Machining Department',
       image: '/img/team/team03-thmb.jpg'
     }
   ],
@@ -108,8 +118,13 @@ const MANAGEMENT_TEAM: Record<Language, Array<{ name: string; role: string; imag
       imagePosition: 'center top'
     },
     {
+      name: 'Vladimir Stojkovic',
+      role: 'Dipl. Jurist - Leiter Personal- und Rechtsdienst',
+      image: '/img/team/team03-thmb.jpg'
+    },
+    {
       name: 'Marina Radenkovic',
-      role: 'Leiterin der Putzerei und mechanischen Bearbeitung',
+      role: 'Maschinentechnikerin - Leiterin der Putzerei und mechanischen Bearbeitung',
       image: '/img/team/team03-thmb.jpg'
     }
   ]
@@ -126,7 +141,7 @@ const MANAGEMENT_COPY: Record<Language, {
 }> = {
   sr: {
     title: 'Rukovodstvo firme',
-    lead: 'Sema menadzmenta Kopex MIN-LIV A.D. Niš sa jasnim funkcijama odgovornosti.',
+    lead: 'Sema menadzmenta Kopex MIN-LIV D.O.O. Niš sa jasnim funkcijama odgovornosti.',
     sectionTitle: 'Menadzment',
     sectionLead: 'Ključni ljudi koji koordinisu proizvodnju, kvalitet, tehnicki razvoj i prodaju.',
     ctaTitle: '',
@@ -135,7 +150,7 @@ const MANAGEMENT_COPY: Record<Language, {
   },
   en: {
     title: 'Company Management',
-    lead: 'Management structure of Kopex MIN-LIV A.D. Niš with clear responsibilities.',
+    lead: 'Management structure of Kopex MIN-LIV D.O.O. Niš with clear responsibilities.',
     sectionTitle: 'Management team',
     sectionLead: 'Key people coordinating production, quality, technical development, and sales.',
     ctaTitle: '',
@@ -144,7 +159,7 @@ const MANAGEMENT_COPY: Record<Language, {
   },
   de: {
     title: 'Geschäftsleitung',
-    lead: 'Organisationsstruktur der Kopex MIN-LIV A.D. Niš mit klaren Verantwortlichkeiten.',
+    lead: 'Organisationsstruktur der Kopex MIN-LIV D.O.O. Niš mit klaren Verantwortlichkeiten.',
     sectionTitle: 'Management',
     sectionLead: 'Schlüsselpersonen für Produktion, Qualität, technische Entwicklung und Vertrieb.',
     ctaTitle: '',

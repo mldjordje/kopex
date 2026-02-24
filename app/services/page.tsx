@@ -81,7 +81,7 @@ const SERVICES_COPY: Record<Language, {
       },
       {
         title: 'Termička obrada',
-        body: 'Peći 10 t (2100x1400x3500) i bazeni za gašenje/kaljenje 4000x3000x4000.'
+        body: 'Peći 6 t i 10 t (2100x1400x3500) i bazeni za gašenje/kaljenje 4000x3000x4000.'
       },
       {
         title: 'Mašinska obrada',
@@ -93,8 +93,8 @@ const SERVICES_COPY: Record<Language, {
     capacitiesLead: 'Stabilna proizvodnja i fleksibilnost za velike industrijske odlivke.',
     capacitiesCards: [
       {
-        title: '100 t/mesec',
-        body: 'Trenutni kapacitet proizvodnje (projektovano 1000 t/mesec).'
+        title: '3000 t/god',
+        body: 'Projektovani kapacitet liva godišnje.'
       },
       {
         title: '2,5 t',
@@ -135,7 +135,7 @@ const SERVICES_COPY: Record<Language, {
       },
       {
         title: 'Heat treatment',
-        body: 'Furnaces 10 t (2100x1400x3500) and quench tanks 4000x3000x4000.'
+        body: 'Furnaces 6 t and 10 t (2100x1400x3500) and quench tanks 4000x3000x4000.'
       },
       {
         title: 'Machining',
@@ -147,8 +147,8 @@ const SERVICES_COPY: Record<Language, {
     capacitiesLead: 'Stable production and flexibility for large industrial castings.',
     capacitiesCards: [
       {
-        title: '100 t/month',
-        body: 'Current production capacity (planned 1000 t/month).'
+        title: '3000 t/year',
+        body: 'Planned annual casting capacity.'
       },
       {
         title: '2.5 t',
@@ -189,7 +189,7 @@ const SERVICES_COPY: Record<Language, {
       },
       {
         title: 'Wärmebehandlung',
-        body: 'Öfen 10 t (2100x1400x3500) und Abschreckbecken 4000x3000x4000.'
+        body: 'Öfen 6 t und 10 t (2100x1400x3500) und Abschreckbecken 4000x3000x4000.'
       },
       {
         title: 'Mechanische Bearbeitung',
@@ -201,8 +201,8 @@ const SERVICES_COPY: Record<Language, {
     capacitiesLead: 'Stabile Produktion und Flexibilität für große Industrie-Gussteile.',
     capacitiesCards: [
       {
-        title: '100 t/Monat',
-        body: 'Aktuelle Produktionskapazität (geplant 1000 t/Monat).'
+        title: '3000 t/Jahr',
+        body: 'Geplante jährliche Gießkapazität.'
       },
       {
         title: '2,5 t',

@@ -62,7 +62,7 @@ const PRODUCTS_COPY: Record<Language, {
   sr: {
     eyebrow: 'Proizvodi',
     title: 'Metalni odlivci za energetiku, rudarstvo i industriju.',
-    lead: 'Detaljan pregled proizvodnih mogućnosti, dokumentacije i tipova odliva.',
+    lead: 'Detaljan pregled proizvodnih mogućnosti, dokumentacije i tipova odlivaka.',
     errorMessage: 'Ne mogu da učitam proizvode. Proverite bazu i konekciju.',
     emptyMessage: 'Trenutno nema proizvoda.',
     noImage: 'Bez slike',

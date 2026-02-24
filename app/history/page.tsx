@@ -8,17 +8,17 @@ import { buildMetadata } from '@/lib/seo';
 const HISTORY_META: Record<Language, { title: string; description: string; keywords: string[] }> = {
   sr: {
     title: 'KOPEX MIN-LIV | Istorija',
-    description: 'Istorijat livnice KOPEX MIN-LIV A.D. Niš i razvoj proizvodnih kapaciteta.',
+    description: 'Istorijat livnice Kopex MIN-LIV D.O.O. Niš i razvoj proizvodnih kapaciteta.',
     keywords: ['istorija', 'livnica', 'KOPEX MIN-LIV', 'Niš']
   },
   en: {
     title: 'KOPEX MIN-LIV | History',
-    description: 'History of KOPEX MIN-LIV A.D. and development of production capacities.',
+    description: 'History of Kopex MIN-LIV D.O.O. and development of production capacities.',
     keywords: ['history', 'foundry', 'KOPEX MIN-LIV', 'Nis']
   },
   de: {
     title: 'KOPEX MIN-LIV | Geschichte',
-    description: 'Geschichte von KOPEX MIN-LIV A.D. und Entwicklung der Produktionskapazitäten.',
+    description: 'Geschichte von Kopex MIN-LIV D.O.O. und Entwicklung der Produktionskapazitäten.',
     keywords: ['geschichte', 'gießerei', 'KOPEX MIN-LIV', 'Nis']
   }
 };
@@ -55,13 +55,13 @@ const HISTORY_COPY_SR: HistoryCopy = {
   title: 'Istorija',
   lead: 'Više od jednog veka razvoja industrijske livnice u Nišu.',
   paragraphs: [
-    'Livnica "KOPEX MIN-LIV A.D." nalazi se u Nišu, Bulevar 12. februar broj 82. Prvobitna Livnica osnovana je 1884 godine u sastavu radionica za popravku železničkih vozila, izradu mostova i skretnica, da bi proizvodnja odlivaka u Livnici, ondašnje železničke radionice, počela 1885 godine.',
+    'Livnica "Kopex MIN-LIV D.O.O." nalazi se u Nišu, Bulevar 12. februar broj 82. Prvobitna Livnica osnovana je 1884 godine u sastavu radionica za popravku železničkih vozila, izradu mostova i skretnica, da bi proizvodnja odlivaka u Livnici, ondašnje železničke radionice, počela 1885 godine.',
     'U predratnom periodu livački kapaciteti su bili mali ali dovoljni da se proizvodni asortiman proširi, tako da se formiraju dve radionice, stolarska i mašinska sa livenjem radi izrade delova za mlinsku i ciglarsku industriju, delova za rudnička postrojenja, i izrade rudarskih pumpi, izrada delova za građevinske mašine za izradu puteva.',
     'U procesu nacionalizacije, Livnica je prešla iz privatne u državnu svojinu, kao "Livnica i fabrika mašina Jastrebac". Godine 1949. Livnica Fabrike pumpi DP "Jastrebac" preseljena je na sadašnju lokaciju AD "SIVI LIV" i tom prilikom izgrađene dve hale, jedna za livenje, a druga za mašinsku radionicu. U novim programima osnovna delatnost je bila izrada pumpi, vodnih turbina, mašina i uređaja za vinogradarstvo, kao i delovi za flotaciju rudnika.',
     'U cilju usaglašenog i bržeg razvoja mašinogradnje Niša, a posebno livačkih proizvodnih kapaciteta, za potrebe mašinogradnje 1979 god. RO "Jastrebac" ulazi u sastav Mašinske industrije Niš, a u cilju izgradnje Livnice "Sivi liv".',
     'Godine 1991 DP "Jastrebac" se izdvaja iz sastava SOUR MIN Niš, dok Livnica razvija svoje kapacitete za proizvodnju visokolegiranih čelika i odlivaka od nerđajućeg čelika, čime upotpunjuje svoj osnovni proizvodni program. Te iste godine dolazi do transformacije DP "Livnice", odnosno podele iste na četiri društva i to: DD "Sivi liv", DD "Modelara", DD "Livmin" i DD "Obojeni metali".',
     'Usklađivanjem sa Zakonom o preduzećima i Zakonom o klasifikaciji delatnosti 29.06.2000 god. preduzeće se transformiše u akcionarsko društvo.',
-    'U skladu sa odredbama Zakona o privatizaciji, livnica i KOPEX SA Grabowa 1, Katowice, Poljska, zaključili su 04.12.2007.god. Ugovor o prodaji kapitala metodom javne aukcije, i tada nastaje AKCIONARSKO DRUŠTVO KOPEX MIN-LIV.'
+    'U skladu sa odredbama Zakona o privatizaciji, livnica i KOPEX SA Grabowa 1, Katowice, Poljska, zaključili su 04.12.2007.god. Ugovor o prodaji kapitala metodom javne aukcije, i tada nastaje "Kopex MIN-LIV D.O.O."'
   ],
   activityTitle: 'Delatnosti društva',
   activityItems: [
