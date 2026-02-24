@@ -72,8 +72,8 @@ const SERVICES_COPY: Record<Language, {
         body: 'Alfaset postupak i regeneracija peska.'
       },
       {
-        title: 'Mikseri i postupci',
-        body: 'Mikseri za sigelnu mešavinu, ŠALKO postupak, CO2 i furanske smole.'
+        title: 'Mikseri za Salko postupak',
+        body: ''
       },
       {
         title: 'Peskirnice',
@@ -90,7 +90,7 @@ const SERVICES_COPY: Record<Language, {
     ],
     equipmentImageAlt: 'Opremljenost',
     capacitiesTitle: 'Kapaciteti',
-    capacitiesLead: 'Stabilna proizvodnja i fleksibilnost za velike industrijske odlivke.',
+    capacitiesLead: 'Projektovani kapacitet 3000 tona liva godišnje.',
     capacitiesCards: [
       {
         title: '3000 t/god',
@@ -126,8 +126,8 @@ const SERVICES_COPY: Record<Language, {
         body: 'Alfaset process and sand reclamation.'
       },
       {
-        title: 'Mixers and processes',
-        body: 'Mixers for silicate mix, ŠALKO process, CO2 and furan resins.'
+        title: 'Mixers for Salko process',
+        body: ''
       },
       {
         title: 'Shot blasting rooms',
@@ -144,7 +144,7 @@ const SERVICES_COPY: Record<Language, {
     ],
     equipmentImageAlt: 'Equipment',
     capacitiesTitle: 'Capacities',
-    capacitiesLead: 'Stable production and flexibility for large industrial castings.',
+    capacitiesLead: 'Planned annual casting capacity of 3000 tonnes.',
     capacitiesCards: [
       {
         title: '3000 t/year',
@@ -180,8 +180,8 @@ const SERVICES_COPY: Record<Language, {
         body: 'Alfaset-Verfahren und Sandregeneration.'
       },
       {
-        title: 'Mischer und Verfahren',
-        body: 'Mischer für Silikatmischung, ŠALKO-Verfahren, CO2 und Furanharze.'
+        title: 'Mischer für Salko-Verfahren',
+        body: ''
       },
       {
         title: 'Strahlräume',
@@ -198,7 +198,7 @@ const SERVICES_COPY: Record<Language, {
     ],
     equipmentImageAlt: 'Ausstattung',
     capacitiesTitle: 'Kapazitäten',
-    capacitiesLead: 'Stabile Produktion und Flexibilität für große Industrie-Gussteile.',
+    capacitiesLead: 'Geplante jährliche Gießkapazität von 3000 Tonnen.',
     capacitiesCards: [
       {
         title: '3000 t/Jahr',
