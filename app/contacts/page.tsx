@@ -41,9 +41,9 @@ export async function generateMetadata({
 }
 
 const FULL_SIZES = '(max-width: 739px) 92vw, 520px';
-const MAP_QUERY = 'Kopex MIN, Bulevar 12. februara, Nis 18000';
-const MAP_QUERY_ENCODED = encodeURIComponent(MAP_QUERY);
-const MAP_EMBED_URL = 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2901.8712722581317!2d21.87462145!3d43.337882699999994!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4755b717fb152f47%3A0xfb48ec15f0fdaa00!2sKopex%20MIN%2C%20Bulevar%2012.%20februara%2C%20Ni%C5%A1%2018000!5e0!3m2!1sen!2srs!4v1770720685397!5m2!1sen!2srs';
+const MAP_COORDINATES = '43.33846592411913,21.87698278712038';
+const MAP_URL = `https://www.google.com/maps?q=${MAP_COORDINATES}`;
+const MAP_EMBED_URL = 'https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d1286.4533588865363!2d21.87698278712038!3d43.33846592411913!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e1!3m2!1sen!2srs!4v1772055892263!5m2!1sen!2srs';
 
 const CONTACTS_COPY: Record<Language, {
   title: string;
@@ -295,7 +295,7 @@ export default async function ContactsPage({
           <div className="stg-col-4 stg-tp-col-6 stg-m-bottom-gap">
             <div className="bringer-block stg-aspect-square stg-vertical-space-between">
               <a
-                href={`https://www.google.com/maps/search/?api=1&query=${MAP_QUERY_ENCODED}`}
+                href={MAP_URL}
                 className="bringer-grid-item-link"
                 target="_blank"
                 rel="noreferrer"
@@ -312,8 +312,8 @@ export default async function ContactsPage({
               className="bringer-google-map"
               src={MAP_EMBED_URL}
               referrerPolicy="no-referrer-when-downgrade"
-              width={790}
-              height={379}
+              width="100%"
+              height={450}
               style={{ border: 0 }}
               allowFullScreen
               loading="lazy"
@@ -383,4 +383,3 @@ export default async function ContactsPage({
     </div>
   );
 }
-
