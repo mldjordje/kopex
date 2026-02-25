@@ -318,6 +318,15 @@ export default async function ContactsPage({
               allowFullScreen
               loading="lazy"
             ></iframe>
+            <div className="stg-top-gap-s">
+              <Image
+                src="/img/mapa.png"
+                alt="Oznacena nova lokacija"
+                width={1200}
+                height={675}
+                sizes="(max-width: 739px) 100vw, 66vw"
+              />
+            </div>
           </div>
         </div>
       </section>
