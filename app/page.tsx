@@ -153,7 +153,7 @@ const HOME_COPY: Record<Language, {
     heroEyebrow: 'Niš • Industrijska livnica • Od 1884',
     heroTitle: 'Industrijska livnica gvožđa i čelika za odlivke koji traju.',
     heroLead:
-      'Od prototipa do serijske proizvodnje: sivi liv, nodularni liv i čelični liv, uz mašinsku obradu, termičku obradu i potpunu kontrolu kvaliteta u sertifikovanoj laboratoriji. KOPEX MIN-LIV je livnica u Srbiji sa tradicijom od 1884god.',
+      'Od prototipa do serijske proizvodnje: sivi liv, nodularni liv i čelični liv, uz mašinsku obradu, termičku obradu i potpunu kontrolu kvaliteta u sertifikovanoj laboratoriji. KOPEX MIN-LIV je livnica u Srbiji sa tradicijom od 1884. g.',
     heroCtaPrimary: 'Pošaljite upit',
     heroCtaSecondary: 'Pogledajte kapacitete',
     heroTrust:
@@ -167,7 +167,7 @@ const HOME_COPY: Record<Language, {
     productsSliderNext: 'Sledeći proizvodi',
     productsSliderLabel: 'Izdvojeni proizvodi',
     newsEyebrow: 'Vesti / Karijera',
-    newsTitle: 'Najnovije informacije i oglasi za posao u Kopex MIN-LIV.',
+    newsTitle: 'Najnovije informacije i oglasi za posao u Kopex MIN-LIV-u.',
     newsLead: 'Pratite najnovije objave, projekte i oglase za zapošljavanje iz naše livnice.',
     newsCta: 'Sve vesti / karijera',
     valuesEyebrow: 'Vrednosti',
@@ -187,7 +187,7 @@ const HOME_COPY: Record<Language, {
     service02Body: 'Obrada na standardnim mašinama (glodalica, strug, borverk) i CNC mašinama.',
     service03Title: 'Termička obrada',
     service03Body:
-      'Termičko tretiranje odlivaka kroz postupke: gašenja, kaljenja, popuštanja i žarenja u bazenima sa velikim kapacitetom quench emulzije ili vode radi optimalnih hemijskih i mehaničkih svojstava.',
+      'Termičko tretiranje odlivaka kroz postupke: gašenja, kaljenja, popuštanja i žarenja u bazenima sa velikim kapacitetom quench emulzije ili vode radi postizanja optimalnih hemijskih i mehaničkih svojstava.',
     service04Title: 'Završne operacije',
     service04Body:
       'Finalizacija proizvoda kroz postupke: brušenje, farbanje, varenje i sačmarenje (peskarenje), radi što bolje površine i vizualno dopadljivijeg proizvoda.',
