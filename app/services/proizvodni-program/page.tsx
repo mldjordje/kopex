@@ -55,7 +55,7 @@ type ProgramCopy = {
 
 const PROGRAM_COPY_SR: ProgramCopy = {
   title: 'Proizvodni program',
-  lead: 'Proizvodni program AD „MIN-LIV“ obuhvata primarni i sekundarni program usluga.',
+  lead: 'Proizvodni program KOPEX MIN-LIV D.O.O. obuhvata primarni i sekundarni program usluga.',
   primaryTitle: 'Primarni proizvodni program',
   primaryItems: [
     'Odlivci od sivog liva',
