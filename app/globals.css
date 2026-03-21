@@ -99,6 +99,15 @@ body:not(.theme-light)::before {
   z-index: 0;
 }
 
+.kopex-hero-video-shell {
+  position: absolute;
+  inset: 0;
+  background-color: #0c1013;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
 .kopex-hero__media::after {
   content: '';
   position: absolute;
@@ -118,6 +127,16 @@ body:not(.theme-light)::before {
   object-fit: cover;
   border-radius: 0;
   filter: saturate(1.08) contrast(1.05);
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+
+.kopex-hero-video-shell.is-playing .kopex-hero-video {
+  opacity: 1;
+}
+
+.kopex-hero-video-shell.is-fallback .kopex-hero-video {
+  visibility: hidden;
 }
 
 .kopex-hero__content {
