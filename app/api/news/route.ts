@@ -6,6 +6,8 @@ import { createNewsEntry, getNewsList } from '@/lib/news';
 
 export const runtime = 'nodejs';
 
+const PUBLIC_CACHE_CONTROL = 'public, s-maxage=300, stale-while-revalidate=86400';
+
 const MAX_IMAGE_COUNT = 6;
 const MAX_IMAGE_SIZE = 5 * 1024 * 1024;
 const allowedTypes = new Set(['image/jpeg', 'image/png', 'image/webp', 'image/gif']);
@@ -132,7 +134,14 @@ const saveImages = async (files: File[]): Promise<string[]> => {
 export async function GET() {
   try {
     const items = await getNewsList();
-    return NextResponse.json({ items });
+    return NextResponse.json(
+      { items },
+      {
+        headers: {
+          'Cache-Control': PUBLIC_CACHE_CONTROL
+        }
+      }
+    );
   } catch (error) {
     console.error('News list error:', error);
     return NextResponse.json(

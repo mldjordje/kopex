@@ -5,8 +5,6 @@ import { getNewsById } from '@/lib/news';
 import { LANGUAGE_COOKIE, resolveLanguage, type Language } from '@/lib/language';
 import { buildMetadata } from '@/lib/seo';
 
-export const dynamic = 'force-dynamic';
-
 type PageProps = {
   params: Promise<{
     id: string;

@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import path from 'path';
 import { readdir } from 'fs/promises';
 import { cookies } from 'next/headers';
+import { unstable_cache } from 'next/cache';
 import { LANGUAGE_COOKIE, resolveLanguage, type Language } from '@/lib/language';
 import { buildMetadata } from '@/lib/seo';
 
@@ -41,8 +42,6 @@ export async function generateMetadata({
   });
 }
 
-export const dynamic = 'force-dynamic';
-
 type HistoryCopy = {
   title: string;
   lead: string;
@@ -79,19 +78,23 @@ const HISTORY_COPY: Record<Language, HistoryCopy> = {
   de: HISTORY_COPY_SR
 };
 
-const getHistoryImages = async (): Promise<string[]> => {
-  try {
-    const historyDir = path.join(process.cwd(), 'public', 'istorija');
-    const files = await readdir(historyDir);
-    return files
-      .filter((file) => /\.(jpe?g|png|webp|gif|bmp|svg)$/i.test(file))
-      .sort((a, b) => a.localeCompare(b, undefined, { numeric: true, sensitivity: 'base' }))
-      .map((file) => `/istorija/${file}`);
-  } catch (error) {
-    console.error('History images error:', error);
-    return [];
-  }
-};
+const getHistoryImages = unstable_cache(
+  async (): Promise<string[]> => {
+    try {
+      const historyDir = path.join(process.cwd(), 'public', 'istorija');
+      const files = await readdir(historyDir);
+      return files
+        .filter((file) => /\.(jpe?g|png|webp|gif|bmp|svg)$/i.test(file))
+        .sort((a, b) => a.localeCompare(b, undefined, { numeric: true, sensitivity: 'base' }))
+        .map((file) => `/istorija/${file}`);
+    } catch (error) {
+      console.error('History images error:', error);
+      return [];
+    }
+  },
+  ['history-images'],
+  { revalidate: 60 * 60 }
+);
 
 export default async function HistoryPage({
   searchParams

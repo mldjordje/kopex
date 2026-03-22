@@ -3,6 +3,7 @@ import Image from 'next/image';
 import path from 'path';
 import { readdir } from 'fs/promises';
 import { cookies } from 'next/headers';
+import { unstable_cache } from 'next/cache';
 import { LANGUAGE_COOKIE, resolveLanguage, type Language } from '@/lib/language';
 import { buildMetadata } from '@/lib/seo';
 
@@ -42,8 +43,6 @@ export async function generateMetadata({
   });
 }
 
-export const dynamic = 'force-dynamic';
-
 const GALLERY_COPY: Record<Language, { title: string; lead: string }> = {
   sr: {
     title: 'Galerija',
@@ -61,18 +60,22 @@ const GALLERY_COPY: Record<Language, { title: string; lead: string }> = {
 
 const CARD_SIZES = '(max-width: 739px) 100vw, (max-width: 1200px) 50vw, 33vw';
 
-const getGalleryFiles = async (): Promise<string[]> => {
-  try {
-    const galleryDir = path.join(process.cwd(), 'public', 'galerija');
-    const files = await readdir(galleryDir);
-    return files
-      .filter((file) => /\.(jpe?g|png|webp|gif|bmp|svg)$/i.test(file))
-      .sort((a, b) => a.localeCompare(b, undefined, { numeric: true, sensitivity: 'base' }));
-  } catch (error) {
-    console.error('Gallery images error:', error);
-    return [];
-  }
-};
+const getGalleryFiles = unstable_cache(
+  async (): Promise<string[]> => {
+    try {
+      const galleryDir = path.join(process.cwd(), 'public', 'galerija');
+      const files = await readdir(galleryDir);
+      return files
+        .filter((file) => /\.(jpe?g|png|webp|gif|bmp|svg)$/i.test(file))
+        .sort((a, b) => a.localeCompare(b, undefined, { numeric: true, sensitivity: 'base' }));
+    } catch (error) {
+      console.error('Gallery images error:', error);
+      return [];
+    }
+  },
+  ['gallery-files'],
+  { revalidate: 60 * 60 }
+);
 
 export default async function GalleryPage({
   searchParams
@@ -209,6 +212,7 @@ export default async function GalleryPage({
                 width={1200}
                 height={900}
                 sizes={CARD_SIZES}
+                unoptimized
                 style={{ width: '100%', height: 'auto' }}
               />
             </div>

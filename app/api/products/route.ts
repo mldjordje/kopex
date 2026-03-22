@@ -7,6 +7,8 @@ import type { ProductDocument } from '@/lib/products';
 
 export const runtime = 'nodejs';
 
+const PUBLIC_CACHE_CONTROL = 'public, s-maxage=300, stale-while-revalidate=86400';
+
 const MAX_HERO_COUNT = 1;
 const MAX_GALLERY_COUNT = 10;
 const MAX_DOCUMENT_COUNT = 8;
@@ -268,7 +270,14 @@ const parseFeaturedRank = (value: FormDataEntryValue | null): number | null => {
 export async function GET() {
   try {
     const items = await getProductsList();
-    return NextResponse.json({ items });
+    return NextResponse.json(
+      { items },
+      {
+        headers: {
+          'Cache-Control': PUBLIC_CACHE_CONTROL
+        }
+      }
+    );
   } catch (error) {
     console.error('Products list error:', error);
     return NextResponse.json(

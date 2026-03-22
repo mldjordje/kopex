@@ -7,8 +7,6 @@ import type { ProductItem } from '@/lib/products';
 import { LANGUAGE_COOKIE, resolveLanguage, type Language } from '@/lib/language';
 import { buildMetadata } from '@/lib/seo';
 
-export const dynamic = 'force-dynamic';
-
 const DETAIL_SIZES = '(max-width: 739px) 100vw, (max-width: 1200px) 80vw, 980px';
 
 const PRODUCT_DETAIL_COPY: Record<Language, {

@@ -1,4 +1,5 @@
 import type { ResultSetHeader, RowDataPacket } from 'mysql2/promise';
+import { revalidateTag, unstable_cache } from 'next/cache';
 import { queryDb } from './db';
 
 export type ProductDocument = {
@@ -26,6 +27,8 @@ export type ProductItem = {
 };
 
 const PRODUCTS_CACHE_TTL_MS = 5 * 60 * 1000;
+const PRODUCTS_REVALIDATE_SECONDS = 5 * 60;
+const PRODUCTS_CACHE_TAG = 'products';
 type ProductCacheEntry = { items: ProductItem[]; cachedAt: number };
 const productCache: { active?: ProductCacheEntry; all?: ProductCacheEntry } = {};
 
@@ -52,6 +55,7 @@ const setCachedProducts = (includeInactive: boolean, items: ProductItem[]) => {
 const clearProductCache = () => {
   productCache.active = undefined;
   productCache.all = undefined;
+  revalidateTag(PRODUCTS_CACHE_TAG, 'max');
 };
 
 type FeaturedRankMode = 'present' | 'absent';
@@ -286,15 +290,13 @@ const mapRow = (row: ProductRow): ProductItem => ({
   updatedAt: toIsoDate(row.updated_at)
 });
 
-export const getProductsList = async ({
-  includeInactive = false
-}: { includeInactive?: boolean } = {}): Promise<ProductItem[]> => {
+const fetchProductsList = async (showInactive: boolean): Promise<ProductItem[]> => {
   const featuredRankMode = await getFeaturedRankMode();
   const featuredRankSelect =
     featuredRankMode === 'present'
       ? 'landing_featured_rank'
       : 'NULL AS landing_featured_rank';
-  const whereClause = includeInactive ? '' : 'WHERE is_active = 1';
+  const whereClause = showInactive ? '' : 'WHERE is_active = 1';
   try {
     const rows = await queryDb<ProductRow[]>(
       `SELECT id, name, slug, summary, description, category, hero_image, gallery_images, documents, seo_title, seo_description, is_active, sort_order, ${featuredRankSelect}, created_at, updated_at
@@ -305,10 +307,10 @@ export const getProductsList = async ({
       { retries: 4 }
     );
     const items = rows.map(mapRow);
-    setCachedProducts(includeInactive, items);
+    setCachedProducts(showInactive, items);
     return items;
   } catch (error) {
-    const cached = getCachedProducts(includeInactive);
+    const cached = getCachedProducts(showInactive);
     if (cached) {
       console.warn('Products list fallback: serving cached data', error);
       return cached;
@@ -317,7 +319,7 @@ export const getProductsList = async ({
   }
 };
 
-export const getProductById = async (id: number): Promise<ProductItem | null> => {
+const fetchProductById = async (id: number): Promise<ProductItem | null> => {
   const featuredRankMode = await getFeaturedRankMode();
   const featuredRankSelect =
     featuredRankMode === 'present'
@@ -339,7 +341,7 @@ export const getProductById = async (id: number): Promise<ProductItem | null> =>
   return mapRow(row);
 };
 
-export const getProductBySlug = async (slug: string): Promise<ProductItem | null> => {
+const fetchProductBySlug = async (slug: string): Promise<ProductItem | null> => {
   const featuredRankMode = await getFeaturedRankMode();
   const featuredRankSelect =
     featuredRankMode === 'present'
@@ -359,6 +361,44 @@ export const getProductBySlug = async (slug: string): Promise<ProductItem | null
   }
 
   return mapRow(row);
+};
+
+const getCachedActiveProducts = unstable_cache(
+  () => fetchProductsList(false),
+  ['products-list-active'],
+  { revalidate: PRODUCTS_REVALIDATE_SECONDS, tags: [PRODUCTS_CACHE_TAG] }
+);
+
+const getCachedAllProducts = unstable_cache(
+  () => fetchProductsList(true),
+  ['products-list-all'],
+  { revalidate: PRODUCTS_REVALIDATE_SECONDS, tags: [PRODUCTS_CACHE_TAG] }
+);
+
+const getCachedProductById = unstable_cache(
+  (id: number) => fetchProductById(id),
+  ['product-by-id'],
+  { revalidate: PRODUCTS_REVALIDATE_SECONDS, tags: [PRODUCTS_CACHE_TAG] }
+);
+
+const getCachedProductBySlug = unstable_cache(
+  (slug: string) => fetchProductBySlug(slug),
+  ['product-by-slug'],
+  { revalidate: PRODUCTS_REVALIDATE_SECONDS, tags: [PRODUCTS_CACHE_TAG] }
+);
+
+export const getProductsList = async ({
+  includeInactive = false
+}: { includeInactive?: boolean } = {}): Promise<ProductItem[]> => {
+  return includeInactive ? getCachedAllProducts() : getCachedActiveProducts();
+};
+
+export const getProductById = async (id: number): Promise<ProductItem | null> => {
+  return getCachedProductById(id);
+};
+
+export const getProductBySlug = async (slug: string): Promise<ProductItem | null> => {
+  return getCachedProductBySlug(slug);
 };
 
 export const createProductEntry = async ({

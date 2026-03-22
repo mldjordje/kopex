@@ -43,8 +43,6 @@ export async function generateMetadata({
   });
 }
 
-export const dynamic = 'force-dynamic';
-
 const CARD_SIZES = '(max-width: 739px) 100vw, (max-width: 1024px) 50vw, 33vw';
 const PRODUCTS_COPY: Record<Language, {
   eyebrow: string;

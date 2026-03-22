@@ -31,28 +31,33 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   let productEntries: MetadataRoute.Sitemap = [];
   let newsEntries: MetadataRoute.Sitemap = [];
 
-  try {
-    const products = await getProductsList();
+  const [productsResult, newsResult] = await Promise.allSettled([
+    getProductsList(),
+    getNewsList()
+  ]);
+
+  if (productsResult.status === 'fulfilled') {
+    const products = productsResult.value;
     productEntries = products.map((product) => ({
       url: `${BASE_URL}/products/${product.slug}`,
       lastModified: new Date(product.updatedAt || product.createdAt || now),
       changeFrequency: 'weekly',
       priority: 0.8
     }));
-  } catch (error) {
-    console.error('Sitemap products error:', error);
+  } else {
+    console.error('Sitemap products error:', productsResult.reason);
   }
 
-  try {
-    const news = await getNewsList();
+  if (newsResult.status === 'fulfilled') {
+    const news = newsResult.value;
     newsEntries = news.map((item) => ({
       url: `${BASE_URL}/news/${item.id}`,
       lastModified: new Date(item.createdAt || now),
       changeFrequency: 'weekly',
       priority: 0.7
     }));
-  } catch (error) {
-    console.error('Sitemap news error:', error);
+  } else {
+    console.error('Sitemap news error:', newsResult.reason);
   }
 
   return [...staticEntries, ...productEntries, ...newsEntries];

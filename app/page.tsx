@@ -50,8 +50,6 @@ export async function generateMetadata({
   });
 }
 
-export const dynamic = 'force-dynamic';
-
 const CARD_SIZES = '(max-width: 739px) 100vw, (max-width: 1024px) 50vw, 33vw';
 const HALF_SIZES = '(max-width: 991px) 100vw, 50vw';
 const MEDIA_LARGE_SIZES = '(max-width: 739px) 100vw, (max-width: 1200px) 60vw, 33vw';
@@ -500,16 +498,21 @@ export default async function HomePage({
   let products: ProductItem[] = [];
   let news: NewsItem[] = [];
 
-  try {
-    products = await getProductsList();
-  } catch (error) {
-    console.error('Home products error:', error);
+  const [productsResult, newsResult] = await Promise.allSettled([
+    getProductsList(),
+    getNewsList()
+  ]);
+
+  if (productsResult.status === 'fulfilled') {
+    products = productsResult.value;
+  } else {
+    console.error('Home products error:', productsResult.reason);
   }
 
-  try {
-    news = await getNewsList();
-  } catch (error) {
-    console.error('Home news error:', error);
+  if (newsResult.status === 'fulfilled') {
+    news = newsResult.value;
+  } else {
+    console.error('Home news error:', newsResult.reason);
   }
 
   const latestNews = news.slice(0, 3);

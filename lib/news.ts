@@ -1,4 +1,5 @@
 import type { ResultSetHeader, RowDataPacket } from 'mysql2/promise';
+import { revalidateTag, unstable_cache } from 'next/cache';
 import { queryDb } from './db';
 
 export type NewsItem = {
@@ -16,6 +17,9 @@ type NewsRow = RowDataPacket & {
   images: unknown;
   created_at: Date | string;
 };
+
+const NEWS_REVALIDATE_SECONDS = 5 * 60;
+const NEWS_CACHE_TAG = 'news';
 
 const parseImages = (value: unknown): string[] => {
   if (!value) {
@@ -51,7 +55,7 @@ const toIsoDate = (value: Date | string): string => {
 
 const normalizeId = (value: number | string): string => String(value).trim();
 
-export const getNewsList = async (): Promise<NewsItem[]> => {
+const fetchNewsList = async (): Promise<NewsItem[]> => {
   const rows = await queryDb<NewsRow[]>(
     'SELECT id, title, body, images, created_at FROM news ORDER BY created_at DESC, id DESC'
   );
@@ -65,7 +69,7 @@ export const getNewsList = async (): Promise<NewsItem[]> => {
   }));
 };
 
-export const getNewsById = async (id: string): Promise<NewsItem | null> => {
+const fetchNewsById = async (id: string): Promise<NewsItem | null> => {
   const rows = await queryDb<NewsRow[]>(
     'SELECT id, title, body, images, created_at FROM news WHERE id = ? LIMIT 1',
     [id]
@@ -85,6 +89,26 @@ export const getNewsById = async (id: string): Promise<NewsItem | null> => {
   };
 };
 
+const getCachedNewsList = unstable_cache(
+  fetchNewsList,
+  ['news-list'],
+  { revalidate: NEWS_REVALIDATE_SECONDS, tags: [NEWS_CACHE_TAG] }
+);
+
+const getCachedNewsById = unstable_cache(
+  (id: string) => fetchNewsById(id),
+  ['news-by-id'],
+  { revalidate: NEWS_REVALIDATE_SECONDS, tags: [NEWS_CACHE_TAG] }
+);
+
+export const getNewsList = async (): Promise<NewsItem[]> => {
+  return getCachedNewsList();
+};
+
+export const getNewsById = async (id: string): Promise<NewsItem | null> => {
+  return getCachedNewsById(id);
+};
+
 export const createNewsEntry = async ({
   title,
   body,
@@ -99,6 +123,7 @@ export const createNewsEntry = async ({
     'INSERT INTO news (title, body, images) VALUES (?, ?, ?)',
     [title, body, payload]
   );
+  revalidateTag(NEWS_CACHE_TAG, 'max');
   return String(result.insertId);
 };
 
@@ -119,6 +144,7 @@ export const updateNewsEntry = async ({
       'UPDATE news SET title = ?, body = ?, images = ? WHERE id = ?',
       [title, body, payload, id]
     );
+    revalidateTag(NEWS_CACHE_TAG, 'max');
     return;
   }
 
@@ -126,8 +152,10 @@ export const updateNewsEntry = async ({
     'UPDATE news SET title = ?, body = ? WHERE id = ?',
     [title, body, id]
   );
+  revalidateTag(NEWS_CACHE_TAG, 'max');
 };
 
 export const deleteNewsEntry = async (id: string): Promise<void> => {
   await queryDb<ResultSetHeader>('DELETE FROM news WHERE id = ?', [id]);
+  revalidateTag(NEWS_CACHE_TAG, 'max');
 };
