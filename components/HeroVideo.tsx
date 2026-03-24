@@ -4,11 +4,26 @@ import { useEffect, useRef, useState } from 'react';
 
 const MOBILE_MEDIA_QUERY = '(max-width: 767px)';
 const PLAYBACK_RETRY_DELAYS = [0, 250, 1000, 2500];
+const VIDEO_SOURCES = {
+  desktop: {
+    compatible: '/hero-video-bg/desktop-h264.mp4',
+    hevc: '/hero-video-bg/desktop.mp4'
+  },
+  mobile: {
+    compatible: '/hero-video-bg/mobile-h264.mp4',
+    hevc: '/hero-video-bg/mobile.mp4'
+  }
+} as const;
+const POSTERS = {
+  desktop: '/img/kopex/facility-front.jpg',
+  mobile: '/img/kopex/production-02.png'
+} as const;
 type DeviceTarget = 'desktop' | 'mobile';
 type PlaybackState = 'idle' | 'playing' | 'fallback';
 
 export default function HeroVideo() {
   const [deviceTarget, setDeviceTarget] = useState<DeviceTarget | null>(null);
+  const [videoSrc, setVideoSrc] = useState<string>(VIDEO_SOURCES.desktop.compatible);
   const [playbackState, setPlaybackState] = useState<PlaybackState>('idle');
   const videoRef = useRef<HTMLVideoElement | null>(null);
 
@@ -33,10 +48,6 @@ export default function HeroVideo() {
   }, []);
 
   useEffect(() => {
-    if (!deviceTarget) {
-      return;
-    }
-
     const video = videoRef.current;
     if (!video) {
       return;
@@ -47,6 +58,20 @@ export default function HeroVideo() {
     let retryTimeout: ReturnType<typeof setTimeout> | null = null;
 
     setPlaybackState('idle');
+
+    const supportsHevc = () => {
+      const capabilityChecks = [
+        'video/mp4; codecs="hvc1"',
+        'video/mp4; codecs="hev1"',
+        'video/mp4; codecs="hvc1.1.6.L123.B0"',
+        'video/mp4; codecs="hev1.1.6.L123.B0"'
+      ];
+
+      return capabilityChecks.some((codec) => {
+        const result = video.canPlayType(codec);
+        return result === 'probably' || result === 'maybe';
+      });
+    };
 
     const clearRetry = () => {
       if (retryTimeout !== null) {
@@ -65,6 +90,16 @@ export default function HeroVideo() {
       video.setAttribute('autoplay', '');
       video.setAttribute('playsinline', '');
       video.setAttribute('webkit-playsinline', 'true');
+    };
+
+    const syncSource = () => {
+      const resolvedTarget: DeviceTarget = deviceTarget === 'mobile' ? 'mobile' : 'desktop';
+      const sources = VIDEO_SOURCES[resolvedTarget];
+      const nextSrc = supportsHevc()
+        ? sources.hevc
+        : sources.compatible;
+
+      setVideoSrc((currentSrc) => (currentSrc === nextSrc ? currentSrc : nextSrc));
     };
 
     const markFallback = () => {
@@ -145,10 +180,17 @@ export default function HeroVideo() {
     };
 
     const handleError = () => {
+      const resolvedTarget: DeviceTarget = deviceTarget === 'mobile' ? 'mobile' : 'desktop';
+      const fallbackSrc = VIDEO_SOURCES[resolvedTarget].compatible;
+      if (videoSrc !== fallbackSrc) {
+        setVideoSrc(fallbackSrc);
+        return;
+      }
       markFallback();
     };
 
     primeVideoElement();
+    syncSource();
     video.load();
     attemptPlayback();
     video.addEventListener('playing', markPlaying);
@@ -176,18 +218,9 @@ export default function HeroVideo() {
       document.removeEventListener('pointerdown', handleUserInteraction, true);
       document.removeEventListener('keydown', handleUserInteraction, true);
     };
-  }, [deviceTarget]);
+  }, [deviceTarget, videoSrc]);
 
-  const src =
-    deviceTarget === 'mobile'
-      ? '/hero-video-bg/mobile.mp4'
-      : deviceTarget === 'desktop'
-        ? '/hero-video-bg/desktop.mp4'
-        : '';
-  const poster =
-    deviceTarget === 'mobile'
-      ? '/img/1.jpg'
-      : '/img/1.jpg';
+  const poster = deviceTarget === 'mobile' ? POSTERS.mobile : POSTERS.desktop;
 
   return (
     <div
@@ -196,16 +229,16 @@ export default function HeroVideo() {
     >
       <video
         ref={videoRef}
-        key={src}
+        key={videoSrc}
         className="kopex-hero-video"
-        autoPlay={deviceTarget !== null}
+        autoPlay
         muted
         loop
         playsInline
         disablePictureInPicture
-        preload={deviceTarget ? 'auto' : 'none'}
+        preload="auto"
         poster={poster}
-        src={deviceTarget ? src : undefined}
+        src={videoSrc}
         aria-hidden="true"
         tabIndex={-1}
       />

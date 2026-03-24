@@ -2,6 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
+    unoptimized: true,
     formats: ['image/avif', 'image/webp'],
     deviceSizes: [640, 768, 960, 1200, 1536],
     imageSizes: [96, 192, 256, 384],

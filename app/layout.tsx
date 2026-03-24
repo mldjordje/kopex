@@ -64,7 +64,7 @@ export default async function RootLayout({
         <link
           rel="preload"
           as="image"
-          href="/img/kopex/production-02.jpg"
+          href="/img/kopex/production-02.png"
           media="(max-width: 767px)"
           fetchPriority="high"
         />

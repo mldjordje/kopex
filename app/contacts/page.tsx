@@ -334,7 +334,7 @@ export default async function ContactsPage({
       <section className="backlight-top is-fullwidth">
         <div className="stg-row stg-valign-middle stg-cta-with-image stg-tp-column-reverse">
           <div className="stg-col-5">
-            <div className="bringer-offset-image" data-bg-src="/img/kopex/production-02.jpg"></div>
+            <div className="bringer-offset-image" data-bg-src="/img/kopex/production-02.png"></div>
             <form
               action="/api/contact"
               method="post"
