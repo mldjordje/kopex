@@ -58,7 +58,8 @@ const MANAGEMENT_TEAM: Record<Language, TeamMember[]> = {
       name: 'Dragoljub Maksimovic',
       profession: 'Dipl. inž. metalurgije',
       role: 'Direktor i vlasnik',
-      image: '/img/team/team01-thmb.jpg'
+      image: '/img/direktor.JPG',
+      imagePosition: 'center 18%'
     },
     {
       name: 'Milos Radivojevic',
@@ -77,7 +78,8 @@ const MANAGEMENT_TEAM: Record<Language, TeamMember[]> = {
       name: 'Vladimir Stojkovic',
       profession: 'Dipl. pravnik',
       role: 'Direktor kadrovske i pravne službe',
-      image: '/img/team/team03-thmb.jpg'
+      image: '/img/vlada.jpg',
+      imagePosition: 'center 18%'
     },
     {
       name: 'Marina Radenkovic',
@@ -91,7 +93,8 @@ const MANAGEMENT_TEAM: Record<Language, TeamMember[]> = {
       name: 'Dragoljub Maksimovic',
       profession: 'Dipl. met. eng.',
       role: 'Owner and Director',
-      image: '/img/team/team01-thmb.jpg'
+      image: '/img/direktor.JPG',
+      imagePosition: 'center 18%'
     },
     {
       name: 'Milos Radivojevic',
@@ -110,7 +113,8 @@ const MANAGEMENT_TEAM: Record<Language, TeamMember[]> = {
       name: 'Vladimir Stojkovic',
       profession: 'LL.B.',
       role: 'Director of HR and Legal Services',
-      image: '/img/team/team03-thmb.jpg'
+      image: '/img/vlada.jpg',
+      imagePosition: 'center 18%'
     },
     {
       name: 'Marina Radenkovic',
@@ -124,7 +128,8 @@ const MANAGEMENT_TEAM: Record<Language, TeamMember[]> = {
       name: 'Dragoljub Maksimovic',
       profession: 'Dipl.-Ing. Metallurgie',
       role: 'Inhaber und Direktor',
-      image: '/img/team/team01-thmb.jpg'
+      image: '/img/direktor.JPG',
+      imagePosition: 'center 18%'
     },
     {
       name: 'Milos Radivojevic',
@@ -143,7 +148,8 @@ const MANAGEMENT_TEAM: Record<Language, TeamMember[]> = {
       name: 'Vladimir Stojkovic',
       profession: 'Dipl. Jurist',
       role: 'Leiter Personal- und Rechtsdienst',
-      image: '/img/team/team03-thmb.jpg'
+      image: '/img/vlada.jpg',
+      imagePosition: 'center 18%'
     },
     {
       name: 'Marina Radenkovic',
