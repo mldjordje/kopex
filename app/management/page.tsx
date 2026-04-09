@@ -69,7 +69,7 @@ const MANAGEMENT_TEAM: Record<Language, TeamMember[]> = {
     },
     {
       name: 'Dragan Drenic',
-      profession: 'Dipl. ekon.',
+      profession: 'Dipl. ekonomista',
       role: 'Komercijalni direktor',
       image: '/img/dragandrenic.jpg',
       imagePosition: 'center top'
@@ -85,7 +85,7 @@ const MANAGEMENT_TEAM: Record<Language, TeamMember[]> = {
       name: 'Marina Radenkovic',
       profession: 'Mašinski tehničar',
       role: 'Rukovodilac odeljenja čistionice i mašinske obrade',
-      image: '/img/team/team03-thmb.jpg'
+      image: '/img/marina.jpg'
     }
   ],
   en: [
@@ -120,7 +120,7 @@ const MANAGEMENT_TEAM: Record<Language, TeamMember[]> = {
       name: 'Marina Radenkovic',
       profession: 'Mechanical Technician',
       role: 'Head of Cleaning and Machining Department',
-      image: '/img/team/team03-thmb.jpg'
+      image: '/img/marina.jpg'
     }
   ],
   de: [
@@ -155,7 +155,7 @@ const MANAGEMENT_TEAM: Record<Language, TeamMember[]> = {
       name: 'Marina Radenkovic',
       profession: 'Maschinentechnikerin',
       role: 'Leiterin der Putzerei und mechanischen Bearbeitung',
-      image: '/img/team/team03-thmb.jpg'
+      image: '/img/marina.jpg'
     }
   ]
 };
