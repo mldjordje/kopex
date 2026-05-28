@@ -35,6 +35,7 @@ export default function Footer() {
     follow: string;
     description: string;
     copyright: string;
+    companyDetails: [string, string, string, string, string, string, string, string];
   }> = {
     sr: {
       contact: 'Kontakt',
@@ -51,7 +52,17 @@ export default function Footer() {
       email: 'E-mail Komercijala / dragan.drenic@kopexmin.rs / marija.nesic@kopexmin.rs / marina.radenkovic@kopexmin.rs; Nabavka / dejan.ivanovic@kopexmin.rs; Finansije / olivera.milic@kopexmin.rs',
       follow: 'Pratite nas:',
       description: 'KOPEX MIN-LIV D.O.O. Ni\u0161 je industrijska livnica Srbije sa tradicijom od 1884. godine, specijalizovana za metalne odlivke od sivog, nodularnog i \u010deli\u010dnog liva.',
-      copyright: '\u00a9 2025 KOPEX MIN-LIV D.O.O. Ni\u0161. Sva prava zadr\u017eana.'
+      copyright: '\u00a9 2025 KOPEX MIN-LIV D.O.O. Ni\u0161. Sva prava zadr\u017eana.',
+      companyDetails: [
+        'Kopex MIN Liv',
+        '12. februar 82',
+        '18000 Nis',
+        'Pib: 101532125',
+        'Maticni br: 07678762',
+        'Sifra delatnosti: 2453',
+        'Tekuci racun: 265-4010310003864-97',
+        'Raiffeisen banka'
+      ]
     },
     en: {
       contact: 'Contact',
@@ -68,7 +79,17 @@ export default function Footer() {
       email: 'E-mail Commercial / dragan.drenic@kopexmin.rs / marija.nesic@kopexmin.rs / marina.radenkovic@kopexmin.rs; Procurement / dejan.ivanovic@kopexmin.rs; Finance / olivera.milic@kopexmin.rs',
       follow: 'Follow us:',
       description: 'KOPEX MIN-LIV D.O.O. Ni\u0161 is an industrial foundry in Serbia with a tradition since 1884, specializing in metal castings of gray iron, ductile iron, and steel.',
-      copyright: '\u00a9 2025 KOPEX MIN-LIV D.O.O. Ni\u0161. All rights reserved.'
+      copyright: '\u00a9 2025 KOPEX MIN-LIV D.O.O. Ni\u0161. All rights reserved.',
+      companyDetails: [
+        'Kopex MIN Liv',
+        '12. februar 82',
+        '18000 Nis',
+        'PIB: 101532125',
+        'Registration no: 07678762',
+        'Activity code: 2453',
+        'Current account: 265-4010310003864-97',
+        'Raiffeisen banka'
+      ]
     },
     de: {
       contact: 'Kontakt',
@@ -85,7 +106,17 @@ export default function Footer() {
       email: 'E-Mail: Kommerziell / dragan.drenic@kopexmin.rs / marija.nesic@kopexmin.rs / marina.radenkovic@kopexmin.rs; Einkauf / dejan.ivanovic@kopexmin.rs; Finanzen / olivera.milic@kopexmin.rs',
       follow: 'Folgen Sie uns:',
       description: 'KOPEX MIN-LIV D.O.O. Ni\u0161 ist eine industrielle Gie\u00dferei in Serbien mit Tradition seit 1884 und spezialisiert auf Metallgussteile aus Grauguss, Sph\u00e4roguss und Stahlguss.',
-      copyright: '\u00a9 2025 KOPEX MIN-LIV D.O.O. Ni\u0161. Alle Rechte vorbehalten.'
+      copyright: '\u00a9 2025 KOPEX MIN-LIV D.O.O. Ni\u0161. Alle Rechte vorbehalten.',
+      companyDetails: [
+        'Kopex MIN Liv',
+        '12. februar 82',
+        '18000 Nis',
+        'PIB: 101532125',
+        'Registrierungsnr.: 07678762',
+        'Taetigkeitscode: 2453',
+        'Girokonto: 265-4010310003864-97',
+        'Raiffeisen banka'
+      ]
     }
   };
 
@@ -120,7 +151,9 @@ export default function Footer() {
                 <h6>{labels[currentLanguage].contact}</h6>
                 <div className="bringer-menu-widget">
                   <ul>
-                    <li>{labels[currentLanguage].address}</li>
+                    {labels[currentLanguage].companyDetails.map((line) => (
+                      <li key={line}>{line}</li>
+                    ))}
                     <li>{labels[currentLanguage].phone}</li>
                     <li>{labels[currentLanguage].email}</li>
                   </ul>

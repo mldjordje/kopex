@@ -50,6 +50,8 @@ const CONTACTS_COPY: Record<Language, {
   lead: string;
   connectTitle: string;
   connectLead: string;
+  companyTitle: string;
+  companyDetails: [string, string, string, string, string, string, string, string];
   phoneTitle: string;
   phoneBody: string;
   emailTitle: string;
@@ -82,6 +84,17 @@ const CONTACTS_COPY: Record<Language, {
     lead: 'Kopex MIN-LIV D.O.O. Niš je tu da odgovori na sva vaša pitanja i pruži podršku u vezi sa našim uslugama i proizvodima.',
     connectTitle: 'Kontakt informacije:',
     connectLead: 'Evo kako možete stupiti u kontakt sa timom KOPEX MIN LIV.',
+    companyTitle: 'Podaci firme',
+    companyDetails: [
+      'Kopex MIN Liv',
+      '12. februar 82',
+      '18000 Nis',
+      'Pib: 101532125',
+      'Maticni br: 07678762',
+      'Sifra delatnosti: 2453',
+      'Tekuci racun: 265-4010310003864-97',
+      'Raiffeisen banka'
+    ],
     phoneTitle: 'Telefon',
     phoneBody: 'Pozovite nas direktno i razgovarajte sa našim timom stručnjaka.',
     emailTitle: 'Email',
@@ -118,6 +131,17 @@ const CONTACTS_COPY: Record<Language, {
     lead: 'Kopex MIN-LIV D.O.O. Niš is here to answer all your questions and support you regarding our services and products.',
     connectTitle: 'Contact information:',
     connectLead: 'Here is how you can reach the KOPEX MIN LIV team.',
+    companyTitle: 'Company details',
+    companyDetails: [
+      'Kopex MIN Liv',
+      '12. februar 82',
+      '18000 Nis',
+      'PIB: 101532125',
+      'Registration no: 07678762',
+      'Activity code: 2453',
+      'Current account: 265-4010310003864-97',
+      'Raiffeisen banka'
+    ],
     phoneTitle: 'Phone',
     phoneBody: 'Call us directly and talk to our expert team.',
     emailTitle: 'Email',
@@ -154,6 +178,17 @@ const CONTACTS_COPY: Record<Language, {
     lead: 'Kopex MIN-LIV D.O.O. Niš beantwortet gerne Ihre Fragen und unterstützt Sie zu unseren Leistungen und Produkten.',
     connectTitle: 'Kontaktinformationen:',
     connectLead: 'So erreichen Sie das KOPEX MIN LIV Team.',
+    companyTitle: 'Firmendaten',
+    companyDetails: [
+      'Kopex MIN Liv',
+      '12. februar 82',
+      '18000 Nis',
+      'PIB: 101532125',
+      'Registrierungsnr.: 07678762',
+      'Taetigkeitscode: 2453',
+      'Girokonto: 265-4010310003864-97',
+      'Raiffeisen banka'
+    ],
     phoneTitle: 'Telefon',
     phoneBody: 'Rufen Sie uns direkt an und sprechen Sie mit unserem Expertenteam.',
     emailTitle: 'E-Mail',
@@ -229,6 +264,22 @@ export default async function ContactsPage({
         <div className="stg-row" data-stagger-appear="fade-up" data-delay="200" data-stagger-unload="fade-up">
           <div className="stg-col-4 stg-tp-col-6 stg-tp-bottom-gap">
             <div className="bringer-block stg-aspect-square stg-vertical-space-between">
+              <div>
+                <h5>{copy.companyTitle}<span className="bringer-accent">.</span></h5>
+                <h6>
+                  {copy.companyDetails.map((line) => (
+                    <span key={line}>
+                      {line}
+                      <br />
+                    </span>
+                  ))}
+                </h6>
+              </div>
+              <p>{copy.addressBody}</p>
+            </div>
+          </div>
+          <div className="stg-col-4 stg-tp-col-6 stg-tp-bottom-gap">
+            <div className="bringer-block stg-aspect-square stg-vertical-space-between">
               <a href="tel:+38163465494" className="bringer-grid-item-link"></a>
               <div>
                 <h5>{copy.phoneTitle}<span className="bringer-accent">.</span></h5>
@@ -243,8 +294,8 @@ export default async function ContactsPage({
               <p>{copy.phoneBody}</p>
             </div>
           </div>
-          <div className="stg-col-4 stg-tp-col-6 stg-tp-bottom-gap">
-            <div className="bringer-block stg-aspect-square stg-vertical-space-between">
+          <div className="stg-col-4 stg-tp-col-12">
+            <div className="bringer-block stg-aspect-square stg-tp-aspect-rectangle stg-vertical-space-between">
               <a href="mailto:dragan.drenic@kopexmin.rs" className="bringer-grid-item-link"></a>
               <div>
                 <h5>{copy.emailTitle}<span className="bringer-accent">.</span></h5>
@@ -257,26 +308,6 @@ export default async function ContactsPage({
                 </h6>
               </div>
               <p>{copy.emailBody}</p>
-            </div>
-          </div>
-          <div className="stg-col-4 stg-tp-col-12">
-            <div className="bringer-block stg-aspect-square stg-tp-aspect-rectangle stg-vertical-space-between">
-              <div>
-                <h5>{copy.socialTitle}<span className="bringer-accent">.</span></h5>
-                <ul className="bringer-socials-list stg-small-gap" data-stagger-appear="fade-up" data-stagger-delay="75">
-                  <li>
-                    <a href="https://www.facebook.com/" target="_blank" rel="noreferrer" className="bringer-socials-facebook">
-                      <i></i>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="https://www.instagram.com/" target="_blank" rel="noreferrer" className="bringer-socials-instagram">
-                      <i></i>
-                    </a>
-                  </li>
-                </ul>
-              </div>
-              <p>{copy.socialBody}</p>
             </div>
           </div>
         </div>
