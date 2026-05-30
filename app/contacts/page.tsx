@@ -87,7 +87,7 @@ const CONTACTS_COPY: Record<Language, {
     companyTitle: 'Podaci firme',
     companyDetails: [
       'Kopex MIN Liv',
-      '12. februar 82',
+      'Bulevar 12. februar 82',
       '18000 Nis',
       'Pib: 101532125',
       'Maticni br: 07678762',
@@ -134,7 +134,7 @@ const CONTACTS_COPY: Record<Language, {
     companyTitle: 'Company details',
     companyDetails: [
       'Kopex MIN Liv',
-      '12. februar 82',
+      'Bulevar 12. februar 82',
       '18000 Nis',
       'PIB: 101532125',
       'Registration no: 07678762',
@@ -181,7 +181,7 @@ const CONTACTS_COPY: Record<Language, {
     companyTitle: 'Firmendaten',
     companyDetails: [
       'Kopex MIN Liv',
-      '12. februar 82',
+      'Bulevar 12. februar 82',
       '18000 Nis',
       'PIB: 101532125',
       'Registrierungsnr.: 07678762',

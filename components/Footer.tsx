@@ -55,7 +55,7 @@ export default function Footer() {
       copyright: '\u00a9 2025 KOPEX MIN-LIV D.O.O. Ni\u0161. Sva prava zadr\u017eana.',
       companyDetails: [
         'Kopex MIN Liv',
-        '12. februar 82',
+        'Bulevar 12. februar 82',
         '18000 Nis',
         'Pib: 101532125',
         'Maticni br: 07678762',
@@ -82,7 +82,7 @@ export default function Footer() {
       copyright: '\u00a9 2025 KOPEX MIN-LIV D.O.O. Ni\u0161. All rights reserved.',
       companyDetails: [
         'Kopex MIN Liv',
-        '12. februar 82',
+        'Bulevar 12. februar 82',
         '18000 Nis',
         'PIB: 101532125',
         'Registration no: 07678762',
@@ -109,7 +109,7 @@ export default function Footer() {
       copyright: '\u00a9 2025 KOPEX MIN-LIV D.O.O. Ni\u0161. Alle Rechte vorbehalten.',
       companyDetails: [
         'Kopex MIN Liv',
-        '12. februar 82',
+        'Bulevar 12. februar 82',
         '18000 Nis',
         'PIB: 101532125',
         'Registrierungsnr.: 07678762',
