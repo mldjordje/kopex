@@ -35,6 +35,7 @@ export default function Footer() {
     follow: string;
     description: string;
     copyright: string;
+    credit: string;
     companyDetails: [string, string, string, string, string, string, string, string];
   }> = {
     sr: {
@@ -53,6 +54,7 @@ export default function Footer() {
       follow: 'Pratite nas:',
       description: 'KOPEX MIN-LIV D.O.O. Ni\u0161 je industrijska livnica Srbije sa tradicijom od 1884. godine, specijalizovana za metalne odlivke od sivog, nodularnog i \u010deli\u010dnog liva.',
       copyright: '\u00a9 2025 KOPEX MIN-LIV D.O.O. Ni\u0161. Sva prava zadr\u017eana.',
+      credit: 'Izrada sajta:',
       companyDetails: [
         'Kopex MIN Liv',
         '12. februar 82',
@@ -80,6 +82,7 @@ export default function Footer() {
       follow: 'Follow us:',
       description: 'KOPEX MIN-LIV D.O.O. Ni\u0161 is an industrial foundry in Serbia with a tradition since 1884, specializing in metal castings of gray iron, ductile iron, and steel.',
       copyright: '\u00a9 2025 KOPEX MIN-LIV D.O.O. Ni\u0161. All rights reserved.',
+      credit: 'Website by',
       companyDetails: [
         'Kopex MIN Liv',
         '12. februar 82',
@@ -107,6 +110,7 @@ export default function Footer() {
       follow: 'Folgen Sie uns:',
       description: 'KOPEX MIN-LIV D.O.O. Ni\u0161 ist eine industrielle Gie\u00dferei in Serbien mit Tradition seit 1884 und spezialisiert auf Metallgussteile aus Grauguss, Sph\u00e4roguss und Stahlguss.',
       copyright: '\u00a9 2025 KOPEX MIN-LIV D.O.O. Ni\u0161. Alle Rechte vorbehalten.',
+      credit: 'Website von',
       companyDetails: [
         'Kopex MIN Liv',
         '12. februar 82',
@@ -182,7 +186,10 @@ export default function Footer() {
       </div>
       <div className="bringer-footer-line stg-container">
         <div className="align-center">
-          {labels[currentLanguage].copyright}
+          {labels[currentLanguage].copyright}{' · '}{labels[currentLanguage].credit}{' '}
+          <a href="https://adspire.rs/our-services/industrijska-resenja" target="_blank" rel="noopener">
+            Adspire
+          </a>
         </div>
       </div>
     </footer>
